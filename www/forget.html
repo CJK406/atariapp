@@ -1,0 +1,79 @@
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/login_util.css">
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+	<div class="limiter" >
+        <div style="padding:20px; background-color:rgb(33,33,33); color:white; border-bottom: 1px solid black;">
+            <a href="index.html">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </a>
+        </div>
+            <div class="container-login100" style="background-color: rgb(33,33,33);">
+			<div class="wrap-login100  p-b-20" style="text-align: center; background-color: rgb(33,33,33);">
+					<span class="login100-form-avatar-forget">
+						<img src="img/crypt.png" alt="AVATAR">
+					</span>
+					<!-- <span style="font-family: Consolas;font-size: 1.4em;">
+						Smart Tag Intelligent Compliant Solutions
+					</span> -->
+					<span class="login100-form-title p-b-10" style="font-size:40px; color:white">
+							Forget <br> Password
+                        </span>
+                        <span style="color:white;text-align:center" class="m-t-10 m-b-30">
+                            We just need your registered email to send you password reset instructions
+                        </span>
+						<div class="wrap-input100 validate-input m-t-25 m-b-25" style="text-align:left" data-validate = "Enter username">
+							<input class="input100 username" type="text" style="font-family: Consolas !important;" name="username">
+							<span class="focus-input1001" style="font-family: Consolas; color:white" data-placeholder="Email"></span>
+						</div>
+
+                        <div class="container-login100-form-btn m-t-50">
+							<button class="login100-form-btn">
+								SEND EMAIL
+							</button>
+						</div>
+						
+				
+			</div>
+		</div>
+	</div>
+	<script src="js/login.js"></script>
+
+</body>
+</html>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".login100-form-btn").click(function(){
+			var username = 	$(".username").val();
+			var password = $(".password").val();
+			
+			console.log(password);
+
+			jQuery.ajax({
+            	url:"https://iotops.net/SN011.php?cmd=logintype&Username="+username+"&Password=" +password +"&UserLevel=1",
+                async:false,
+                data: { 
+                	
+                    },
+                    type: 'post',
+                    success: function(result) 
+                    {
+						
+						var res = result[0];
+						if(res!=undefined)
+						{
+							// window.location.href = "dashboard.php?username="+username+"&password="+password;
+							$("#username").val(username);
+							$("#password").val(password);
+							$("#form_id").submit();
+						}
+                    }
+				});	
+		});
+	});
+</script> 

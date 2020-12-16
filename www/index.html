@@ -1,0 +1,101 @@
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/login_util.css">
+	<link rel="stylesheet" type="text/css" href="css/login.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="limiter" >
+		<div class="container-login100">
+			<div class="wrap-login100 p-t-25 p-b-20">
+					<span class="login100-form-avatar">
+						<img src="img/logo.png" alt="AVATAR">
+					</span>
+					<div style="padding:30px; background-color:white; border-radius:40px" class="m-t-30">
+						<span class="login100-form-title p-b-10">
+							Log In
+						</span>
+						<div class="wrap-input100 validate-input m-t-15 m-b-25" data-validate = "Enter username">
+							<input class="input100 username" type="text" style="font-family: Consolas !important;" name="username">
+							<span class="focus-input100" style="font-family: Consolas;" data-placeholder="Email"></span>
+						</div>
+						<div class="wrap-input100 validate-input m-b-20" data-validate="Enter password">
+							<input class="input100 password" type="password" style="font-family: Consolas;" name="password">
+							<span class="focus-input100" style="font-family: Consolas;" data-placeholder="Password"></span>
+						</div>
+						<a href="forget.html" class="txt1 m-b-20" style="text-decoration: none;">
+							Forgot password?
+						</a>
+						<div class="container-login100-form-btn m-t-80">
+							<button class="login100-form-btn">
+								Login
+							</button>
+						</div>
+						<li style="text-align: center;" class="m-t-20">
+							<span class="txt2">
+								Don’t have an account?
+							</span>
+
+							<a href="#" class="txt1">
+								Sign up
+							</a>
+						</li>
+					</div>
+			</div>
+		</div>
+	</div>
+	<script src="js/login.js"></script>
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog" style="margin-top:35%">
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<img src="img/1.png" style="width: 101%;">
+			<div style="text-align: center;">
+				<p class="m-t-30" style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-size: 25px;">
+					Visit Our Website
+				</p>
+				<span>
+					Please visit ataritokens.com in order to make an account.
+				</span>
+			</div>
+			<div class="modal-footer" style="text-align: center;">
+			  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+</body>
+</html>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".login100-form-btn").click(function(){
+			var username = 	$(".username").val();
+			var password = $(".password").val();
+			jQuery.ajax({
+            	url:"https://iotops.net/SN011.php?cmd=logintype&Username="+username+"&Password=" +password +"&UserLevel=1",
+                async:false,
+                data: { 
+                    },
+                    type: 'post',
+                    success: function(result) 
+                    {
+						var res = result[0];
+						if(res!=undefined)
+						{
+							// window.location.href = "dashboard.php?username="+username+"&password="+password;
+							$("#username").val(username);
+							$("#password").val(password);
+							$("#form_id").submit();
+						}
+                    }
+				});	
+		});
+
+		$(".txt1").click(function(){
+			$("#myModal").modal();
+		})
+	});
+</script> 
