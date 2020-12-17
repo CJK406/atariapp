@@ -1,0 +1,110 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../css/index.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../../css/bootstrap.css">
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- <link rel="stylesheet" href="../../css/cryptfont.css"> -->
+        <link rel="stylesheet" type="text/css" href="../../css/login_util.css">
+
+        <script src="../../js/jquery.js"></script>
+        <script src="../../js/bootstrap.js"></script>
+        <link rel="stylesheet" href="../../css/morris.css">
+        <script src="../../js/jquery.js"></script>
+        <script src="../../js/raphael.js"></script>
+        <script src="../../js/morris.js"></script>
+        <script src="../../js/dropdown.js"></script>
+    </head>
+    <body style="background-color: black;">
+        <div class="top_head">
+            <img src="../../img/logo.png">
+        </div>
+        <div class="exchange_div">
+            <p class="exchange_label">From: </p>
+            <div id="exchange_from_select"></div>
+            <p class="exchange_label m-t-20">To: </p>
+            <div id="exchange_to_select"></div>
+            <div>
+                <p class="exchange_label m-t-20">Buy now </p>
+                <div class="flex-row">
+                    <input type="number" style="width: 38%; height: 50px;">
+                    <span class="exchange_crypto_icon_span" style="">
+                        <i class="fa fa-btc" aria-hidden="true" style="color:#f7931a;"></i>
+                    </span>
+                    
+                    <input type="number" style="width: 38%;">
+                    <span class="exchange_crypto_icon_span"> 
+                     <i class="fa fa-usd" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+            <div>
+                <p class="exchange_label m-t-20">Buy now </p>
+                <div class="flex-row">
+                    <input type="number" style="width: 38%; height: 50px;">
+                    <span class="exchange_crypto_icon_span" style="">
+                        <i class="fa fa-btc" aria-hidden="true" style="color:#f7931a;"></i>
+                    </span>
+                    
+                    <input type="number" style="width: 38%;">
+                    <span class="exchange_crypto_icon_span"> 
+                     <i class="fa fa-usd" aria-hidden="true"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="exchange_button_div">
+                <button class="form-control">Buy Now</button>
+            </div>
+        </div>
+        
+    </body>
+</html>
+<script>
+    var ddData = [
+    {
+        text: "Btc bitcoin",
+        value: 1,
+        selected: false,
+        description: "0.000 BTC | $0.00",
+        imageSrc: "../../img/btc.png",
+    
+    },
+    {
+        text: "Atri Atari token",
+        value: 2,
+        selected: false,
+        description: "0.000 BTC | $0.00",
+        imageSrc: "../../img/atri.png"
+    },
+    {
+        text: "Eth Ethereum",
+        value: 3,
+        selected: true,
+        description: "0.000 BTC | $0.00",
+        imageSrc: "../../img/eth.png"
+    },
+    {
+        text: "Ltc litcoin",
+        value: 4,
+        selected: false,
+        description: "0.000 BTC | $0.00",
+        imageSrc: "../../img/ltc.png"
+    },
+    {
+        text: "Bch Bitcoin cash",
+        value: 4,
+        selected: false,
+        description: "0.000 BTC | $0.00",
+        imageSrc: "../../img/bch.png"
+    }
+];
+    $('#exchange_from_select').ddslick({
+        data: ddData,
+        defaultSelectedIndex:1
+    });
+    $('#exchange_to_select').ddslick({
+        data: ddData,
+        defaultSelectedIndex:1
+    });
+</script>

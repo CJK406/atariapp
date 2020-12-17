@@ -109,6 +109,7 @@ h1 {
 .top_head{
     text-align: center;
     background-color: black;
+    height: 9%;
 }
 .top_head img{
     width: 170px;
@@ -136,14 +137,56 @@ h1 {
     text-align: right;
     padding-right:10px
 }
-.history_div{
+.history_div, .exchange_div{
     background-color: rgb(33,33,33);
     padding:20px;
 }
+.exchange_div{
+    background-color: rgb(33,33,33);
+    padding:20px;
+    height: 91%;
+}
+
 #pie_chart svg text[fill="#000000"]{
         fill:  #CFD8DC;
 }
 #pie_chart svg  path[stroke="#ffffff"]{
     stroke: black;
 }
+.wrapper-dropdown{
+    background-color: white !important;
+    color:black !important;
+}
+.wrapper-dropdown span{
+    color: black !important;
+}
       
+.dd-select{
+    background-color: white !important;
+    width: 100% !important;
+}
+#exchange_from_select, #exchange_to_select{
+    width: 100% !important;
+}
+.dd-options{
+    width: 100% !important;
+}
+.exchange_label{
+    color:white;
+    font-weight: 700;
+    font-size:16px
+}
+.exchange_crypto_icon_span{
+    justify-content: center ; text-align: center; align-items: center; align-self: center; height: 50px; width: 50px; font-size: 20px; background-color: white;
+}
+.exchange_crypto_icon_span i{
+    margin-top:12px
+}
+.exchange_button_div button{
+    margin-top:30px;
+    color:white;
+    background-color: #ad1919;
+    box-shadow: 0px 25px 30px rgba(0, 0, 0, 0.3);
+    height: 50px;
+    border: none;
+}

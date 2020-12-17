@@ -1,0 +1,3262 @@
+@font-face {
+    font-family: 'cryptofont';
+    src:  url('../fonts/cryptofont.eot?21w9ej');
+    src:  url('../fonts/cryptofont.eot?21w9ej#iefix') format('embedded-opentype'),
+      url('../fonts/cryptofont.ttf?21w9ej') format('truetype'),
+      url('../fonts/cryptofont.woff?21w9ej') format('woff'),
+      url('../fonts/cryptofont.svg?21w9ej#cryptofont') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+  }
+  
+  .crypt_balance_text i {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'cryptofont' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    font-size: 16px;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .cf-42:before {
+    content: "\e900";
+  }
+  .cf-888:before {
+    content: "\e901";
+  }
+  .cf-1337:before {
+    content: "\e902";
+  }
+  .cf-abbc:before {
+    content: "\e903";
+  }
+  .cf-abt:before {
+    content: "\e904";
+  }
+  .cf-aby:before {
+    content: "\e905";
+  }
+  .cf-abyss:before {
+    content: "\e906";
+  }
+  .cf-ac3:before {
+    content: "\e907";
+  }
+  .cf-acat:before {
+    content: "\e908";
+  }
+  .cf-acc:before {
+    content: "\e909";
+  }
+  .cf-ace:before {
+    content: "\e90a";
+  }
+  .cf-act:before {
+    content: "\e90b";
+  }
+  .cf-ada:before {
+    content: "\e90c";
+  }
+  .cf-adb:before {
+    content: "\e90d";
+  }
+  .cf-adc:before {
+    content: "\e90e";
+  }
+  .cf-adh:before {
+    content: "\e90f";
+  }
+  .cf-adi:before {
+    content: "\e910";
+  }
+  .cf-adst:before {
+    content: "\e911";
+  }
+  .cf-adt:before {
+    content: "\e912";
+  }
+  .cf-adx:before {
+    content: "\e913";
+  }
+  .cf-ae:before {
+    content: "\e914";
+  }
+  .cf-aeon:before {
+    content: "\e915";
+  }
+  .cf-aerm:before {
+    content: "\e916";
+  }
+  .cf-agi:before {
+    content: "\e917";
+  }
+  .cf-aht:before {
+    content: "\e918";
+  }
+  .cf-ai:before {
+    content: "\e919";
+  }
+  .cf-aib:before {
+    content: "\e91a";
+  }
+  .cf-aid:before {
+    content: "\e91b";
+  }
+  .cf-aidoc:before {
+    content: "\e91c";
+  }
+  .cf-aion:before {
+    content: "\e91d";
+  }
+  .cf-air:before {
+    content: "\e91e";
+  }
+  .cf-ait:before {
+    content: "\e91f";
+  }
+  .cf-aix:before {
+    content: "\e920";
+  }
+  .cf-algo:before {
+    content: "\e921";
+  }
+  .cf-alis:before {
+    content: "\e922";
+  }
+  .cf-alqo:before {
+    content: "\e923";
+  }
+  .cf-alt:before {
+    content: "\e924";
+  }
+  .cf-amb:before {
+    content: "\e925";
+  }
+  .cf-amlt:before {
+    content: "\e926";
+  }
+  .cf-amm:before {
+    content: "\e927";
+  }
+  .cf-amn:before {
+    content: "\e928";
+  }
+  .cf-amp:before {
+    content: "\e929";
+  }
+  .cf-ampl:before {
+    content: "\e92a";
+  }
+  .cf-ams:before {
+    content: "\e92b";
+  }
+  .cf-anc:before {
+    content: "\e92c";
+  }
+  .cf-ant:before {
+    content: "\e92d";
+  }
+  .cf-aph:before {
+    content: "\e92e";
+  }
+  .cf-apis:before {
+    content: "\e92f";
+  }
+  .cf-apl:before {
+    content: "\e930";
+  }
+  .cf-appc:before {
+    content: "\e931";
+  }
+  .cf-apr:before {
+    content: "\e932";
+  }
+  .cf-arc:before {
+    content: "\e933";
+  }
+  .cf-arct:before {
+    content: "\e934";
+  }
+  .cf-ardr:before {
+    content: "\e935";
+  }
+  .cf-arg:before {
+    content: "\e936";
+  }
+  .cf-ark:before {
+    content: "\e937";
+  }
+  .cf-arn:before {
+    content: "\e938";
+  }
+  .cf-art:before {
+    content: "\e939";
+  }
+  .cf-ary:before {
+    content: "\e93a";
+  }
+  .cf-ast:before {
+    content: "\e93b";
+  }
+  .cf-astro:before {
+    content: "\e93c";
+  }
+  .cf-atb:before {
+    content: "\e93d";
+  }
+  .cf-atc:before {
+    content: "\e93e";
+  }
+  .cf-atl:before {
+    content: "\e93f";
+  }
+  .cf-atm:before {
+    content: "\e940";
+  }
+  .cf-atmc:before {
+    content: "\e941";
+  }
+  .cf-atn:before {
+    content: "\e942";
+  }
+  .cf-atom:before {
+    content: "\e943";
+  }
+  .cf-ats:before {
+    content: "\e944";
+  }
+  .cf-atx:before {
+    content: "\e945";
+  }
+  .cf-auc:before {
+    content: "\e946";
+  }
+  .cf-aur:before {
+    content: "\e947";
+  }
+  .cf-aura:before {
+    content: "\e948";
+  }
+  .cf-avt:before {
+    content: "\e949";
+  }
+  .cf-axp:before {
+    content: "\e94a";
+  }
+  .cf-b2b:before {
+    content: "\e94b";
+  }
+  .cf-banca:before {
+    content: "\e94c";
+  }
+  .cf-band:before {
+    content: "\e94d";
+  }
+  .cf-bank:before {
+    content: "\e94e";
+  }
+  .cf-bat:before {
+    content: "\e94f";
+  }
+  .cf-bax:before {
+    content: "\e950";
+  }
+  .cf-bay:before {
+    content: "\e951";
+  }
+  .cf-bbi:before {
+    content: "\e952";
+  }
+  .cf-bbn:before {
+    content: "\e953";
+  }
+  .cf-bbo:before {
+    content: "\e954";
+  }
+  .cf-bbp:before {
+    content: "\e955";
+  }
+  .cf-bbr:before {
+    content: "\e956";
+  }
+  .cf-bcc:before {
+    content: "\e957";
+  }
+  .cf-bcd:before {
+    content: "\e958";
+  }
+  .cf-bch:before {
+    content: "\e959";
+  }
+  .cf-bcn:before {
+    content: "\e95a";
+  }
+  .cf-bco:before {
+    content: "\e95b";
+  }
+  .cf-bcpt:before {
+    content: "\e95c";
+  }
+  .cf-bdg:before {
+    content: "\e95d";
+  }
+  .cf-bdl:before {
+    content: "\e95e";
+  }
+  .cf-bee:before {
+    content: "\e95f";
+  }
+  .cf-bela:before {
+    content: "\e960";
+  }
+  .cf-berry:before {
+    content: "\e961";
+  }
+  .cf-bet:before {
+    content: "\e962";
+  }
+  .cf-betr:before {
+    content: "\e963";
+  }
+  .cf-bez:before {
+    content: "\e964";
+  }
+  .cf-bft:before {
+    content: "\e965";
+  }
+  .cf-bigup:before {
+    content: "\e966";
+  }
+  .cf-birds:before {
+    content: "\e967";
+  }
+  .cf-bis:before {
+    content: "\e968";
+  }
+  .cf-bitb:before {
+    content: "\e969";
+  }
+  .cf-bitg:before {
+    content: "\e96a";
+  }
+  .cf-bits:before {
+    content: "\e96b";
+  }
+  .cf-bitz:before {
+    content: "\e96c";
+  }
+  .cf-bix:before {
+    content: "\e96d";
+  }
+  .cf-bkx:before {
+    content: "\e96e";
+  }
+  .cf-blc:before {
+    content: "\e96f";
+  }
+  .cf-blitz:before {
+    content: "\e970";
+  }
+  .cf-blk:before {
+    content: "\e971";
+  }
+  .cf-bln:before {
+    content: "\e972";
+  }
+  .cf-block:before {
+    content: "\e973";
+  }
+  .cf-blt:before {
+    content: "\e974";
+  }
+  .cf-blu:before {
+    content: "\e975";
+  }
+  .cf-blue:before {
+    content: "\e976";
+  }
+  .cf-blz:before {
+    content: "\e977";
+  }
+  .cf-blz2:before {
+    content: "\e978";
+  }
+  .cf-bmc:before {
+    content: "\e979";
+  }
+  .cf-bmh:before {
+    content: "\e97a";
+  }
+  .cf-bnb:before {
+    content: "\e97b";
+  }
+  .cf-bnk:before {
+    content: "\e97c";
+  }
+  .cf-bnt:before {
+    content: "\e97d";
+  }
+  .cf-bnty:before {
+    content: "\e97e";
+  }
+  .cf-boat:before {
+    content: "\e97f";
+  }
+  .cf-bon:before {
+    content: "\e980";
+  }
+  .cf-bos:before {
+    content: "\e981";
+  }
+  .cf-bot:before {
+    content: "\e982";
+  }
+  .cf-bpt:before {
+    content: "\e983";
+  }
+  .cf-bqx:before {
+    content: "\e984";
+  }
+  .cf-brat:before {
+    content: "\e985";
+  }
+  .cf-brd:before {
+    content: "\e986";
+  }
+  .cf-bsd:before {
+    content: "\e987";
+  }
+  .cf-bsm:before {
+    content: "\e988";
+  }
+  .cf-bta:before {
+    content: "\e989";
+  }
+  .cf-btc:before {
+    content: "\e98a";
+  }
+  .cf-btca:before {
+    content: "\e98b";
+  }
+  .cf-btcd:before {
+    content: "\e98c";
+  }
+  .cf-btcp:before {
+    content: "\e98d";
+  }
+  .cf-btdx:before {
+    content: "\e98e";
+  }
+  .cf-bte:before {
+    content: "\e98f";
+  }
+  .cf-btg:before {
+    content: "\e990";
+  }
+  .cf-btm:before {
+    content: "\e991";
+  }
+  .cf-btm2:before {
+    content: "\e992";
+  }
+  .cf-bto:before {
+    content: "\e993";
+  }
+  .cf-btrn:before {
+    content: "\e994";
+  }
+  .cf-bts:before {
+    content: "\e995";
+  }
+  .cf-btt:before {
+    content: "\e996";
+  }
+  .cf-btx:before {
+    content: "\e997";
+  }
+  .cf-burst:before {
+    content: "\e998";
+  }
+  .cf-busd:before {
+    content: "\e999";
+  }
+  .cf-buzz:before {
+    content: "\e99a";
+  }
+  .cf-bwk:before {
+    content: "\e99b";
+  }
+  .cf-byc:before {
+    content: "\e99c";
+  }
+  .cf-c20:before {
+    content: "\e99d";
+  }
+  .cf-can:before {
+    content: "\e99e";
+  }
+  .cf-candy:before {
+    content: "\e99f";
+  }
+  .cf-cann:before {
+    content: "\e9a0";
+  }
+  .cf-capp:before {
+    content: "\e9a1";
+  }
+  .cf-carbon:before {
+    content: "\e9a2";
+  }
+  .cf-cas:before {
+    content: "\e9a3";
+  }
+  .cf-cat:before {
+    content: "\e9a4";
+  }
+  .cf-cat2:before {
+    content: "\e9a5";
+  }
+  .cf-caz:before {
+    content: "\e9a6";
+  }
+  .cf-cbc:before {
+    content: "\e9a7";
+  }
+  .cf-cbt:before {
+    content: "\e9a8";
+  }
+  .cf-cbx:before {
+    content: "\e9a9";
+  }
+  .cf-ccrb:before {
+    content: "\e9aa";
+  }
+  .cf-cdn:before {
+    content: "\e9ab";
+  }
+  .cf-cdt:before {
+    content: "\e9ac";
+  }
+  .cf-ceek:before {
+    content: "\e9ad";
+  }
+  .cf-cel:before {
+    content: "\e9ae";
+  }
+  .cf-cennz:before {
+    content: "\e9af";
+  }
+  .cf-cfi:before {
+    content: "\e9b0";
+  }
+  .cf-chc:before {
+    content: "\e9b1";
+  }
+  .cf-chp:before {
+    content: "\e9b2";
+  }
+  .cf-chsb:before {
+    content: "\e9b3";
+  }
+  .cf-chx:before {
+    content: "\e9b4";
+  }
+  .cf-chz:before {
+    content: "\e9b5";
+  }
+  .cf-cjt:before {
+    content: "\e9b6";
+  }
+  .cf-ckb:before {
+    content: "\e9b7";
+  }
+  .cf-cl:before {
+    content: "\e9b8";
+  }
+  .cf-clam:before {
+    content: "\e9b9";
+  }
+  .cf-cln:before {
+    content: "\e9ba";
+  }
+  .cf-clo:before {
+    content: "\e9bb";
+  }
+  .cf-cloak:before {
+    content: "\e9bc";
+  }
+  .cf-clr:before {
+    content: "\e9bd";
+  }
+  .cf-cmpco:before {
+    content: "\e9be";
+  }
+  .cf-cms:before {
+    content: "\e9bf";
+  }
+  .cf-cmt:before {
+    content: "\e9c0";
+  }
+  .cf-cnd:before {
+    content: "\e9c1";
+  }
+  .cf-cnet:before {
+    content: "\e9c2";
+  }
+  .cf-cnn:before {
+    content: "\e9c3";
+  }
+  .cf-cnx:before {
+    content: "\e9c4";
+  }
+  .cf-coal:before {
+    content: "\e9c5";
+  }
+  .cf-cob:before {
+    content: "\e9c6";
+  }
+  .cf-colx:before {
+    content: "\e9c7";
+  }
+  .cf-comp:before {
+    content: "\e9c8";
+  }
+  .cf-con:before {
+    content: "\e9c9";
+  }
+  .cf-coss:before {
+    content: "\e9ca";
+  }
+  .cf-cov:before {
+    content: "\e9cb";
+  }
+  .cf-coval:before {
+    content: "\e9cc";
+  }
+  .cf-cpc:before {
+    content: "\e9cd";
+  }
+  .cf-cpc2:before {
+    content: "\e9ce";
+  }
+  .cf-cpn:before {
+    content: "\e9cf";
+  }
+  .cf-cpx:before {
+    content: "\e9d0";
+  }
+  .cf-cpy:before {
+    content: "\e9d1";
+  }
+  .cf-crave:before {
+    content: "\e9d2";
+  }
+  .cf-crb:before {
+    content: "\e9d3";
+  }
+  .cf-crc:before {
+    content: "\e9d4";
+  }
+  .cf-cre:before {
+    content: "\e9d5";
+  }
+  .cf-crea:before {
+    content: "\e9d6";
+  }
+  .cf-cred:before {
+    content: "\e9d7";
+  }
+  .cf-credo:before {
+    content: "\e9d8";
+  }
+  .cf-crm:before {
+    content: "\e9d9";
+  }
+  .cf-crop:before {
+    content: "\e9da";
+  }
+  .cf-crpt:before {
+    content: "\e9db";
+  }
+  .cf-crw:before {
+    content: "\e9dc";
+  }
+  .cf-cs:before {
+    content: "\e9dd";
+  }
+  .cf-csc:before {
+    content: "\e9de";
+  }
+  .cf-csno:before {
+    content: "\e9df";
+  }
+  .cf-ctr:before {
+    content: "\e9e0";
+  }
+  .cf-ctxc:before {
+    content: "\e9e1";
+  }
+  .cf-cure:before {
+    content: "\e9e2";
+  }
+  .cf-cv:before {
+    content: "\e9e3";
+  }
+  .cf-cvc:before {
+    content: "\e9e4";
+  }
+  .cf-cvcoin:before {
+    content: "\e9e5";
+  }
+  .cf-cvt:before {
+    content: "\e9e6";
+  }
+  .cf-cxo:before {
+    content: "\e9e7";
+  }
+  .cf-dadi:before {
+    content: "\e9e8";
+  }
+  .cf-dai:before {
+    content: "\e9e9";
+  }
+  .cf-dan:before {
+    content: "\e9ea";
+  }
+  .cf-dasc:before {
+    content: "\e9eb";
+  }
+  .cf-dash:before {
+    content: "\e9ec";
+  }
+  .cf-dat:before {
+    content: "\e9ed";
+  }
+  .cf-data:before {
+    content: "\e9ee";
+  }
+  .cf-datx:before {
+    content: "\e9ef";
+  }
+  .cf-dax:before {
+    content: "\e9f0";
+  }
+  .cf-daxx:before {
+    content: "\e9f1";
+  }
+  .cf-day:before {
+    content: "\e9f2";
+  }
+  .cf-dbc:before {
+    content: "\e9f3";
+  }
+  .cf-dbet:before {
+    content: "\e9f4";
+  }
+  .cf-dcn:before {
+    content: "\e9f5";
+  }
+  .cf-dcr:before {
+    content: "\e9f6";
+  }
+  .cf-dct:before {
+    content: "\e9f7";
+  }
+  .cf-dcy:before {
+    content: "\e9f8";
+  }
+  .cf-ddd:before {
+    content: "\e9f9";
+  }
+  .cf-ddf:before {
+    content: "\e9fa";
+  }
+  .cf-deb:before {
+    content: "\e9fb";
+  }
+  .cf-dent:before {
+    content: "\e9fc";
+  }
+  .cf-dero:before {
+    content: "\e9fd";
+  }
+  .cf-deus:before {
+    content: "\e9fe";
+  }
+  .cf-dev:before {
+    content: "\e9ff";
+  }
+  .cf-dew:before {
+    content: "\ea00";
+  }
+  .cf-dft:before {
+    content: "\ea01";
+  }
+  .cf-dgb:before {
+    content: "\ea02";
+  }
+  .cf-dgd:before {
+    content: "\ea03";
+  }
+  .cf-dgpt:before {
+    content: "\ea04";
+  }
+  .cf-dgtx:before {
+    content: "\ea05";
+  }
+  .cf-dice:before {
+    content: "\ea06";
+  }
+  .cf-dim:before {
+    content: "\ea07";
+  }
+  .cf-dime:before {
+    content: "\ea08";
+  }
+  .cf-divi:before {
+    content: "\ea09";
+  }
+  .cf-divx:before {
+    content: "\ea0a";
+  }
+  .cf-dix:before {
+    content: "\ea0b";
+  }
+  .cf-dlisk:before {
+    content: "\ea0c";
+  }
+  .cf-dlt:before {
+    content: "\ea0d";
+  }
+  .cf-dmb:before {
+    content: "\ea0e";
+  }
+  .cf-dmd:before {
+    content: "\ea0f";
+  }
+  .cf-dml:before {
+    content: "\ea10";
+  }
+  .cf-dmt:before {
+    content: "\ea11";
+  }
+  .cf-dna:before {
+    content: "\ea12";
+  }
+  .cf-dnr:before {
+    content: "\ea13";
+  }
+  .cf-dnt:before {
+    content: "\ea14";
+  }
+  .cf-dock:before {
+    content: "\ea15";
+  }
+  .cf-doge:before {
+    content: "\ea16";
+  }
+  .cf-dp:before {
+    content: "\ea17";
+  }
+  .cf-dpy:before {
+    content: "\ea18";
+  }
+  .cf-drgn:before {
+    content: "\ea19";
+  }
+  .cf-drop:before {
+    content: "\ea1a";
+  }
+  .cf-drpu:before {
+    content: "\ea1b";
+  }
+  .cf-drt:before {
+    content: "\ea1c";
+  }
+  .cf-drxne:before {
+    content: "\ea1d";
+  }
+  .cf-dsh:before {
+    content: "\ea1e";
+  }
+  .cf-dsr:before {
+    content: "\ea1f";
+  }
+  .cf-dta:before {
+    content: "\ea20";
+  }
+  .cf-dtb:before {
+    content: "\ea21";
+  }
+  .cf-dth:before {
+    content: "\ea22";
+  }
+  .cf-dtr:before {
+    content: "\ea23";
+  }
+  .cf-dtrc:before {
+    content: "\ea24";
+  }
+  .cf-duo:before {
+    content: "\ea25";
+  }
+  .cf-dxt:before {
+    content: "\ea26";
+  }
+  .cf-earth:before {
+    content: "\ea27";
+  }
+  .cf-ebtc:before {
+    content: "\ea28";
+  }
+  .cf-eca:before {
+    content: "\ea29";
+  }
+  .cf-ecash:before {
+    content: "\ea2a";
+  }
+  .cf-ecc:before {
+    content: "\ea2b";
+  }
+  .cf-ecob:before {
+    content: "\ea2c";
+  }
+  .cf-edg:before {
+    content: "\ea2d";
+  }
+  .cf-edo:before {
+    content: "\ea2e";
+  }
+  .cf-edr:before {
+    content: "\ea35";
+  }
+  .cf-edt:before {
+    content: "\ea36";
+  }
+  .cf-edu:before {
+    content: "\ea37";
+  }
+  .cf-efl:before {
+    content: "\ea38";
+  }
+  .cf-efx:before {
+    content: "\ea39";
+  }
+  .cf-efyt:before {
+    content: "\ea3a";
+  }
+  .cf-egc:before {
+    content: "\ea3b";
+  }
+  .cf-egcc:before {
+    content: "\ea3c";
+  }
+  .cf-eko:before {
+    content: "\ea3d";
+  }
+  .cf-ekt:before {
+    content: "\ea3e";
+  }
+  .cf-el:before {
+    content: "\ea3f";
+  }
+  .cf-ela:before {
+    content: "\ea40";
+  }
+  .cf-elec:before {
+    content: "\ea41";
+  }
+  .cf-elf:before {
+    content: "\ea42";
+  }
+  .cf-elix:before {
+    content: "\ea43";
+  }
+  .cf-ella:before {
+    content: "\ea44";
+  }
+  .cf-eltcoin:before {
+    content: "\ea45";
+  }
+  .cf-emb:before {
+    content: "\ea46";
+  }
+  .cf-emc:before {
+    content: "\ea47";
+  }
+  .cf-emc2:before {
+    content: "\ea48";
+  }
+  .cf-eng:before {
+    content: "\ea49";
+  }
+  .cf-enj:before {
+    content: "\ea4a";
+  }
+  .cf-enrg:before {
+    content: "\ea4b";
+  }
+  .cf-ent:before {
+    content: "\ea4c";
+  }
+  .cf-eos:before {
+    content: "\ea4d";
+  }
+  .cf-eosdac:before {
+    content: "\ea4e";
+  }
+  .cf-epc:before {
+    content: "\ea4f";
+  }
+  .cf-eql:before {
+    content: "\ea50";
+  }
+  .cf-eqt:before {
+    content: "\ea51";
+  }
+  .cf-erc:before {
+    content: "\ea52";
+  }
+  .cf-erc20:before {
+    content: "\ea53";
+  }
+  .cf-erd:before {
+    content: "\ea54";
+  }
+  .cf-ero:before {
+    content: "\ea55";
+  }
+  .cf-esp:before {
+    content: "\ea56";
+  }
+  .cf-esz:before {
+    content: "\ea57";
+  }
+  .cf-etbs:before {
+    content: "\ea58";
+  }
+  .cf-etc:before {
+    content: "\ea59";
+  }
+  .cf-eth:before {
+    content: "\ea5a";
+  }
+  .cf-etn:before {
+    content: "\ea5b";
+  }
+  .cf-etp:before {
+    content: "\ea5c";
+  }
+  .cf-ett:before {
+    content: "\ea5d";
+  }
+  .cf-etz:before {
+    content: "\ea5e";
+  }
+  .cf-euc:before {
+    content: "\ea5f";
+  }
+  .cf-evc:before {
+    content: "\ea60";
+  }
+  .cf-eve:before {
+    content: "\ea61";
+  }
+  .cf-evn:before {
+    content: "\ea62";
+  }
+  .cf-evr:before {
+    content: "\ea63";
+  }
+  .cf-evx:before {
+    content: "\ea64";
+  }
+  .cf-excl:before {
+    content: "\ea65";
+  }
+  .cf-exy:before {
+    content: "\ea66";
+  }
+  .cf-face:before {
+    content: "\ea67";
+  }
+  .cf-fair:before {
+    content: "\ea68";
+  }
+  .cf-fct:before {
+    content: "\ea69";
+  }
+  .cf-fdx:before {
+    content: "\ea6a";
+  }
+  .cf-fdz:before {
+    content: "\ea6b";
+  }
+  .cf-fet:before {
+    content: "\ea6c";
+  }
+  .cf-fil:before {
+    content: "\ea6d";
+  }
+  .cf-fjc:before {
+    content: "\ea6e";
+  }
+  .cf-flash:before {
+    content: "\ea6f";
+  }
+  .cf-flixx:before {
+    content: "\ea70";
+  }
+  .cf-flo:before {
+    content: "\ea71";
+  }
+  .cf-fluz:before {
+    content: "\ea72";
+  }
+  .cf-fnd:before {
+    content: "\ea73";
+  }
+  .cf-for:before {
+    content: "\ea74";
+  }
+  .cf-fota:before {
+    content: "\ea75";
+  }
+  .cf-frec:before {
+    content: "\ea76";
+  }
+  .cf-frst:before {
+    content: "\ea77";
+  }
+  .cf-fsn:before {
+    content: "\ea78";
+  }
+  .cf-fst:before {
+    content: "\ea79";
+  }
+  .cf-ft:before {
+    content: "\ea7a";
+  }
+  .cf-ftc:before {
+    content: "\ea7b";
+  }
+  .cf-ftt:before {
+    content: "\ea7c";
+  }
+  .cf-ftx:before {
+    content: "\ea7d";
+  }
+  .cf-fuel:before {
+    content: "\ea7e";
+  }
+  .cf-fun:before {
+    content: "\ea7f";
+  }
+  .cf-func:before {
+    content: "\ea80";
+  }
+  .cf-fxc:before {
+    content: "\ea81";
+  }
+  .cf-fxt:before {
+    content: "\ea82";
+  }
+  .cf-fyn:before {
+    content: "\ea83";
+  }
+  .cf-game:before {
+    content: "\ea84";
+  }
+  .cf-gat:before {
+    content: "\ea85";
+  }
+  .cf-gb:before {
+    content: "\ea86";
+  }
+  .cf-gbx:before {
+    content: "\ea87";
+  }
+  .cf-gbyte:before {
+    content: "\ea88";
+  }
+  .cf-gcc:before {
+    content: "\ea89";
+  }
+  .cf-gcs:before {
+    content: "\ea8a";
+  }
+  .cf-gen:before {
+    content: "\ea8b";
+  }
+  .cf-gene:before {
+    content: "\ea8c";
+  }
+  .cf-get:before {
+    content: "\ea8d";
+  }
+  .cf-getx:before {
+    content: "\ea8e";
+  }
+  .cf-gin:before {
+    content: "\ea8f";
+  }
+  .cf-gla:before {
+    content: "\ea90";
+  }
+  .cf-gno:before {
+    content: "\ea91";
+  }
+  .cf-gnt:before {
+    content: "\ea92";
+  }
+  .cf-gnx:before {
+    content: "\ea93";
+  }
+  .cf-go:before {
+    content: "\ea94";
+  }
+  .cf-god:before {
+    content: "\ea95";
+  }
+  .cf-golf:before {
+    content: "\ea96";
+  }
+  .cf-golos:before {
+    content: "\ea97";
+  }
+  .cf-good:before {
+    content: "\ea98";
+  }
+  .cf-grc:before {
+    content: "\ea99";
+  }
+  .cf-grft:before {
+    content: "\ea9a";
+  }
+  .cf-grid:before {
+    content: "\ea9b";
+  }
+  .cf-grin:before {
+    content: "\ea9c";
+  }
+  .cf-grlc:before {
+    content: "\ea9d";
+  }
+  .cf-grmd:before {
+    content: "\ea9e";
+  }
+  .cf-grn:before {
+    content: "\ea9f";
+  }
+  .cf-grs:before {
+    content: "\eaa0";
+  }
+  .cf-gsc:before {
+    content: "\eaa1";
+  }
+  .cf-gt:before {
+    content: "\eaa2";
+  }
+  .cf-gtc:before {
+    content: "\eaa3";
+  }
+  .cf-gto:before {
+    content: "\eaa4";
+  }
+  .cf-guess:before {
+    content: "\eaa5";
+  }
+  .cf-gup:before {
+    content: "\eaa6";
+  }
+  .cf-gvt:before {
+    content: "\eaa7";
+  }
+  .cf-gxs:before {
+    content: "\eaa8";
+  }
+  .cf-hac:before {
+    content: "\eaa9";
+  }
+  .cf-hade:before {
+    content: "\eaaa";
+  }
+  .cf-hat:before {
+    content: "\eaab";
+  }
+  .cf-hav:before {
+    content: "\eaac";
+  }
+  .cf-hbar:before {
+    content: "\eaad";
+  }
+  .cf-hbc:before {
+    content: "\eaae";
+  }
+  .cf-hc:before {
+    content: "\eaaf";
+  }
+  .cf-heat:before {
+    content: "\eab0";
+  }
+  .cf-hedg:before {
+    content: "\eab1";
+  }
+  .cf-her:before {
+    content: "\eab2";
+  }
+  .cf-hero:before {
+    content: "\eab3";
+  }
+  .cf-hgt:before {
+    content: "\eab4";
+  }
+  .cf-hire:before {
+    content: "\eab5";
+  }
+  .cf-hive:before {
+    content: "\eab6";
+  }
+  .cf-hkn:before {
+    content: "\eab7";
+  }
+  .cf-hlc:before {
+    content: "\eab8";
+  }
+  .cf-hmc:before {
+    content: "\eab9";
+  }
+  .cf-hmq:before {
+    content: "\eaba";
+  }
+  .cf-hot:before {
+    content: "\eabb";
+  }
+  .cf-hot2:before {
+    content: "\eabc";
+  }
+  .cf-hpb:before {
+    content: "\eabd";
+  }
+  .cf-hpc:before {
+    content: "\eabe";
+  }
+  .cf-hqx:before {
+    content: "\eabf";
+  }
+  .cf-hsr:before {
+    content: "\eac0";
+  }
+  .cf-hst:before {
+    content: "\eac1";
+  }
+  .cf-ht:before {
+    content: "\eac2";
+  }
+  .cf-huc:before {
+    content: "\eac3";
+  }
+  .cf-hur:before {
+    content: "\eac4";
+  }
+  .cf-husd:before {
+    content: "\eac5";
+  }
+  .cf-hush:before {
+    content: "\eac6";
+  }
+  .cf-hvn:before {
+    content: "\eac7";
+  }
+  .cf-hxx:before {
+    content: "\eac8";
+  }
+  .cf-hydro:before {
+    content: "\eac9";
+  }
+  .cf-hyn:before {
+    content: "\eaca";
+  }
+  .cf-ic:before {
+    content: "\eacb";
+  }
+  .cf-icn:before {
+    content: "\eacc";
+  }
+  .cf-icon:before {
+    content: "\eacd";
+  }
+  .cf-icx:before {
+    content: "\eace";
+  }
+  .cf-idh:before {
+    content: "\eacf";
+  }
+  .cf-idt:before {
+    content: "\ead0";
+  }
+  .cf-idxm:before {
+    content: "\ead1";
+  }
+  .cf-ieth:before {
+    content: "\ead2";
+  }
+  .cf-ift:before {
+    content: "\ead3";
+  }
+  .cf-ignis:before {
+    content: "\ead4";
+  }
+  .cf-iht:before {
+    content: "\ead5";
+  }
+  .cf-iic:before {
+    content: "\ead6";
+  }
+  .cf-inc:before {
+    content: "\ead7";
+  }
+  .cf-incnt:before {
+    content: "\ead8";
+  }
+  .cf-ind:before {
+    content: "\ead9";
+  }
+  .cf-infx:before {
+    content: "\eada";
+  }
+  .cf-ing:before {
+    content: "\eadb";
+  }
+  .cf-ink:before {
+    content: "\eadc";
+  }
+  .cf-inn:before {
+    content: "\eadd";
+  }
+  .cf-inpay:before {
+    content: "\eade";
+  }
+  .cf-ins:before {
+    content: "\eadf";
+  }
+  .cf-insn:before {
+    content: "\eae0";
+  }
+  .cf-instar:before {
+    content: "\eae1";
+  }
+  .cf-insur:before {
+    content: "\eae2";
+  }
+  .cf-int:before {
+    content: "\eae3";
+  }
+  .cf-inv:before {
+    content: "\eae4";
+  }
+  .cf-inxt:before {
+    content: "\eae5";
+  }
+  .cf-ioc:before {
+    content: "\eae6";
+  }
+  .cf-ion:before {
+    content: "\eae7";
+  }
+  .cf-iop:before {
+    content: "\eae8";
+  }
+  .cf-iost:before {
+    content: "\eae9";
+  }
+  .cf-iota:before {
+    content: "\eaea";
+  }
+  .cf-iotx:before {
+    content: "\eaeb";
+  }
+  .cf-ipl:before {
+    content: "\eaf6";
+  }
+  .cf-iqt:before {
+    content: "\eaf7";
+  }
+  .cf-isl:before {
+    content: "\eaf8";
+  }
+  .cf-itc:before {
+    content: "\eaf9";
+  }
+  .cf-itns:before {
+    content: "\eafa";
+  }
+  .cf-itt:before {
+    content: "\eafb";
+  }
+  .cf-ivy:before {
+    content: "\eafc";
+  }
+  .cf-ixc:before {
+    content: "\eafd";
+  }
+  .cf-ixt:before {
+    content: "\eafe";
+  }
+  .cf-j8t:before {
+    content: "\eaff";
+  }
+  .cf-jc:before {
+    content: "\eb00";
+  }
+  .cf-jet:before {
+    content: "\eb01";
+  }
+  .cf-jew:before {
+    content: "\eb02";
+  }
+  .cf-jnt:before {
+    content: "\eb03";
+  }
+  .cf-karma:before {
+    content: "\eb04";
+  }
+  .cf-kava:before {
+    content: "\eb05";
+  }
+  .cf-kb3:before {
+    content: "\eb06";
+  }
+  .cf-kbr:before {
+    content: "\eb07";
+  }
+  .cf-kcs:before {
+    content: "\eb08";
+  }
+  .cf-key:before {
+    content: "\eb09";
+  }
+  .cf-key2:before {
+    content: "\eb0a";
+  }
+  .cf-kick:before {
+    content: "\eb0b";
+  }
+  .cf-kin:before {
+    content: "\eb0c";
+  }
+  .cf-kln:before {
+    content: "\eb0d";
+  }
+  .cf-kmd:before {
+    content: "\eb0e";
+  }
+  .cf-knc:before {
+    content: "\eb0f";
+  }
+  .cf-kobo:before {
+    content: "\eb10";
+  }
+  .cf-kore:before {
+    content: "\eb11";
+  }
+  .cf-krb:before {
+    content: "\eb12";
+  }
+  .cf-krm:before {
+    content: "\eb13";
+  }
+  .cf-krone:before {
+    content: "\eb14";
+  }
+  .cf-kurt:before {
+    content: "\eb15";
+  }
+  .cf-la:before {
+    content: "\eb16";
+  }
+  .cf-lala:before {
+    content: "\eb17";
+  }
+  .cf-latx:before {
+    content: "\eb18";
+  }
+  .cf-lba:before {
+    content: "\eb19";
+  }
+  .cf-lbc:before {
+    content: "\eb1a";
+  }
+  .cf-lbtc:before {
+    content: "\eb1b";
+  }
+  .cf-lcc:before {
+    content: "\eb1c";
+  }
+  .cf-ldc:before {
+    content: "\eb1d";
+  }
+  .cf-lend:before {
+    content: "\eb1e";
+  }
+  .cf-leo:before {
+    content: "\eb1f";
+  }
+  .cf-let:before {
+    content: "\eb20";
+  }
+  .cf-lev:before {
+    content: "\eb21";
+  }
+  .cf-lgd:before {
+    content: "\eb22";
+  }
+  .cf-lgo:before {
+    content: "\eb23";
+  }
+  .cf-linda:before {
+    content: "\eb24";
+  }
+  .cf-link:before {
+    content: "\eb25";
+  }
+  .cf-linx:before {
+    content: "\eb26";
+  }
+  .cf-live:before {
+    content: "\eb27";
+  }
+  .cf-lkk:before {
+    content: "\eb28";
+  }
+  .cf-lmc:before {
+    content: "\eb29";
+  }
+  .cf-lnc:before {
+    content: "\eb2a";
+  }
+  .cf-lnd:before {
+    content: "\eb2b";
+  }
+  .cf-loc:before {
+    content: "\eb2c";
+  }
+  .cf-loci:before {
+    content: "\eb2d";
+  }
+  .cf-log:before {
+    content: "\eb2e";
+  }
+  .cf-loki:before {
+    content: "\eb2f";
+  }
+  .cf-loom:before {
+    content: "\eb30";
+  }
+  .cf-lrc:before {
+    content: "\eb31";
+  }
+  .cf-lsk:before {
+    content: "\eb32";
+  }
+  .cf-ltc:before {
+    content: "\eb33";
+  }
+  .cf-lun:before {
+    content: "\eb34";
+  }
+  .cf-luna:before {
+    content: "\eb35";
+  }
+  .cf-lux:before {
+    content: "\eb3b";
+  }
+  .cf-lwf:before {
+    content: "\eb3c";
+  }
+  .cf-lyl:before {
+    content: "\eb3d";
+  }
+  .cf-lym:before {
+    content: "\eb3e";
+  }
+  .cf-mag:before {
+    content: "\eb3f";
+  }
+  .cf-maid:before {
+    content: "\eb40";
+  }
+  .cf-man:before {
+    content: "\eb43";
+  }
+  .cf-mana:before {
+    content: "\eb44";
+  }
+  .cf-matic:before {
+    content: "\eb45";
+  }
+  .cf-max:before {
+    content: "\eb4a";
+  }
+  .cf-mbrs:before {
+    content: "\eb4b";
+  }
+  .cf-mcap:before {
+    content: "\eb4c";
+  }
+  .cf-mco:before {
+    content: "\eb4d";
+  }
+  .cf-mda:before {
+    content: "\eb4e";
+  }
+  .cf-mdc:before {
+    content: "\eb4f";
+  }
+  .cf-mds:before {
+    content: "\eb50";
+  }
+  .cf-mdt:before {
+    content: "\eb51";
+  }
+  .cf-mec:before {
+    content: "\eb52";
+  }
+  .cf-med:before {
+    content: "\eb53";
+  }
+  .cf-medic:before {
+    content: "\eb54";
+  }
+  .cf-meet:before {
+    content: "\eb55";
+  }
+  .cf-mer:before {
+    content: "\eb56";
+  }
+  .cf-mfg:before {
+    content: "\eb57";
+  }
+  .cf-mgo:before {
+    content: "\eb58";
+  }
+  .cf-minex:before {
+    content: "\eb59";
+  }
+  .cf-mint:before {
+    content: "\eb5a";
+  }
+  .cf-mith:before {
+    content: "\eb5b";
+  }
+  .cf-mitx:before {
+    content: "\eb5c";
+  }
+  .cf-mkr:before {
+    content: "\eb5d";
+  }
+  .cf-mln:before {
+    content: "\eb5e";
+  }
+  .cf-mne:before {
+    content: "\eb5f";
+  }
+  .cf-mntp:before {
+    content: "\eb60";
+  }
+  .cf-mnx:before {
+    content: "\eb61";
+  }
+  .cf-mnx2:before {
+    content: "\eb62";
+  }
+  .cf-moac:before {
+    content: "\eb63";
+  }
+  .cf-mobi:before {
+    content: "\eb64";
+  }
+  .cf-mod:before {
+    content: "\eb65";
+  }
+  .cf-mof:before {
+    content: "\eb66";
+  }
+  .cf-moin:before {
+    content: "\eb67";
+  }
+  .cf-mojo:before {
+    content: "\eb68";
+  }
+  .cf-mona:before {
+    content: "\eb69";
+  }
+  .cf-moon:before {
+    content: "\eb6a";
+  }
+  .cf-morph:before {
+    content: "\eb6b";
+  }
+  .cf-mot:before {
+    content: "\eb6c";
+  }
+  .cf-mrk:before {
+    content: "\eb6d";
+  }
+  .cf-mrq:before {
+    content: "\eb6e";
+  }
+  .cf-mscn:before {
+    content: "\eb6f";
+  }
+  .cf-msp:before {
+    content: "\eb70";
+  }
+  .cf-msr:before {
+    content: "\eb71";
+  }
+  .cf-mtc:before {
+    content: "\eb72";
+  }
+  .cf-mth:before {
+    content: "\eb73";
+  }
+  .cf-mtl:before {
+    content: "\eb74";
+  }
+  .cf-mtn:before {
+    content: "\eb75";
+  }
+  .cf-mtx:before {
+    content: "\eb76";
+  }
+  .cf-mue:before {
+    content: "\eb77";
+  }
+  .cf-muse:before {
+    content: "\eb78";
+  }
+  .cf-music:before {
+    content: "\eb79";
+  }
+  .cf-mvc:before {
+    content: "\eb7a";
+  }
+  .cf-mwat:before {
+    content: "\eb7b";
+  }
+  .cf-myb:before {
+    content: "\eb7c";
+  }
+  .cf-myst:before {
+    content: "\eb7d";
+  }
+  .cf-nanj:before {
+    content: "\eb7e";
+  }
+  .cf-nano:before {
+    content: "\eb7f";
+  }
+  .cf-nanox:before {
+    content: "\eb80";
+  }
+  .cf-nas:before {
+    content: "\eb81";
+  }
+  .cf-nav:before {
+    content: "\eb82";
+  }
+  .cf-navi:before {
+    content: "\eb83";
+  }
+  .cf-nbai:before {
+    content: "\eb84";
+  }
+  .cf-ncash:before {
+    content: "\eb85";
+  }
+  .cf-nct:before {
+    content: "\eb86";
+  }
+  .cf-nebl:before {
+    content: "\eb87";
+  }
+  .cf-neo:before {
+    content: "\eb88";
+  }
+  .cf-neos:before {
+    content: "\eb89";
+  }
+  .cf-net:before {
+    content: "\eb8a";
+  }
+  .cf-neu:before {
+    content: "\eb8b";
+  }
+  .cf-newb:before {
+    content: "\eb8c";
+  }
+  .cf-nex:before {
+    content: "\eb8d";
+  }
+  .cf-nexo:before {
+    content: "\eb8e";
+  }
+  .cf-ngc:before {
+    content: "\eb8f";
+  }
+  .cf-nio:before {
+    content: "\eb90";
+  }
+  .cf-nkn:before {
+    content: "\eb91";
+  }
+  .cf-nlc2:before {
+    content: "\eb92";
+  }
+  .cf-nlg:before {
+    content: "\eb93";
+  }
+  .cf-nlx:before {
+    content: "\eb94";
+  }
+  .cf-nmc:before {
+    content: "\eb95";
+  }
+  .cf-nmr:before {
+    content: "\eb96";
+  }
+  .cf-nms:before {
+    content: "\eb97";
+  }
+  .cf-nobl:before {
+    content: "\eb98";
+  }
+  .cf-nper:before {
+    content: "\eb99";
+  }
+  .cf-npxs:before {
+    content: "\eb9a";
+  }
+  .cf-nrg:before {
+    content: "\eb9b";
+  }
+  .cf-nsr:before {
+    content: "\eb9c";
+  }
+  .cf-ntk:before {
+    content: "\eb9d";
+  }
+  .cf-ntrn:before {
+    content: "\eb9e";
+  }
+  .cf-nuko:before {
+    content: "\eb9f";
+  }
+  .cf-nuls:before {
+    content: "\eba0";
+  }
+  .cf-nvst:before {
+    content: "\eba1";
+  }
+  .cf-nxs:before {
+    content: "\eba2";
+  }
+  .cf-nxt:before {
+    content: "\eba3";
+  }
+  .cf-nyan:before {
+    content: "\eba4";
+  }
+  .cf-oax:before {
+    content: "\eba5";
+  }
+  .cf-obits:before {
+    content: "\eba6";
+  }
+  .cf-oc:before {
+    content: "\eba7";
+  }
+  .cf-occ:before {
+    content: "\eba8";
+  }
+  .cf-ocean:before {
+    content: "\eba9";
+  }
+  .cf-ocn:before {
+    content: "\ebaa";
+  }
+  .cf-oct:before {
+    content: "\ebab";
+  }
+  .cf-ode:before {
+    content: "\ebac";
+  }
+  .cf-odn:before {
+    content: "\ebad";
+  }
+  .cf-ogn:before {
+    content: "\ebae";
+  }
+  .cf-ok:before {
+    content: "\ebaf";
+  }
+  .cf-okb:before {
+    content: "\ebb0";
+  }
+  .cf-omg:before {
+    content: "\ebb8";
+  }
+  .cf-omni:before {
+    content: "\ebb9";
+  }
+  .cf-omx:before {
+    content: "\ebba";
+  }
+  .cf-one:before {
+    content: "\ebbb";
+  }
+  .cf-onion:before {
+    content: "\ebbc";
+  }
+  .cf-ont:before {
+    content: "\ebbd";
+  }
+  .cf-onx:before {
+    content: "\ebbe";
+  }
+  .cf-oot:before {
+    content: "\ebbf";
+  }
+  .cf-opc:before {
+    content: "\ebc0";
+  }
+  .cf-open:before {
+    content: "\ebc1";
+  }
+  .cf-opt:before {
+    content: "\ebc2";
+  }
+  .cf-orbs:before {
+    content: "\ebc3";
+  }
+  .cf-ore:before {
+    content: "\ebe5";
+  }
+  .cf-ori:before {
+    content: "\ebe6";
+  }
+  .cf-orme:before {
+    content: "\ebe7";
+  }
+  .cf-ost:before {
+    content: "\ebe8";
+  }
+  .cf-otn:before {
+    content: "\ebe9";
+  }
+  .cf-otx:before {
+    content: "\ebea";
+  }
+  .cf-oxy:before {
+    content: "\ebeb";
+  }
+  .cf-pac:before {
+    content: "\ebec";
+  }
+  .cf-pai:before {
+    content: "\ebed";
+  }
+  .cf-pak:before {
+    content: "\ebee";
+  }
+  .cf-pal:before {
+    content: "\ebef";
+  }
+  .cf-pareto:before {
+    content: "\ebf0";
+  }
+  .cf-part:before {
+    content: "\ebf1";
+  }
+  .cf-pasc:before {
+    content: "\ebf2";
+  }
+  .cf-pasl:before {
+    content: "\ebf3";
+  }
+  .cf-pat:before {
+    content: "\ebf4";
+  }
+  .cf-pax:before {
+    content: "\ebf5";
+  }
+  .cf-pay:before {
+    content: "\ebfb";
+  }
+  .cf-payx:before {
+    content: "\ebfc";
+  }
+  .cf-pbl:before {
+    content: "\ebfd";
+  }
+  .cf-pbt:before {
+    content: "\ebfe";
+  }
+  .cf-pcl:before {
+    content: "\ebff";
+  }
+  .cf-pcn:before {
+    content: "\ec00";
+  }
+  .cf-pfr:before {
+    content: "\ec01";
+  }
+  .cf-pho:before {
+    content: "\ec02";
+  }
+  .cf-phr:before {
+    content: "\ec03";
+  }
+  .cf-phs:before {
+    content: "\ec04";
+  }
+  .cf-ping:before {
+    content: "\ec05";
+  }
+  .cf-pink:before {
+    content: "\ec06";
+  }
+  .cf-pirl:before {
+    content: "\ec07";
+  }
+  .cf-pivx:before {
+    content: "\ec08";
+  }
+  .cf-pix:before {
+    content: "\ec09";
+  }
+  .cf-pkc:before {
+    content: "\ec0a";
+  }
+  .cf-pkt:before {
+    content: "\ec0b";
+  }
+  .cf-plan:before {
+    content: "\ec0c";
+  }
+  .cf-play:before {
+    content: "\ec0d";
+  }
+  .cf-plbt:before {
+    content: "\ec0e";
+  }
+  .cf-plc:before {
+    content: "\ec0f";
+  }
+  .cf-plr:before {
+    content: "\ec10";
+  }
+  .cf-plu:before {
+    content: "\ec11";
+  }
+  .cf-plx:before {
+    content: "\ec12";
+  }
+  .cf-pmnt:before {
+    content: "\ec13";
+  }
+  .cf-pnt:before {
+    content: "\ec14";
+  }
+  .cf-poa:before {
+    content: "\ec15";
+  }
+  .cf-poe:before {
+    content: "\ec16";
+  }
+  .cf-polis:before {
+    content: "\ec17";
+  }
+  .cf-poll:before {
+    content: "\ec18";
+  }
+  .cf-poly:before {
+    content: "\ec19";
+  }
+  .cf-pos:before {
+    content: "\ec1a";
+  }
+  .cf-post:before {
+    content: "\ec1b";
+  }
+  .cf-posw:before {
+    content: "\ec1c";
+  }
+  .cf-pot:before {
+    content: "\ec1d";
+  }
+  .cf-powr:before {
+    content: "\ec1e";
+  }
+  .cf-ppc:before {
+    content: "\ec2a";
+  }
+  .cf-ppp:before {
+    content: "\ec2b";
+  }
+  .cf-ppt:before {
+    content: "\ec2c";
+  }
+  .cf-ppy:before {
+    content: "\ec2d";
+  }
+  .cf-pra:before {
+    content: "\ec2e";
+  }
+  .cf-pre:before {
+    content: "\ec2f";
+  }
+  .cf-prg:before {
+    content: "\ec30";
+  }
+  .cf-prl:before {
+    content: "\ec31";
+  }
+  .cf-pro:before {
+    content: "\ec32";
+  }
+  .cf-proc:before {
+    content: "\ec33";
+  }
+  .cf-prs:before {
+    content: "\ec34";
+  }
+  .cf-pst:before {
+    content: "\ec35";
+  }
+  .cf-ptc:before {
+    content: "\ec36";
+  }
+  .cf-ptoy:before {
+    content: "\ec37";
+  }
+  .cf-pura:before {
+    content: "\ec38";
+  }
+  .cf-pure:before {
+    content: "\ec39";
+  }
+  .cf-pwr:before {
+    content: "\ec3a";
+  }
+  .cf-pylnt:before {
+    content: "\ec3b";
+  }
+  .cf-pzm:before {
+    content: "\ec3c";
+  }
+  .cf-qash:before {
+    content: "\ec3d";
+  }
+  .cf-qau:before {
+    content: "\ec3e";
+  }
+  .cf-qbic:before {
+    content: "\ec3f";
+  }
+  .cf-qbt:before {
+    content: "\ec40";
+  }
+  .cf-qkc:before {
+    content: "\ec41";
+  }
+  .cf-qlc:before {
+    content: "\ec42";
+  }
+  .cf-qlr:before {
+    content: "\ec43";
+  }
+  .cf-qnt:before {
+    content: "\ec44";
+  }
+  .cf-qora:before {
+    content: "\ec4b";
+  }
+  .cf-qrk:before {
+    content: "\ec4c";
+  }
+  .cf-qsp:before {
+    content: "\ec4d";
+  }
+  .cf-qtum:before {
+    content: "\ec4e";
+  }
+  .cf-qun:before {
+    content: "\ec4f";
+  }
+  .cf-qvt:before {
+    content: "\ec50";
+  }
+  .cf-qwark:before {
+    content: "\ec51";
+  }
+  .cf-r:before {
+    content: "\ec52";
+  }
+  .cf-rads:before {
+    content: "\ec53";
+  }
+  .cf-rain:before {
+    content: "\ec54";
+  }
+  .cf-rbt:before {
+    content: "\ec55";
+  }
+  .cf-rby:before {
+    content: "\ec56";
+  }
+  .cf-rcn:before {
+    content: "\ec57";
+  }
+  .cf-rdd:before {
+    content: "\ec58";
+  }
+  .cf-rdn:before {
+    content: "\ec59";
+  }
+  .cf-real:before {
+    content: "\ec5a";
+  }
+  .cf-rebl:before {
+    content: "\ec5b";
+  }
+  .cf-red:before {
+    content: "\ec5c";
+  }
+  .cf-ree:before {
+    content: "\ec5d";
+  }
+  .cf-ref:before {
+    content: "\ec5e";
+  }
+  .cf-rem:before {
+    content: "\ec5f";
+  }
+  .cf-ren:before {
+    content: "\ec60";
+  }
+  .cf-rep:before {
+    content: "\ec61";
+  }
+  .cf-repo:before {
+    content: "\ec62";
+  }
+  .cf-req:before {
+    content: "\ec63";
+  }
+  .cf-rex:before {
+    content: "\ec64";
+  }
+  .cf-rfr:before {
+    content: "\ec65";
+  }
+  .cf-rhoc:before {
+    content: "\ec66";
+  }
+  .cf-ric:before {
+    content: "\ec67";
+  }
+  .cf-rif:before {
+    content: "\ec68";
+  }
+  .cf-rise:before {
+    content: "\ec69";
+  }
+  .cf-rkt:before {
+    content: "\ec6a";
+  }
+  .cf-rlc:before {
+    content: "\ec6b";
+  }
+  .cf-rmt:before {
+    content: "\ec6c";
+  }
+  .cf-rnt:before {
+    content: "\ec6d";
+  }
+  .cf-rntb:before {
+    content: "\ec6e";
+  }
+  .cf-rpx:before {
+    content: "\ec6f";
+  }
+  .cf-rsr:before {
+    content: "\ec70";
+  }
+  .cf-ruff:before {
+    content: "\ec71";
+  }
+  .cf-rup:before {
+    content: "\ec72";
+  }
+  .cf-rvn:before {
+    content: "\ec73";
+  }
+  .cf-rvt:before {
+    content: "\ec74";
+  }
+  .cf-safex:before {
+    content: "\ec75";
+  }
+  .cf-saga:before {
+    content: "\ec76";
+  }
+  .cf-sai:before {
+    content: "\ec77";
+  }
+  .cf-sal:before {
+    content: "\ec78";
+  }
+  .cf-salt:before {
+    content: "\ec79";
+  }
+  .cf-san:before {
+    content: "\ec7a";
+  }
+  .cf-sbtc:before {
+    content: "\ec7b";
+  }
+  .cf-scl:before {
+    content: "\ec7c";
+  }
+  .cf-scs:before {
+    content: "\ec7d";
+  }
+  .cf-sct:before {
+    content: "\ec7e";
+  }
+  .cf-sdc:before {
+    content: "\ec7f";
+  }
+  .cf-sdrn:before {
+    content: "\ec80";
+  }
+  .cf-seele:before {
+    content: "\ec81";
+  }
+  .cf-sen:before {
+    content: "\ec82";
+  }
+  .cf-senc:before {
+    content: "\ec83";
+  }
+  .cf-send:before {
+    content: "\ec84";
+  }
+  .cf-sense:before {
+    content: "\ec85";
+  }
+  .cf-sent:before {
+    content: "\ec86";
+  }
+  .cf-seq:before {
+    content: "\ec87";
+  }
+  .cf-seth:before {
+    content: "\ec88";
+  }
+  .cf-sexc:before {
+    content: "\ec89";
+  }
+  .cf-sfc:before {
+    content: "\ec8a";
+  }
+  .cf-sgcc:before {
+    content: "\ec8b";
+  }
+  .cf-sgn:before {
+    content: "\ec8c";
+  }
+  .cf-sgr:before {
+    content: "\ec8d";
+  }
+  .cf-shift:before {
+    content: "\ec8e";
+  }
+  .cf-ship:before {
+    content: "\ec8f";
+  }
+  .cf-shl:before {
+    content: "\ec90";
+  }
+  .cf-shorty:before {
+    content: "\ec91";
+  }
+  .cf-shp:before {
+    content: "\ec92";
+  }
+  .cf-sia:before {
+    content: "\ec93";
+  }
+  .cf-sib:before {
+    content: "\ec94";
+  }
+  .cf-sigt:before {
+    content: "\ec95";
+  }
+  .cf-skb:before {
+    content: "\ec96";
+  }
+  .cf-skin:before {
+    content: "\ec97";
+  }
+  .cf-skm:before {
+    content: "\ec98";
+  }
+  .cf-sky:before {
+    content: "\ec99";
+  }
+  .cf-slg:before {
+    content: "\ec9a";
+  }
+  .cf-slr:before {
+    content: "\ec9b";
+  }
+  .cf-sls:before {
+    content: "\ec9c";
+  }
+  .cf-slt:before {
+    content: "\ec9d";
+  }
+  .cf-smart:before {
+    content: "\ec9e";
+  }
+  .cf-smc:before {
+    content: "\ec9f";
+  }
+  .cf-sms:before {
+    content: "\eca0";
+  }
+  .cf-smt:before {
+    content: "\eca1";
+  }
+  .cf-snc:before {
+    content: "\eca2";
+  }
+  .cf-sngls:before {
+    content: "\eca3";
+  }
+  .cf-snm:before {
+    content: "\eca4";
+  }
+  .cf-snt:before {
+    content: "\eca5";
+  }
+  .cf-sntr:before {
+    content: "\eca6";
+  }
+  .cf-snx:before {
+    content: "\eca7";
+  }
+  .cf-soar:before {
+    content: "\ecaa";
+  }
+  .cf-soc:before {
+    content: "\ecab";
+  }
+  .cf-soil:before {
+    content: "\ecac";
+  }
+  .cf-soul:before {
+    content: "\ecad";
+  }
+  .cf-spank:before {
+    content: "\ecae";
+  }
+  .cf-spd:before {
+    content: "\ecaf";
+  }
+  .cf-spd2:before {
+    content: "\ecb0";
+  }
+  .cf-spf:before {
+    content: "\ecb1";
+  }
+  .cf-sphtx:before {
+    content: "\ecb2";
+  }
+  .cf-spk:before {
+    content: "\ecb3";
+  }
+  .cf-spr:before {
+    content: "\ecb4";
+  }
+  .cf-sprts:before {
+    content: "\ecb5";
+  }
+  .cf-src:before {
+    content: "\ecb6";
+  }
+  .cf-srcoin:before {
+    content: "\ecb7";
+  }
+  .cf-srn:before {
+    content: "\ecb8";
+  }
+  .cf-ss:before {
+    content: "\ecb9";
+  }
+  .cf-ssp:before {
+    content: "\ecba";
+  }
+  .cf-sss:before {
+    content: "\ecbb";
+  }
+  .cf-sta:before {
+    content: "\ecbc";
+  }
+  .cf-stac:before {
+    content: "\ecbd";
+  }
+  .cf-stak:before {
+    content: "\ecbe";
+  }
+  .cf-start:before {
+    content: "\ecbf";
+  }
+  .cf-stc:before {
+    content: "\ecc0";
+  }
+  .cf-steem:before {
+    content: "\ecc1";
+  }
+  .cf-stn2:before {
+    content: "\ecc2";
+  }
+  .cf-storj:before {
+    content: "\ecc3";
+  }
+  .cf-storm:before {
+    content: "\ecc4";
+  }
+  .cf-stq:before {
+    content: "\ecc5";
+  }
+  .cf-strat:before {
+    content: "\ecc6";
+  }
+  .cf-strc:before {
+    content: "\ecc7";
+  }
+  .cf-stv:before {
+    content: "\ecc8";
+  }
+  .cf-stx:before {
+    content: "\ecc9";
+  }
+  .cf-sub:before {
+    content: "\ecca";
+  }
+  .cf-sumo:before {
+    content: "\eccb";
+  }
+  .cf-super:before {
+    content: "\eccc";
+  }
+  .cf-sur:before {
+    content: "\eccd";
+  }
+  .cf-svh:before {
+    content: "\ecce";
+  }
+  .cf-swftc:before {
+    content: "\eccf";
+  }
+  .cf-swift:before {
+    content: "\ecd0";
+  }
+  .cf-swm:before {
+    content: "\ecd1";
+  }
+  .cf-swt:before {
+    content: "\ecd2";
+  }
+  .cf-swtc:before {
+    content: "\ecd3";
+  }
+  .cf-sxdt:before {
+    content: "\ecd4";
+  }
+  .cf-sys:before {
+    content: "\ecd5";
+  }
+  .cf-taas:before {
+    content: "\ecd6";
+  }
+  .cf-tau:before {
+    content: "\ecd7";
+  }
+  .cf-tbar:before {
+    content: "\ecd8";
+  }
+  .cf-tbx:before {
+    content: "\ecd9";
+  }
+  .cf-tct:before {
+    content: "\ecda";
+  }
+  .cf-tdx:before {
+    content: "\ecdb";
+  }
+  .cf-tel:before {
+    content: "\ecdc";
+  }
+  .cf-ten:before {
+    content: "\ecdd";
+  }
+  .cf-tes:before {
+    content: "\ecde";
+  }
+  .cf-tfd:before {
+    content: "\ecdf";
+  }
+  .cf-tfuel:before {
+    content: "\ece0";
+  }
+  .cf-thc:before {
+    content: "\ece1";
+  }
+  .cf-theta:before {
+    content: "\ece2";
+  }
+  .cf-tie:before {
+    content: "\ece3";
+  }
+  .cf-tig:before {
+    content: "\ece4";
+  }
+  .cf-time:before {
+    content: "\ece5";
+  }
+  .cf-tio:before {
+    content: "\ece6";
+  }
+  .cf-tips:before {
+    content: "\ece7";
+  }
+  .cf-tit:before {
+    content: "\ece8";
+  }
+  .cf-tix:before {
+    content: "\ece9";
+  }
+  .cf-tka:before {
+    content: "\ecea";
+  }
+  .cf-tkn:before {
+    content: "\eceb";
+  }
+  .cf-tkr:before {
+    content: "\ecec";
+  }
+  .cf-tks:before {
+    content: "\eced";
+  }
+  .cf-tky:before {
+    content: "\ecee";
+  }
+  .cf-tmt:before {
+    content: "\ecef";
+  }
+  .cf-tnb:before {
+    content: "\ecf0";
+  }
+  .cf-tnc:before {
+    content: "\ecf1";
+  }
+  .cf-tns:before {
+    content: "\ecf2";
+  }
+  .cf-tnt:before {
+    content: "\ecf3";
+  }
+  .cf-tok:before {
+    content: "\ecf4";
+  }
+  .cf-tokc:before {
+    content: "\ecf5";
+  }
+  .cf-tomo:before {
+    content: "\ecf6";
+  }
+  .cf-tpay:before {
+    content: "\ecf7";
+  }
+  .cf-trac:before {
+    content: "\ecf8";
+  }
+  .cf-trak:before {
+    content: "\ecf9";
+  }
+  .cf-trc:before {
+    content: "\ecfa";
+  }
+  .cf-trct:before {
+    content: "\ecfb";
+  }
+  .cf-trig:before {
+    content: "\ecfc";
+  }
+  .cf-trst:before {
+    content: "\ecfd";
+  }
+  .cf-true:before {
+    content: "\ecfe";
+  }
+  .cf-trump:before {
+    content: "\ecff";
+  }
+  .cf-trust:before {
+    content: "\ed00";
+  }
+  .cf-trx:before {
+    content: "\ed01";
+  }
+  .cf-tsl:before {
+    content: "\ed02";
+  }
+  .cf-ttt:before {
+    content: "\ed03";
+  }
+  .cf-turbo:before {
+    content: "\ed04";
+  }
+  .cf-tusd:before {
+    content: "\ed05";
+  }
+  .cf-tx:before {
+    content: "\ed06";
+  }
+  .cf-tzc:before {
+    content: "\ed07";
+  }
+  .cf-ubq:before {
+    content: "\ed08";
+  }
+  .cf-ubt:before {
+    content: "\ed09";
+  }
+  .cf-ubtc:before {
+    content: "\ed0a";
+  }
+  .cf-ucash:before {
+    content: "\ed0b";
+  }
+  .cf-ufo:before {
+    content: "\ed0c";
+  }
+  .cf-ufr:before {
+    content: "\ed0d";
+  }
+  .cf-ugc:before {
+    content: "\ed0e";
+  }
+  .cf-uip:before {
+    content: "\ed0f";
+  }
+  .cf-uis:before {
+    content: "\ed10";
+  }
+  .cf-ukg:before {
+    content: "\ed11";
+  }
+  .cf-unb:before {
+    content: "\ed12";
+  }
+  .cf-uni:before {
+    content: "\ed13";
+  }
+  .cf-unify:before {
+    content: "\ed14";
+  }
+  .cf-unit:before {
+    content: "\ed15";
+  }
+  .cf-unity:before {
+    content: "\ed16";
+  }
+  .cf-uno:before {
+    content: "\ed17";
+  }
+  .cf-up:before {
+    content: "\ed18";
+  }
+  .cf-uqc:before {
+    content: "\ed19";
+  }
+  .cf-usdc:before {
+    content: "\ed1a";
+  }
+  .cf-usdt:before {
+    content: "\ed1b";
+  }
+  .cf-usnbt:before {
+    content: "\ed1c";
+  }
+  .cf-utc:before {
+    content: "\ed1d";
+  }
+  .cf-utk:before {
+    content: "\ed1e";
+  }
+  .cf-utnp:before {
+    content: "\ed1f";
+  }
+  .cf-uuu:before {
+    content: "\ed20";
+  }
+  .cf-v:before {
+    content: "\ed21";
+  }
+  .cf-vee:before {
+    content: "\ed22";
+  }
+  .cf-veri:before {
+    content: "\ed23";
+  }
+  .cf-vet:before {
+    content: "\ed24";
+  }
+  .cf-via:before {
+    content: "\ed25";
+  }
+  .cf-vib:before {
+    content: "\ed26";
+  }
+  .cf-vibe:before {
+    content: "\ed27";
+  }
+  .cf-vit:before {
+    content: "\ed28";
+  }
+  .cf-viu:before {
+    content: "\ed29";
+  }
+  .cf-vivo:before {
+    content: "\ed2a";
+  }
+  .cf-vme:before {
+    content: "\ed2b";
+  }
+  .cf-voise:before {
+    content: "\ed2c";
+  }
+  .cf-vrc:before {
+    content: "\ed2d";
+  }
+  .cf-vrm:before {
+    content: "\ed2e";
+  }
+  .cf-vrs:before {
+    content: "\ed2f";
+  }
+  .cf-vsl:before {
+    content: "\ed30";
+  }
+  .cf-vsx:before {
+    content: "\ed31";
+  }
+  .cf-vsys:before {
+    content: "\ed32";
+  }
+  .cf-vtc:before {
+    content: "\ed33";
+  }
+  .cf-vtr:before {
+    content: "\ed34";
+  }
+  .cf-vzt:before {
+    content: "\ed35";
+  }
+  .cf-wabi:before {
+    content: "\ed36";
+  }
+  .cf-wan:before {
+    content: "\ed37";
+  }
+  .cf-wand:before {
+    content: "\ed38";
+  }
+  .cf-warp:before {
+    content: "\ed39";
+  }
+  .cf-waves:before {
+    content: "\ed3a";
+  }
+  .cf-wax:before {
+    content: "\ed3b";
+  }
+  .cf-wct:before {
+    content: "\ed3c";
+  }
+  .cf-wdc:before {
+    content: "\ed3d";
+  }
+  .cf-wgr:before {
+    content: "\ed3e";
+  }
+  .cf-whl:before {
+    content: "\ed3f";
+  }
+  .cf-wild:before {
+    content: "\ed40";
+  }
+  .cf-wings:before {
+    content: "\ed41";
+  }
+  .cf-wish:before {
+    content: "\ed42";
+  }
+  .cf-wpr:before {
+    content: "\ed43";
+  }
+  .cf-wrc:before {
+    content: "\ed44";
+  }
+  .cf-wtc:before {
+    content: "\ed45";
+  }
+  .cf-wxt:before {
+    content: "\ed46";
+  }
+  .cf-xas:before {
+    content: "\ed47";
+  }
+  .cf-xaur:before {
+    content: "\ed48";
+  }
+  .cf-xbl:before {
+    content: "\ed49";
+  }
+  .cf-xbp:before {
+    content: "\ed4a";
+  }
+  .cf-xbts:before {
+    content: "\ed4b";
+  }
+  .cf-xby:before {
+    content: "\ed4c";
+  }
+  .cf-xcp:before {
+    content: "\ed4d";
+  }
+  .cf-xcpo:before {
+    content: "\ed4e";
+  }
+  .cf-xct:before {
+    content: "\ed4f";
+  }
+  .cf-xcxt:before {
+    content: "\ed50";
+  }
+  .cf-xdce:before {
+    content: "\ed51";
+  }
+  .cf-xdn:before {
+    content: "\ed52";
+  }
+  .cf-xel:before {
+    content: "\ed53";
+  }
+  .cf-xem:before {
+    content: "\ed54";
+  }
+  .cf-xes:before {
+    content: "\ed55";
+  }
+  .cf-xgox:before {
+    content: "\ed56";
+  }
+  .cf-xhv:before {
+    content: "\ed57";
+  }
+  .cf-xin:before {
+    content: "\ed58";
+  }
+  .cf-xios:before {
+    content: "\ed59";
+  }
+  .cf-xjo:before {
+    content: "\ed5a";
+  }
+  .cf-xlm:before {
+    content: "\ed5b";
+  }
+  .cf-xlr:before {
+    content: "\ed5c";
+  }
+  .cf-xmcc:before {
+    content: "\ed5d";
+  }
+  .cf-xmg:before {
+    content: "\ed5e";
+  }
+  .cf-xmo:before {
+    content: "\ed5f";
+  }
+  .cf-xmr:before {
+    content: "\ed60";
+  }
+  .cf-xmx:before {
+    content: "\ed61";
+  }
+  .cf-xmy:before {
+    content: "\ed62";
+  }
+  .cf-xnk:before {
+    content: "\ed63";
+  }
+  .cf-xnn:before {
+    content: "\ed64";
+  }
+  .cf-xns:before {
+    content: "\ed65";
+  }
+  .cf-xp:before {
+    content: "\ed66";
+  }
+  .cf-xpa:before {
+    content: "\ed67";
+  }
+  .cf-xpd:before {
+    content: "\ed68";
+  }
+  .cf-xpm:before {
+    content: "\ed69";
+  }
+  .cf-xptx:before {
+    content: "\ed6a";
+  }
+  .cf-xrh:before {
+    content: "\ed6b";
+  }
+  .cf-xrl:before {
+    content: "\ed6c";
+  }
+  .cf-xrp:before {
+    content: "\ed6d";
+  }
+  .cf-xsh:before {
+    content: "\ed6e";
+  }
+  .cf-xsn:before {
+    content: "\ed6f";
+  }
+  .cf-xspec:before {
+    content: "\ed70";
+  }
+  .cf-xsr:before {
+    content: "\ed71";
+  }
+  .cf-xst:before {
+    content: "\ed72";
+  }
+  .cf-xstc:before {
+    content: "\ed73";
+  }
+  .cf-xtl:before {
+    content: "\ed74";
+  }
+  .cf-xto:before {
+    content: "\ed75";
+  }
+  .cf-xtz:before {
+    content: "\ed76";
+  }
+  .cf-xvg:before {
+    content: "\ed77";
+  }
+  .cf-xyo:before {
+    content: "\ed78";
+  }
+  .cf-xzc:before {
+    content: "\ed79";
+  }
+  .cf-yee:before {
+    content: "\ed7a";
+  }
+  .cf-yoc:before {
+    content: "\ed7b";
+  }
+  .cf-yoyow:before {
+    content: "\ed7c";
+  }
+  .cf-ytn:before {
+    content: "\ed7d";
+  }
+  .cf-zap:before {
+    content: "\ed7e";
+  }
+  .cf-zb:before {
+    content: "\ed7f";
+  }
+  .cf-zcl:before {
+    content: "\ed80";
+  }
+  .cf-zco:before {
+    content: "\ed81";
+  }
+  .cf-zec:before {
+    content: "\ed82";
+  }
+  .cf-zen:before {
+    content: "\ed83";
+  }
+  .cf-zeni:before {
+    content: "\ed84";
+  }
+  .cf-zeph:before {
+    content: "\ed85";
+  }
+  .cf-zer:before {
+    content: "\ed86";
+  }
+  .cf-zet:before {
+    content: "\ed87";
+  }
+  .cf-zil:before {
+    content: "\ed88";
+  }
+  .cf-zipt:before {
+    content: "\ed89";
+  }
+  .cf-zla:before {
+    content: "\ed8a";
+  }
+  .cf-zny:before {
+    content: "\ed8b";
+  }
+  .cf-zoi:before {
+    content: "\ed8c";
+  }
+  .cf-zpt:before {
+    content: "\ed8d";
+  }
+  .cf-zrx:before {
+    content: "\ed8e";
+  }
+  .cf-zsc:before {
+    content: "\ed8f";
+  }
+  .cf-zzc:before {
+    content: "\ed90";
+  }
+  
