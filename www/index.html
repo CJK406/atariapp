@@ -4,6 +4,8 @@
 	<link rel="stylesheet" type="text/css" href="css/login_util.css">
 	<link rel="stylesheet" type="text/css" href="css/login.css">
 	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<script src="js/login.js"></script>
@@ -15,17 +17,24 @@
 					<span class="login100-form-avatar">
 						<img src="img/logo.png" alt="AVATAR">
 					</span>
-					<div style="padding:30px; background-color:white; border-radius:40px" class="m-t-30">
+					<div style="padding:30px; background-color:white; border-radius:20px" class="m-t-30">
 						<span class="login100-form-title p-b-10">
-							Log In
+							Login
 						</span>
-						<div class="wrap-input100 validate-input m-t-15 m-b-25" data-validate = "Enter username">
-							<input class="input100 username" type="text" style="font-family: Consolas !important;" name="username">
-							<span class="focus-input100" style="font-family: Consolas;" data-placeholder="Email"></span>
+						<div style="display: flex;">
+							<i class="fa fa-envelope" style="align-self:center; font-size:20px;margin-right: 10px; margin-bottom: 15px;"></i>
+							<div class="wrap-input100 validate-input m-t-15 m-b-25" style="display: flex;" data-validate = "Enter username">
+								
+								<input class="input100 username" type="text" style="font-family: Consolas !important;" name="username">
+								<span class="focus-input100" style="font-family: Consolas;" data-placeholder="Email"></span>
+							</div>
 						</div>
-						<div class="wrap-input100 validate-input m-b-20" data-validate="Enter password">
-							<input class="input100 password" type="password" style="font-family: Consolas;" name="password">
-							<span class="focus-input100" style="font-family: Consolas;" data-placeholder="Password"></span>
+						<div style="display: flex;">
+							<i class="fa fa-lock" style="align-self: center;font-size:20px;margin-right: 10px; margin-bottom: 15px;"></i>
+							<div class="wrap-input100 validate-input m-b-20" data-validate="Enter password">
+								<input class="input100 password" type="password" style="font-family: Consolas;" name="password">
+								<span class="focus-input100" style="font-family: Consolas;" data-placeholder="Password"></span>
+							</div>
 						</div>
 						<a href="forget.html" class="txt1 m-b-20" style="text-decoration: none;">
 							Forgot password?
@@ -36,7 +45,7 @@
 							</button>
 						</div>
 						<li style="text-align: center;" class="m-t-20">
-							<span class="txt2">
+							<span class="fs-13">
 								Don’t have an account?
 							</span>
 							<a href="#" class="txt1">
