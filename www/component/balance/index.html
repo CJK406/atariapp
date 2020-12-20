@@ -6,140 +6,260 @@
     <link rel="stylesheet" href="../../css/cryptfont.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../css/morris.css">
-    <script src="../../js/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../css/login_util.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
     <script src="../../js/bootstrap.js"></script>
     <script src="../../js/jquery.js"></script>
-    <script src="../../js/raphael.js"></script>
-    <script src="../../js/morris.js"></script>
     </head>
-    <body style="background-color: black;">
+    <body style="background-color: rgb(33,33,33);">
         <div class="top_head">
             <img src="../../img/logo.png">
         </div>
         <div class="balance_div">
-            <p class="fs-19" style="font-weight: 700;">Total Balance: </p>
-            <p class="fs-18">$47.97: </p>
+            <p class="fs-17" style="font-weight: 500;">Total Balance </p>
+            <p class="fs-16 total_balance" style="font-weight: 500;">$0.00 </p>
             <div style="display: flex; margin-top:20px">
                 <div class="w_55">
                     <div class="crypt_balance_text">
                         <i class="cf cf-btc" style="color:#f7931a"></i> 
-                        <span class="crypt_amount_text">0.000934</span>
+                        <span class="crypt_amount_text btc_balance">0.00</span>
                         <span>BTC</span>
                     </div>
                     <div class="crypt_balance_text">
                         <img src="../../img/atri.png" style="width: 20px; margin-right:20px"/>
-                        <span class="crypt_amount_text">233 </span>
+                        <span class="crypt_amount_text atri_balance">0.00 </span>
                         <span>ATRI</span>
 
                     </div>  <div class="crypt_balance_text">
                         <i class="cf cf-eth" style="color:aqua"></i> 
-                        <span class="crypt_amount_text">0.0001321 </span>
+                        <span class="crypt_amount_text eth_balance">0.00 </span>
                         <span>ETH</span>
                     </div>  
                     <div class="crypt_balance_text">
-                        <i class="cf cf-eth" style="color:#345c9c"></i> 
-                        <span class="crypt_amount_text">1.232 </span>
+                        <i class="cf cf-ltc" style="color:#345c9c"></i> 
+                        <span class="crypt_amount_text ltc_balance">0.00</span>
                         <span>LTC</span>
                     </div>
                     <div class="crypt_balance_text">
                         <i class="cf cf-btc" style="color:green"></i> 
-                        <span class="crypt_amount_text">0.09092 </span>
+                        <span class="crypt_amount_text bch_balance">0.00</span>
                         <span>BCH</span>
                     </div>
                 </div>
                 <div style="width: 45%;">
-                    <div id="pie_chart" style="height: 230px;"></div>
+                    <div id="chartdiv"></div>
                 </div>
             </div>
         </div>
         <div class="history_div">
-           <h4 style="color:white">History</h4>
-           <div style="overflow-y: auto; height: 32%;">
-                <div style="display:flex; color:white">
-                    <div style="width: 10%; align-items: center; align-self:center">
-                        <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                    </div>
-                    <div style="width: 45%;">
-                        <p style="font-weight:700;font-size:16px">Received</p>
-                        <p style="font-size:13px; margin-top:0px">Jul 6, 2020 6:51 PM</p></div>
-                    <div style="width: 45%; text-align: right;">
-                        <p style="font-weight:700; font-size:18px; color:yellowgreen">0.003432 BTC</p>
-                        <p style="font-size:13px; margin-top:0px; font-weight: 800;">$0.05</p>
-                    </div>
-
-                </div>
-                <div style="display:flex; color:white">
-                    <div style="width: 10%; align-items: center; align-self:center">
-                        <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                    </div>
-                    <div style="width: 45%;">
-                        <p style="font-weight:700;font-size:16px">Received</p>
-                        <p style="font-size:13px; margin-top:0px">Jul 6, 2020 6:51 PM</p></div>
-                    <div style="width: 45%; text-align: right;">
-                        <p style="font-weight:700; font-size:18px; color:yellowgreen">0.003432 BTC</p>
-                        <p style="font-size:13px; margin-top:0px; font-weight: 800;">$0.05</p>
-                    </div>
-                </div>
-                <div style="display:flex; color:white">
-                    <div style="width: 10%; align-items: center; align-self:center">
-                        <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                    </div>
-                    <div style="width: 45%;">
-                        <p style="font-weight:700;font-size:16px">Received</p>
-                        <p style="font-size:13px; margin-top:0px">Jul 6, 2020 6:51 PM</p></div>
-                    <div style="width: 45%; text-align: right;">
-                        <p style="font-weight:700; font-size:18px; color:yellowgreen">0.003432 BTC</p>
-                        <p style="font-size:13px; margin-top:0px; font-weight: 800;">$0.05</p>
-                    </div>
-
-                </div>
-                <div style="display:flex; color:white">
-                    <div style="width: 10%; align-items: center; align-self:center">
-                        <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                    </div>
-                    <div style="width: 45%;">
-                        <p style="font-weight:700;font-size:16px">Received</p>
-                        <p style="font-size:13px; margin-top:0px">Jul 6, 2020 6:51 PM</p></div>
-                    <div style="width: 45%; text-align: right;">
-                        <p style="font-weight:700; font-size:18px; color:yellowgreen">0.003432 BTC</p>
-                        <p style="font-size:13px; margin-top:0px; font-weight: 800;">$0.05</p>
-                    </div>
-                </div>
-                <div style="display:flex; color:white">
-                    <div style="width: 10%; align-items: center; align-self:center">
-                        <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                    </div>
-                    <div style="width: 45%;">
-                        <p style="font-weight:700;font-size:16px">Received</p>
-                        <p style="font-size:13px; margin-top:0px">Jul 6, 2020 6:51 PM</p></div>
-                    <div style="width: 45%; text-align: right;">
-                        <p style="font-weight:700; font-size:18px; color:yellowgreen">0.003432 BTC</p>
-                        <p style="font-size:13px; margin-top:0px; font-weight: 800;">$0.05</p>
-                    </div>
-
-                </div>
- 
+           <h4 class="fs-16 m-b-20" style="color:white">History</h4>
+           <div id="history_div" style="overflow-y: auto; height: 32%;">
+               
            </div> 
+        </div>
+        <div class="footer_navigation">
+            <div class="footer_tab active">
+                <span></span>
+                <a><i class="fas fa-align-justify"></i></a>
+            </div>
+            <div class="footer_tab">
+                <a href="../trade/index.html">
+                    <i class="fa fa-line-chart" style="font:normal normal normal 14px/1 FontAwesome"></i>
+                </a>
+            </div><div class="footer_tab ">
+                <a><i class="fas fa-qrcode"></i></a>
+            </div><div class="footer_tab">
+                <a href="../exchange/index.html"><i class="fa fa-exchange" style="font:normal normal normal 14px/1 FontAwesome"></i></a>
+            </div><div class="footer_tab">
+                <a href="../setting/index.html"><i class="fas fa-cog"></i></a>
+            </div>
         </div>
     </body>
 </html>
 <script>
-    Morris.Donut({
-    element: 'pie_chart',
-    resize: true,
-    colors: [
-        '#f10101',
-        '#f1a501',
-        '#41dddd',
-        '#226ddd',
-        '#269651',
-    ],
-    data: [
-        {label:"ATRI", value:123},
-        {label:"BTC", value:34},
-        {label:"Dato Ej.3", value:65},
-        {label:"Dato Ej.4", value:5},
-        {label:"Dato Ej.5", value:12}
-    ]
-    });
-</script>
+	var login_data = JSON.parse(localStorage.getItem("login_data"));
+    var token = localStorage.getItem('token');
+    var btc_v = login_data['data']['balance']['btc'];
+    var atri_v = login_data['data']['balance']['atri'];
+    var eth_v = login_data['data']['balance']['eth'];
+    var ltc_v = login_data['data']['balance']['ltc'];
+    var bch_v = login_data['data']['balance']['bch'];
+    var sum_v = login_data['data']['balance']['sum'];
+
+    $(".btc_balance").html(btc_v.toFixed(7));
+    $(".atri_balance").html(atri_v.toFixed(2));
+    $(".eth_balance").html(eth_v.toFixed(7));
+    $(".ltc_balance").html(ltc_v.toFixed(7));
+    $(".bch_balance").html(bch_v.toFixed(7));
+    $(".total_balance").html('$'+sum_v.toFixed(2));
+
+    get_history();
+    
+
+
+    var btc_u_v = 0;var atri_u_v = 0;var eth_u_v = 0;var ltc_u_v = 0;var bch_u_v = 0;
+    currency_convert("btc",btc_v);
+    currency_convert("atri",atri_v);
+    currency_convert("eth",eth_v);
+    currency_convert("ltc",ltc_v);
+    currency_convert("bch",bch_v);
+    setTimeout(() => {
+        pie_chart_generate();
+    }, 2000);
+    function currency_convert(currency,value){
+        $.ajax
+        ({
+            type: "GET",
+            url: 'https://www.ataritokens.com/myportal/api/currency-convert/'+value+'/'+currency+'/usd',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader ("Authorization", token);
+            },
+            success: function (result){
+                if(currency=="btc")
+                    btc_u_v=result['result'];
+                if(currency=="atri")
+                    atri_u_v=result['result'];
+                if(currency=="eth")
+                    eth_u_v=result['result'];
+                if(currency=="ltc")
+                    ltc_u_v=result['result'];
+                if(currency=="bch")
+                    bch_u_v=result['result'];
+            },
+            error: function(xhr, status, error) {
+                console.log("error",status,xhr,error);
+            }
+        });
+    }
+    function get_history(){
+        $.ajax
+        ({
+            type: "GET",
+            url: 'https://www.ataritokens.com/myportal/api/transactions/all',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader ("Authorization", token);
+            },
+            success: function (value){
+                var result = value['result'];
+                console.log(result);
+                var history_div = "";
+
+                for(var i=0; i<result.length; i++){
+                    history_div+=`<div class="m-b-10" style="display:flex; color:white">
+                        <div style="width: 10%; align-items: center; align-self:center">`;
+                    if(result[i]['type']=="received")
+                    {
+                        history_div+=`<i class="fa fa-arrow-down" aria-hidden="true"></i>
+                            </div>
+                            <div style="width: 45%;">
+                                <p class="fs-15">Received</p>
+                                <p class="fs-11">`+result[i]['created_at']+`</p></div>
+                            <div style="width: 45%; text-align: right;">
+                                
+                                    <p class="fs-15" style="color:rgb(70,155,74)">`+result[i]['amount']+` `+result[i]['currency'].toUpperCase()+`</p>
+                                    <p class="fs-14">$`+result[i]['amount_usd']+`</p>
+                                </div>
+                            </div>`;
+                    }
+                    else{
+                        history_div+=`<i class="fa fa-arrow-up" aria-hidden="true"></i>
+                            </div>
+                            <div style="width: 45%;">
+                                <p class="fs-15">Sent</p>
+                                <p class="fs-11">`+result[i]['created_at']+`</p></div>
+                            <div style="width: 45%; text-align: right;">
+                                
+                                    <p class="fs-15" style='color:rgb(244,67,54)'>`+result[i]['amount']+` `+result[i]['currency'].toUpperCase()+`</p>
+                                    <p class="fs-14">$`+result[i]['amount_usd']+`</p>
+                                </div>
+                            </div>`;
+                    }
+                        
+                }
+                $("#history_div").html(history_div);
+            },
+            error: function(xhr, status, error) {
+                console.log("error",status,xhr,error);
+            }
+        });
+    }
+    function pie_chart_generate(){
+        am4core.ready(function() {
+            am4core.useTheme(am4themes_animated);
+            var data = [{
+            "category": "BTC",
+            "value": btc_u_v.toFixed(2),
+            "color": am4core.color("#f7931a"),
+            
+            }, {
+            "category": "ATRI",
+            "value": atri_u_v.toFixed(2),
+            "color": am4core.color("#ce2424"),
+            
+            }, {
+            "category": "ETH",
+            "value": eth_u_v.toFixed(2),
+            "color": am4core.color("aqua"),
+            }, {
+            "category": "LTC",
+            "value": ltc_u_v.toFixed(2),
+            "color": am4core.color("#345c9c"),
+            }, {
+            "category": "BCH",
+            "value": bch_u_v.toFixed(2),
+            "color": am4core.color("green"),
+            }]
+            
+            /**
+             * Chart container
+             */
+            
+            // Create chart instance
+            var chart = am4core.create("chartdiv", am4core.Container);
+            chart.width = am4core.percent(100);
+            chart.height = am4core.percent(100);
+            chart.layout = "horizontal";
+            
+            var pieChart = chart.createChild(am4charts.PieChart);
+            pieChart.data = data;
+            pieChart.innerRadius = am4core.percent(65);
+            
+            var pieSeries = pieChart.series.push(new am4charts.PieSeries());
+            pieSeries.dataFields.value = "value";
+            pieSeries.dataFields.category = "category";
+            pieSeries.slices.template.propertyFields.fill = "color";
+            pieSeries.labels.template.disabled = true;
+            
+            var label1 = pieChart.seriesContainer.createChild(am4core.Label);
+            label1.text = "";
+            label1.horizontalCenter = "middle";
+            label1.fontSize = 25;
+            label1.fontWeight = 600;
+            label1.dy = -15;
+            
+            pieChart.events.on("ready", function(ev) {
+            pieSeries.slices.getIndex(0).isActive = true;
+            });
+            pieSeries.slices.template.stroke = am4core.color("rgb(0,0,0)");
+            pieSeries.slices.template.strokeWidth = 2;
+            pieSeries.slices.template.strokeOpacity = 1;
+            
+            pieSeries.slices.template.events.on("toggled", function(ev) {
+            if (ev.target.isActive) {
+                pieSeries.slices.each(function(slice) {
+                if (slice != ev.target) {
+                    slice.isActive = false;
+                }
+                });
+                label1.text = pieChart.numberFormatter.format(ev.target.dataItem.values.value.value);
+                label1.fill = ev.target.fill;
+            }
+        });
+        });
+    }
+    </script>
