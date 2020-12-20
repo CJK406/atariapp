@@ -6,9 +6,6 @@
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<script src="js/jquery.js"></script>
-	<script src="js/bootstrap.js"></script>
-	<script src="js/login.js"></script>
 </head>
 <body>
 	<div class="limiter" >
@@ -17,70 +14,111 @@
 					<span class="login100-form-avatar">
 						<img src="img/logo.png" alt="AVATAR">
 					</span>
-					<div style="padding:30px; background-color:white; border-radius:20px" class="m-t-30">
-						<span class="login100-form-title p-b-10">
-							Login
-						</span>
-						<div style="display: flex;">
-							<i class="fa fa-envelope" style="align-self:center; font-size:20px;margin-right: 10px; margin-bottom: 15px;"></i>
-							<div class="wrap-input100 validate-input m-t-15 m-b-25" style="display: flex;" data-validate = "Enter username">
-								
-								<input class="input100 username" type="text" style="font-family: Consolas !important;" name="username">
-								<span class="focus-input100" style="font-family: Consolas;" data-placeholder="Email"></span>
-							</div>
-						</div>
-						<div style="display: flex;">
-							<i class="fa fa-lock" style="align-self: center;font-size:20px;margin-right: 10px; margin-bottom: 15px;"></i>
-							<div class="wrap-input100 validate-input m-b-20" data-validate="Enter password">
-								<input class="input100 password" type="password" style="font-family: Consolas;" name="password">
-								<span class="focus-input100" style="font-family: Consolas;" data-placeholder="Password"></span>
-							</div>
-						</div>
-						<a href="forget.html" class="txt1 m-b-20" style="text-decoration: none;">
-							Forgot password?
-						</a>
-						<div class="container-login100-form-btn m-t-80">
-							<button class="login100-form-btn">
+					<div style="height: 90%; display:flex; justify-content: center; align-self: center; align-items: center;">
+						<div style="padding:30px; background-color:white; border-radius:20px; width: 100%;">
+							<span class="login100-form-title p-b-10">
 								Login
-							</button>
-						</div>
-						<li style="text-align: center;" class="m-t-20">
-							<span class="fs-13">
-								Don’t have an account?
 							</span>
-							<a href="#" class="txt1">
-								Sign up
+							<div style="display: flex;">
+								<i class="fa fa-envelope" style="align-self:center; font-size:18px;margin-right: 10px; margin-bottom: 0px;"></i>
+								<div class="wrap-input100 validate-input m-t-15 m-b-25" style="display: flex;" data-validate = "Enter username">
+									<input class="input100 username" type="text" style="font-family: Consolas !important;" name="username">
+									<span class="focus-input100" style="font-family: Consolas;" data-placeholder="Email"></span>
+								</div>
+							</div>
+							<div style="display: flex;">
+							
+
+								<i class="fa fa-lock" style="align-self:center; font-size:23px;margin-right: 10px; margin-bottom: 0px;"></i>
+								<div class="wrap-input100 validate-input m-t-15 m-b-25" style="display: flex;" data-validate = "Enter username">
+									<input class="input100 password" type="password" style="font-family: Consolas !important;" name="password">
+									<span class="focus-input100" style="font-family: Consolas;" data-placeholder="Password"></span>
+								</div>
+							</div>
+							<a href="forget.html" class="txt1 m-b-20" style="text-decoration: none;">
+								Forgot password?
 							</a>
-						</li>
+							<div class="container-login100-form-btn m-t-40">
+								<button class="login100-form-btn" >
+									<span class="button__text">Login</span>
+								</button>
+							</div>
+							<li style="text-align: center;" class="m-t-20">
+								<span class="fs-12" style="font-family: 'roboto';">
+									Don’t have an account?
+								</span>
+								<a href="#" class="txt1" style="margin-left:10px">
+									Sign up
+								</a>
+							</li>
+						</div>
 					</div>
+						
 			</div>
 		</div>
 	</div>
 	<div class="modal fade" id="myModal" role="dialog">
-		<div class="modal-dialog" style="margin-top:35%">
+		<div class="modal-dialog" style="margin-top:27%">
 		  <!-- Modal content-->
 		  <div class="modal-content">
 			<img src="img/1.png" style="width: 101%;">
 			<div style="text-align: center;">
-				<p class="m-t-30" style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-size: 25px;">
+				<p class="m-t-30" style="font-family: 'roboto'; font-size: 18px; color:black">
 					Visit Our Website
 				</p>
-				<span>
+				<span class="fs-12" style="font-family: 'roboto_light';">
 					Please visit ataritokens.com in order to make an account.
 				</span>
 			</div>
 			<div class="modal-footer" style="text-align: center;">
-			  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			  <button type="button" class="btn" data-dismiss="modal" style="background-color: rgb(227,30,45); width:100px; color:white">OK</button>
 			</div>
 		  </div>
 		</div>
 	  </div>
 </body>
 </html>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/login.js"></script>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$(".txt1").click(function(){
 			$("#myModal").modal();
-		})
+		});
+
+		function make_base_auth(user, password) {
+			var tok = user + ':' + password;
+			var hash = btoa(tok);
+			return "Basic " + hash;
+		}
+		var url = "https://www.ataritokens.com/myportal/api/user-data";
+		$(".login100-form-btn").click(function(){
+			$(this).addClass('button--loading');
+			// window.location.href = "./component/balance/index.html";
+			var userName = $(".username").val();
+			var passWord = $(".password").val();
+			$.ajax
+				({
+					type: "GET",
+					url: url,
+					dataType: 'json',
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader ("Authorization", make_base_auth(userName,passWord));
+					},
+					success: function (result){
+						localStorage.setItem("login_data",JSON.stringify(result));
+						localStorage.setItem("token",make_base_auth(userName,passWord));
+						
+						window.location.href = "./component/balance/index.html";
+					},
+					error: function(xhr, status, error) {
+						console.log("error",status,xhr,error);
+						$(".login100-form-btn").removeClass('button--loading');
+
+					}
+				});
+			})
 	});
 </script> 

@@ -4,15 +4,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="../../css/bootstrap.css">
 	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <!-- <link rel="stylesheet" href="../../css/cryptfont.css"> -->
         <link rel="stylesheet" type="text/css" href="../../css/login_util.css">
-
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
         <script src="../../js/jquery.js"></script>
         <script src="../../js/bootstrap.js"></script>
-        <link rel="stylesheet" href="../../css/morris.css">
-        <script src="../../js/jquery.js"></script>
-        <script src="../../js/raphael.js"></script>
-        <script src="../../js/morris.js"></script>
         <script src="../../js/dropdown.js"></script>
     </head>
     <body style="background-color: black;">
@@ -28,8 +23,8 @@
                 <p class="exchange_label m-t-20">Buy now </p>
                 <div class="flex-row">
                     <input type="number" style="width: 38%; height: 50px;">
-                    <span class="exchange_crypto_icon_span" style="">
-                        <i class="fa fa-btc" aria-hidden="true" style="color:#f7931a;"></i>
+                    <span class="exchange_crypto_icon_span" >
+                        <i class="fa fa-btc" aria-hidden="true" style="color:rgb(242,169,0);"></i>
                     </span>
                     
                     <input type="number" style="width: 38%;">
@@ -42,7 +37,7 @@
                 <p class="exchange_label m-t-20">Receive </p>
                 <div class="flex-row">
                     <input type="number" style="width: 38%; height: 50px;">
-                    <span class="exchange_crypto_icon_span" style="">
+                    <span class="exchange_crypto_icon_span" >
                         <i class="fa fa-btc" aria-hidden="true" style="color:#f7931a;"></i>
                     </span>
                     
@@ -57,42 +52,63 @@
                 <button class="form-control">Buy Now</button>
             </div>
         </div>
+        <div class="footer_navigation">
+            <div class="footer_tab">
+                <span></span>
+                <a href="../balance/index.html">
+                    <i class="fas fa-align-justify"></i>
+                </a>
+            </div>
+            <div class="footer_tab">
+                <span></span>
+                <a href="../trade/index.html">
+                    <i class="fa fa-line-chart" style="font:normal normal normal 14px/1 FontAwesome"></i>
+                </a>
+            </div><div class="footer_tab ">
+                <span></span>
+                <a><i class="fas fa-qrcode"></i></a>
+            </div><div class="footer_tab active">
+                <span></span>
+                <a><i class="fa fa-exchange" style="font:normal normal normal 14px/1 FontAwesome"></i></a>
+            </div><div class="footer_tab">
+                <a href="../setting/index.html"><i class="fas fa-cog"></i></a>
+            </div>
+        </div>
         
     </body>
 </html>
 <script>
     var ddData = [
     {
-        text: "Btc bitcoin",
+        text: "BTC Bitcoin",
         value: 1,
         selected: false,
         description: "0.000 BTC | $0.00",
         imageSrc: "../../img/btc.png",
-    
     },
     {
-        text: "Atri Atari token",
+        text: "ATRI Atari token",
         value: 2,
         selected: false,
         description: "0.000 BTC | $0.00",
         imageSrc: "../../img/atri.png"
     },
     {
-        text: "Eth Ethereum",
+        text: "ETH Ethereum",
         value: 3,
         selected: true,
         description: "0.000 BTC | $0.00",
         imageSrc: "../../img/eth.png"
     },
     {
-        text: "Ltc litcoin",
+        text: "LTC litcoin",
         value: 4,
         selected: false,
         description: "0.000 BTC | $0.00",
         imageSrc: "../../img/ltc.png"
     },
     {
-        text: "Bch Bitcoin cash",
+        text: "BCH Bitcoin cash",
         value: 4,
         selected: false,
         description: "0.000 BTC | $0.00",

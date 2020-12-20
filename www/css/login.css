@@ -4,14 +4,19 @@
 
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
+
 @font-face {
-  font-family: grota_bold;
-  src: url('../fonts/Grota\ Sans\ Bold.otf');
+  font-family: roboto_bold;
+  src: url('../fonts/Roboto-Bold.ttf');
 }
 
 @font-face {
-  font-family: grota_light;
-  src: url('../fonts/Grota\ Sans\ Alt\ Light.otf');
+  font-family: roboto;
+  src: url('../fonts/Roboto-Regular.ttf');
+}
+@font-face {
+  font-family: roboto_light;
+  src: url('../fonts/Roboto-Light.ttf');
 }
 
 
@@ -26,7 +31,7 @@
 
 body, html {
 	height: 100%;
-	font-family: 'grota_bold' !important;
+	font-family: 'roboto_bold' !important;
 }
 
 /*---------------------------------------------*/
@@ -123,10 +128,11 @@ iframe {
 /*//////////////////////////////////////////////////////////////////
 [ Utility ]*/
 .txt1 {
-  font-size: 15px;
+  font-size: 12px;
   color: red;
   line-height: 1.5;
-  font-weight: 700;
+  font-weight: 400;
+  font-family: 'roboto';
 }
 
 .txt2 {
@@ -154,7 +160,7 @@ iframe {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   padding: 15px;
   background: black;  
 }
@@ -174,21 +180,23 @@ iframe {
 
 .login100-form-title {
   display: block;
-  font-size: 25px;
+  font-size: 20px;
   color: rgb(233, 47, 47);
   line-height: 1.2;
   text-align: center;
   font-weight: 800;
+  letter-spacing: 1px;
 }
 
 .login100-form-avatar {
   display: block;
-  width: 200px;
+  width: 150px;
   /*height: 120px;*/
   /*border-radius: 50%;*/
   overflow: hidden;
   margin: 0 auto;
   text-align: center;
+  height: 10%;
 }
 .login100-form-avatar-forget {
   display: block;
@@ -208,7 +216,7 @@ iframe {
 [ Input ]*/
 
 .wrap-input100 {
-  width: 100%;
+  width: 85%;
   position: relative;
   border-bottom: 2px solid #d9d9d9;
 }
@@ -221,7 +229,7 @@ iframe {
 
   display: block;
   width: 100%;
-  height: 52px;
+  height: 36px;
   background: transparent;
   padding: 0 5px;
 }
@@ -251,7 +259,7 @@ iframe {
   -moz-transition: all 0.4s;
   transition: all 0.4s;
 
-  background: #57b846;
+  background: rgb(227,30,45);
 }
 .focus-input1001::before {
   content: "";
@@ -272,8 +280,8 @@ iframe {
 
 .focus-input100::after {
   
-  font-size: 15px;
-  color: #383838;
+  font-size: 14px;
+  color: black;
   line-height: 1.2;
 
   content: attr(data-placeholder);
@@ -311,7 +319,7 @@ iframe {
 
 
 .input100:focus + .focus-input100::after {
-  top: -20px;
+  top: -15px;
   font-size: 15px;
 }
 
@@ -320,7 +328,7 @@ iframe {
 }
 
 .has-val.input100 + .focus-input100::after {
-  top: -20px;
+  top: -15px;
   font-size: 15px;
 }
 
@@ -328,7 +336,7 @@ iframe {
   width: 100%;
 }
 .input100:focus + .focus-input1001::after {
-  top: -20px;
+  top: -15px;
   font-size: 15px;
 }
 
@@ -337,7 +345,7 @@ iframe {
 }
 
 .has-val.input100 + .focus-input1001::after {
-  top: -20px;
+  top: -15px;
   font-size: 15px;
 }
 
@@ -360,7 +368,7 @@ iframe {
 }
 
 .login100-form-btn {
-  
+  position: relative;
   font-size: 17px;
   color: #fff;
   line-height: 1.2;
@@ -377,7 +385,7 @@ iframe {
   width: 100%;
   height: 50px;
   background-color: rgb(214 35 35);
-  border-radius: 25px;
+  border-radius: 10px;
 
   box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
   -moz-box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
@@ -389,10 +397,56 @@ iframe {
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
   transition: all 0.4s;
+  color:white;
+  background-color: rgb(227,30,45);
+  box-shadow: 0px 25px 30px rgba(0, 0, 0, 0.3);
+  height: 50px;
+  border: none;
+  font-size: 17px;
+  font-family: 'roboto_bold';
+  letter-spacing: 1px;
 }
 
+.button__text {
+  color: #ffffff;
+  transition: all 0.2s;
+}
+
+.button--loading .button__text {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.button--loading::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border: 4px solid transparent;
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: button-loading-spinner 1s ease infinite;
+}
+
+@keyframes button-loading-spinner {
+  from {
+    transform: rotate(0turn);
+  }
+
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+
+
+
 .login100-form-btn:hover  {
-  background-color: #333333;
   box-shadow: 0 10px 30px 0px rgba(51, 51, 51, 0.5);
   -moz-box-shadow: 0 10px 30px 0px rgba(51, 51, 51, 0.5);
   -webkit-box-shadow: 0 10px 30px 0px rgba(51, 51, 51, 0.5);
