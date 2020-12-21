@@ -15,7 +15,7 @@
         </div>
         <div style="text-align: center; color:white; margin-top:10px">
             <p class="fs-12" style="font-weight: 300; margin-bottom:1px">Total Balance </p>
-            <p class="fs-13" style="font-weight: 300;">$47.97 </p>
+            <p class="fs-13 total_balance_text" style="font-weight: 300;">$0.00</p>
         </div>
 
         <div class="trade_main_div">
@@ -54,8 +54,8 @@
                                         </button>
                                     </div>
                                     <div style="width: 70%; text-align: center;">
-                                        <p class="fs-23" style="margin-bottom:3px">0.094323 BTC</p>
-                                        <p class="fs-20">$0.34</p>
+                                        <p class="fs-23 btc_balance" style="margin-bottom:3px">0.00</p>
+                                        <p class="fs-20 btc_usd_balance">$0.00</p>
                                     </div>
                                     <div style="width:15%">
                                         <button class="c_send_btn form-control btn_send" id="btc">
@@ -66,15 +66,16 @@
                                 </div>
                                 <div style="text-align:center" class="m-t-3">
                                     <span class="btc_price_text">BTC $22,494.56</span>
-                                    <span class="btc_percent_text">-2.2%</span>
+                                    <span class="btc_percent_text">0%</span>
                                 </div>
-                                <div class="m-t-20">
-                                    <div id="spark1" class="apex-charts"></div>
+                                <div class="m-t-20" style="text-align: center;">
+                                    <div class="loading"></div>
+                                    <div id="btc_graph" class="apex-charts"></div>
                                 </div>
                                 <div class="period_button_group">
-                                    <button class="form-control btc_1_hour_btn btc_period_button active"> 1 hour</button>
-                                    <button class="form-control btc_24_hour_btn btc_period_button"> 24 hours</button>
-                                    <button class="form-control btc_7_day_btn btc_period_button"> 7 days</button>
+                                    <button class="form-control btc_1_hour_btn btc_period_button active" id="1h"> 1 hour</button>
+                                    <button class="form-control btc_24_hour_btn btc_period_button" id='1d'> 24 hours</button>
+                                    <button class="form-control btc_7_day_btn btc_period_button" id='7d'> 7 days</button>
 
                                 </div>
                             </div>
@@ -90,8 +91,8 @@
                                         </button>
                                     </div>
                                     <div style="width: 70%; text-align: center;">
-                                        <p class="fs-23" style="margin-bottom:3px">203 ATRI</p>
-                                        <p class="fs-20">$0.34</p>
+                                        <p class="fs-23 atri_balance" style="margin-bottom:3px">0.00 ATRI</p>
+                                        <p class="fs-20 atri_usd_balance">$0.00</p>
                                     </div>
                                     <div style="width:15%">
                                         <button class="c_send_btn form-control btn_send" id="btc">
@@ -102,15 +103,16 @@
                                 </div>
                                 <div style="text-align:center" class="m-t-10">
                                     <span class="atri_price_text">ATRI $0.12</span>
-                                    <span class="atri_percent_text">-2.2%</span>
+                                    <span class="atri_percent_text">0.0%</span>
                                 </div>
-                                <div class="m-t-20">
-                                    <div id="spark2" class="apex-charts"></div>
+                                <div class="m-t-20" style="text-align:center">
+                                    <div class="loading"></div>
+                                    <div id="atri_graph" class="apex-charts"></div>
                                 </div>
                                 <div class="period_button_group">
-                                    <button class="form-control btc_1_hour_btn btc_period_button active"> 1 hour</button>
-                                    <button class="form-control btc_24_hour_btn btc_period_button"> 24 hours</button>
-                                    <button class="form-control btc_7_day_btn btc_period_button"> 7 days</button>
+                                    <button class="form-control btc_1_hour_btn btc_period_button active" id="1h"> 1 hour</button>
+                                    <button class="form-control btc_24_hour_btn btc_period_button" id='1d'> 24 hours</button>
+                                    <button class="form-control btc_7_day_btn btc_period_button" id='7d'> 7 days</button>
 
                                 </div>
                             </div><div class="swiper-slide">
@@ -125,8 +127,8 @@
                                         </button>
                                     </div>
                                     <div style="width: 70%; text-align: center;">
-                                        <p class="fs-23" style="margin-bottom:3px">0.094323 ETH</p>
-                                        <p class="fs-20">$0.34</p>
+                                        <p class="fs-23 eth_balance" style="margin-bottom:3px">0.00</p>
+                                        <p class="fs-20 eth_usd_balance">$0.00</p>
                                     </div>
                                     <div style="width:15%">
                                         <button class="c_send_btn form-control btn_send" id="btc">
@@ -137,15 +139,16 @@
                                 </div>
                                 <div style="text-align:center" class="m-t-10">
                                     <span class="eth_price_text">ETH $647.34</span>
-                                    <span class="eth_percent_text">0.57%</span>
+                                    <span class="eth_percent_text">0%</span>
                                 </div>
-                                <div class="m-t-20">
-                                    <div id="spark3" class="apex-charts"></div>
+                                <div class="m-t-20" style="text-align:center">
+                                    <div class="loading"></div>
+                                    <div id="eth_graph" class="apex-charts"></div>
                                 </div>
                                 <div class="period_button_group">
-                                    <button class="form-control btc_1_hour_btn btc_period_button active"> 1 hour</button>
-                                    <button class="form-control btc_24_hour_btn btc_period_button"> 24 hours</button>
-                                    <button class="form-control btc_7_day_btn btc_period_button"> 7 days</button>
+                                    <button class="form-control btc_1_hour_btn btc_period_button active" id="1h"> 1 hour</button>
+                                    <button class="form-control btc_24_hour_btn btc_period_button" id='1d'> 24 hours</button>
+                                    <button class="form-control btc_7_day_btn btc_period_button" id='7d'> 7 days</button>
 
                                 </div>
                             </div><div class="swiper-slide">
@@ -160,8 +163,8 @@
                                         </button>
                                     </div>
                                     <div style="width: 70%; text-align: center;">
-                                        <p class="fs-23" style="margin-bottom:3px">0.094323 LTC</p>
-                                        <p class="fs-20">$0.04</p>
+                                        <p class="fs-23 ltc_balance" style="margin-bottom:3px">0.00</p>
+                                        <p class="fs-20 ltc_usd_balance">$0.00</p>
                                     </div>
                                     <div style="width:15%">
                                         <button class="c_send_btn form-control btn_send" id="btc">
@@ -172,15 +175,16 @@
                                 </div>
                                 <div style="text-align:center" class="m-t-10">
                                     <span class="ltc_price_text">LTC $106.06</span>
-                                    <span class="ltc_percent_text">0.53%</span>
+                                    <span class="ltc_percent_text">0%</span>
                                 </div>
-                                <div class="m-t-20">
-                                    <div id="spark4" class="apex-charts"></div>
+                                <div class="m-t-20" style="text-align:center">
+                                    <div class="loading"></div>
+                                    <div id="ltc_graph" class="apex-charts"></div>
                                 </div>
                                 <div class="period_button_group">
-                                    <button class="form-control btc_1_hour_btn btc_period_button active"> 1 hour</button>
-                                    <button class="form-control btc_24_hour_btn btc_period_button"> 24 hours</button>
-                                    <button class="form-control btc_7_day_btn btc_period_button"> 7 days</button>
+                                    <button class="form-control btc_1_hour_btn btc_period_button active" id="1h"> 1 hour</button>
+                                    <button class="form-control btc_24_hour_btn btc_period_button" id='1d'> 24 hours</button>
+                                    <button class="form-control btc_7_day_btn btc_period_button" id='7d'> 7 days</button>
 
                                 </div>
                             </div><div class="swiper-slide">
@@ -195,8 +199,8 @@
                                         </button>
                                     </div>
                                     <div style="width: 70%; text-align: center;">
-                                        <p class="fs-23" style="margin-bottom:3px">0.094323 BCH</p>
-                                        <p class="fs-20">$0.34</p>
+                                        <p class="fs-23 bch_balance" style="margin-bottom:3px">0.00</p>
+                                        <p class="fs-20 bch_usd_balance">$0.00</p>
                                     </div>
                                     <div style="width:15%">
                                         <button class="c_send_btn form-control btn_send" id="btc">
@@ -207,15 +211,16 @@
                                 </div>
                                 <div style="text-align:center" class="m-t-10">
                                     <span class="bch_price_text">BCH $307.34</span>
-                                    <span class="bch_percent_text">0.07%</span>
+                                    <span class="bch_percent_text">0%</span>
                                 </div>
-                                <div class="m-t-20">
-                                    <div id="spark5" class="apex-charts"></div>
+                                <div class="m-t-20" style="text-align:center">
+                                    <div class="loading"></div>
+                                    <div id="bch_graph" class="apex-charts"></div>
                                 </div>
                                 <div class="period_button_group">
-                                    <button class="form-control btc_1_hour_btn btc_period_button active"> 1 hour</button>
-                                    <button class="form-control btc_24_hour_btn btc_period_button"> 24 hours</button>
-                                    <button class="form-control btc_7_day_btn btc_period_button"> 7 days</button>
+                                    <button class="form-control btc_1_hour_btn btc_period_button active" id="1h"> 1 hour</button>
+                                    <button class="form-control btc_24_hour_btn btc_period_button" id='1d'> 24 hours</button>
+                                    <button class="form-control btc_7_day_btn btc_period_button" id='7d'> 7 days</button>
 
                                 </div>
                             </div>
@@ -227,19 +232,8 @@
         </div>
         <div class="history_div">
            <h4 class="fs-16 m-b-20" style="color:white; font-family: 'roboto_bold'; letter-spacing: 1px; ">Activity</h4>
-           <div style="overflow-y: auto; height: 32%;">
-                <div class="m-b-10" style="display:flex; color:white">
-                    <div style="width: 10%; align-items: center; align-self:center">
-                        <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                    </div>
-                    <div style="width: 45%;">
-                        <p class="fs-14">Received</p>
-                        <p class="fs-12">Jul 6, 2020 6:51 PM</p></div>
-                    <div style="width: 45%; text-align: right;">
-                        <p class="fs-14" style="color:yellowgreen">0.003432 BTC</p>
-                        <p class="fs-12">$0.05</p>
-                    </div>
-                </div>
+           <div id="history_div" style="overflow-y: auto; height: 32%;">
+              
            </div> 
         </div>
         <div class="footer_navigation">
@@ -256,7 +250,7 @@
                 </a>
             </div><div class="footer_tab ">
                 <span></span>
-                <a><i class="fas fa-qrcode"></i></a>
+                <a href="../scan_qr/index.html"><i class="fas fa-qrcode"></i></a>
             </div><div class="footer_tab">
                 <span></span>
                 <a href="../exchange/index.html"><i class="fa fa-exchange" style="font:normal normal normal 14px/1 FontAwesome"></i></a>
@@ -271,11 +265,11 @@
           <div class="modal-content">
                 <p class="fs-20" style="color:white; padding-top:20px;">Address</p>
                 <div style="width: 80%; display: flex; margin:auto">
-                    <p class="fs-9">0x9360e055793e299a6da2c54a4b37fbd43992b624</p>
-                    <span style="color:white; margin-top:15px"><i class="fas fa-copy"></i></span>
+                    <input type="text" style="position:absolute; left:999999" value="efsefsef" class="receive_address_input">
+                    <p class="fs-9 receive_address"></p>
+                    <span class="receive_address_copy" style="color:white; margin-top:13px"><i class="fas fa-copy"></i></span>
                 </div>
-                <div>
-                    <img src="../../img/bitcoin_qr.png" style="width: 53%; margin-bottom: 20px;" />
+                <div class="receive_qr" >
                 </div>
           </div>
           
@@ -286,27 +280,27 @@
         <div class="modal-dialog">
           <div class="modal-content">
                 <div class="select_crypt_send_slide">
-                    <i class="fas fa-caret-left"></i>
+                    <!-- <i class="fas fa-caret-left"></i> -->
                     <span>
-                        <i class="cf cf-eth" style="color:aqua"></i> 
+                        <i class="cf cf-eth fs-30" style="color:aqua"></i> 
                     </span>
-                    <i class="fas fa-caret-right"></i>
+                    <!-- <i class="fas fa-caret-right"></i> -->
                 </div>
                 <p class="fs-20" style="color:white; padding-top:20px;">Send amount</p>
                 <div class="input_amount_send_div">
-                    <div style="width:20%">
-                        <input value="0.00" type="number" style="text-align:center; border:none" class="fs-27" />
-                        <p>BTC</p>
+                    <div style="width:45%">
+                        <input class="send_amount" value="0.00" type="number" style="text-align:center; border:none; font-size: 24px;" class="fs-24" />
+                        <p class="send_amount_currency">BTC</p>
                     </div>
-                    <div style="width:60%;align-self: center;"><i class="fa fa-exchange" style="font:normal normal normal 20px/1 FontAwesome; color:white"></i></div>
-                    <div style="width:20%">
-                        <p class="fs-27" style="color:gray">0.00</p>
+                    <div style="width:10%;align-self: center;"><i class="fa fa-exchange" style="font:normal normal normal 20px/1 FontAwesome; color:white"></i></div>
+                    <div style="width:45%">
+                        <input class="send_amount_usd" value="0.00" type="number" style="text-align:center; border:none; font-size: 24px;" class="fs-24" />
                         <p>USD</p>
                     </div>
                 </div>
                 <div style="width: 80%; display: flex; margin:auto; margin-bottom:20px; margin-top:20px">
-                    <input class="fs-12" placeholder="Tap to paste address">
-                    <span style="color:white; margin-top:15px"><i class="fas fa-qrcode"></i></span>
+                    <input class="fs-12 send_address" placeholder="Tap to paste address">
+                    <span class="scan_qr" style="color:white; margin-top:15px"><i class="fas fa-qrcode"></i></span>
                 </div>
                 <div class="exchange_button_div" style="padding-bottom:50px">
                     <button class="form-control send_continue" style="width: 80%; margin:auto; margin-top:40px">CONTINUE</button>
@@ -322,29 +316,34 @@
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <script src="../../js/jquery.slimscroll.min.js"></script>
 <script src="../../js/apexcharts.min.js"></script>
-<script src="../../js/apexcharts.init.js"></script>
+<script src="../../js/get_crypt_data.js"></script>
+<script src="../../js/receive.js"></script>
+<script src="../../js/send_payment.js"></script>
+<script src="../../js/jquery-qrcode.js"></script>
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+<script type="text/javascript" src="../../cordova.js"></script>
+
+
+
 <script>
+    $(".loading").css("display","block");
+    setTimeout(() => {
+        get_crypt_data(0);
+        
+    }, 1000);
+    var current_tab =0;
+    var currency_data = [['btc','bitcoin'],['atri','atri'],['eth','ethereum'],['ltc','litecoin'],['bch','bitcoincash']];
+    localStorage.setItem("current_currency",current_tab);
+
     const tabControls = [...document.querySelectorAll(".tabs__controls")];
     const tabsContent = document.querySelector(".tabs__content");
     const tabsActiveClass = "tabs__tab--active";
     let tabsSwiper;
-    const initTabControls = (swiper) => {
-        tabControls.forEach((tab) => {
-            tab.addEventListener("click", (event) => {
-                if (event.target.classList.contains("tabs__tab")) {
-                    [...tab.children].forEach((t) => {
-                        t.classList.remove(tabsActiveClass);
-                    });
-
-                    swiper.slideTo(event.target.dataset.tab);
-                    event.target.classList.add(tabsActiveClass);
-                }
-            });
-        });
-    };
     const initTabs = () => {
         tabsSwiper = new Swiper(tabsContent, {
             autoHeight: true,
+            allowTouchMove:false,
             on: {
                 slideChange: function () {
                     tabControls.forEach((tab) => {
@@ -352,28 +351,53 @@
                             t.classList.remove(tabsActiveClass);
                         });
                     });
-
                     const setActive = document.querySelector(
                         `.tabs__tab[data-tab="${this.activeIndex}"]`
                     );
-
                     setActive && setActive.classList.add(tabsActiveClass);
                 }
             }
         });
     };
+
+    const initTabControls = (swiper) => {
+        tabControls.forEach((tab) => {
+            tab.addEventListener("click", (event) => {
+                if (event.target.classList.contains("tabs__tab")) {
+                    [...tab.children].forEach((t) => {
+                        t.classList.remove(tabsActiveClass);
+                    });
+                    swiper.slideTo(event.target.dataset.tab);
+                    event.target.classList.add(tabsActiveClass);
+                    var tab_count = $(event.target).attr('data-tab');
+                    $(".loading").css("display","block");
+                    $(".apex-charts").html("");
+                    setTimeout(() => {
+                        get_crypt_data(tab_count);
+                    }, 10);
+                    current_tab = tab_count;
+                    localStorage.setItem("current_currency",current_tab);
+
+                }
+            });
+        });
+    };
     initTabs();
     initTabControls(tabsSwiper);
     
-    $(".btn_receive").click(function(){
-        $("#receive_modal").modal('show');
-    });
+    $(".btc_period_button").click(function(){
+        var period = $(this).attr('id');
+        $(".btc_period_button").removeClass('active');
+        $(this).addClass('active');
+        $(".apex-charts").html("");
 
-    $(".btn_send").click(function(){
-        $("#send_modal").modal('show');
-    });
-
-    $(".send_continue").click(function(){
-        window.location.href = "../send_confirm/index.html";
+        $(".loading").css("display","block");
+        setTimeout(() => {
+            draw_graph(current_tab,period);
+        }, 10);
     })
+
+    
+
+
 </script>

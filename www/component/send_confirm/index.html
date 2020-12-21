@@ -21,7 +21,10 @@
                 <p style="width: 50%; letter-spacing: 1px;">Sending to</p>
                 <div style="width: 50%; text-align: right; ">
                     <span class="send_to_address_span">
-                        <i class="cf cf-btc" style="color:green"></i> 
+                        <div class="send_address_icon">
+                            <i class="cf cf-btc" style="color:green"></i> 
+                        </div>
+                        
                         <span class="fs-12" >0x9360e055793e299a6da2c54a4b37fbd43992b624</span>
                     </span>
                 </div>
@@ -38,24 +41,26 @@
             <div class="send_sub_div" style="display: block;">
                 <p style="width: 100%;">Enter your pincode*</p>
                 <div style="width: 80%; margin:auto; padding-bottom:15px;">
-                     <input type="number" class="pincode_input" tabindex="1" />
-                     <input class="pincode_input" tabindex="2"/>
-                     <input class="pincode_input" tabindex="3"/>
-                     <input class="pincode_input" tabindex="4"/>
-                     <input class="pincode_input" tabindex="5"/>
-                     <input class="pincode_input" tabindex="6"/>
+                    <input type="number" class="pincode_input" id="pincode_input_1" tabindex="1" />
+                    <input class="pincode_input" id="pincode_input_2" tabindex="2"/>
+                    <input class="pincode_input" id="pincode_input_3" tabindex="3"/>
+                    <input class="pincode_input" id="pincode_input_4" tabindex="4"/>
+                    <input class="pincode_input" id="pincode_input_5" tabindex="5"/>
+                    <input class="pincode_input" id="pincode_input_6" tabindex="6"/>
                 </div>
             </div>
 
             <div class="send_sub_div" style="margin-top:10px">
                 <p class="fs-15" style="width: 50%;">TOTAL AMOUNT</p>
                 <div style="width: 50%; text-align: right; ">
-                     <p class="fs-17" style="margin-bottom:3px; font-weight: 700;">0.05 BCH</p>
-                     <p style="margin-bottom:0">13.43 USD</p>
+                     <p class="fs-17 total_amount" style="margin-bottom:3px; font-weight: 700;">0.00 BTC</p>
+                     <p style="margin-bottom:0" class="total_amount_usd">0.0 USD</p>
                 </div>
             </div>
             <div class="exchange_button_div" style="padding-bottom:50px">
-                <button class="form-control" style="width: 60%; margin:auto; margin-top:20px">SEND</button>
+                <button class="form-control send_payment" style="width: 60%; margin:auto; margin-top:20px">
+                    <span class="button__text">SEND</span>
+                </button>
             </div>
         </div>
         <div class="modal fade" id="miner_fee_modal" role="dialog">
@@ -63,13 +68,13 @@
               <div class="modal-content">
                     <p class="fs-15" >Miner fee</p>
                     <div class="radio">
-                        <label><input type="radio" value="Economic" class="miner_fee_radio" name="miner_fee_radio" checked>Economic</label>
+                        <label><input type="radio" value="1" class="miner_fee_radio" name="miner_fee_radio" checked>Economic</label>
                     </div>
                     <div class="radio">
-                        <label><input type="radio" value="Standard" class="miner_fee_radio" name="miner_fee_radio">Standard</label>
+                        <label><input type="radio" value="2" class="miner_fee_radio" name="miner_fee_radio">Standard</label>
                     </div>
                     <div class="radio" style="margin-bottom:0px; padding-bottom:20px">
-                        <label><input type="radio"  value="High Priority" class="miner_fee_radio" name="miner_fee_radio">High Priority</label>
+                        <label><input type="radio"  value="3" class="miner_fee_radio" name="miner_fee_radio">High Priority</label>
                     </div>
               </div>
               
@@ -78,56 +83,130 @@
     </body>
 </html>
 <script>
-    var ddData = [
-    {
-        text: "BTC Bitcoin",
-        value: 1,
-        selected: false,
-        description: "0.000 BTC | $0.00",
-        imageSrc: "../../img/btc.png",
-    },
-    {
-        text: "ATRI Atari token",
-        value: 2,
-        selected: false,
-        description: "0.000 BTC | $0.00",
-        imageSrc: "../../img/atri.png"
-    },
-    {
-        text: "ETH Ethereum",
-        value: 3,
-        selected: true,
-        description: "0.000 BTC | $0.00",
-        imageSrc: "../../img/eth.png"
-    },
-    {
-        text: "LTC litcoin",
-        value: 4,
-        selected: false,
-        description: "0.000 BTC | $0.00",
-        imageSrc: "../../img/ltc.png"
-    },
-    {
-        text: "BCH Bitcoin cash",
-        value: 4,
-        selected: false,
-        description: "0.000 BTC | $0.00",
-        imageSrc: "../../img/bch.png"
-    }
-];
-    $('#exchange_from_select').ddslick({
-        data: ddData,
-        defaultSelectedIndex:1
-    });
-    $('#exchange_to_select').ddslick({
-        data: ddData,
-        defaultSelectedIndex:1
-    });
+    var token = localStorage.getItem('token');
+    var send_amount = localStorage.getItem('send_amount');
+    var current_currency = localStorage.getItem('current_currency');
+    var send_address = localStorage.getItem('send_address');
+    var currency_data = [['btc','bitcoin'],['atri','atri'],['eth','ethereum'],['ltc','litecoin'],['bch','bitcoincash']];
+
+    
+    $(".total_amount").html(send_amount+" "+currency_data[current_currency][0].toUpperCase());
+    
+    $(".total_amount_usd").html((currency_convert(currency_data[current_currency][0],send_amount)).toFixed(2)+" "+"USD");
+
+    $(".send_to_address_span span").html(send_address);
+    if(current_currency==0)
+        $(".send_address_icon").html(' <i class="cf cf-btc" style="color:#f7931a"></i> ');
+    if(current_currency==1)
+        $(".send_address_icon").html(' <img src="../../img/atri.png" style="width: 20px; margin-right:20px"/> ');
+    if(current_currency==2)
+        $(".send_address_icon").html(' <i class="cf cf-eth" style="color:aqua"></i>  ');
+    if(current_currency==3)
+        $(".send_address_icon").html('  <i class="cf cf-ltc" style="color:#345c9c"></i>  ');
+    if(current_currency==4)
+        $(".send_address_icon").html(' <i class="cf cf-btc" style="color:green"></i> ');
+
     $(".miner_fee_modal_button").click(function(){
         $("#miner_fee_modal").modal('show');
     })
     $(".miner_fee_radio").change(function(){
         $("#miner_fee_modal").modal('hide');
-        $(".miner_fee_button_text").html($('input[name=miner_fee_radio]:checked').val())
+        var array = ['Economic','Standard','High Priority'];
+        $(".miner_fee_button_text").html(array[$('input[name=miner_fee_radio]:checked').val()-1])
     })
+
+    $(".pincode_input").keydown(function(){
+       value = $(this).val();
+    });
+    $(".pincode_input").keyup(function(event){
+        if($(this).val().length>1){
+            $(this).val(value);
+        }
+        if (event.key == "Backspace") { 
+            $(this).prev().focus(); 
+        } 
+        else{
+            $(this).next().focus(); 
+        }
+        if(check_status())
+            $(".alert_div").css("display","none");
+        else    
+            $(".alert_div").css("display","block");
+
+    });
+
+    $(".send_payment").click(function(){
+        var input_1 = $("#pincode_input_1").val();
+        var input_2 = $("#pincode_input_2").val();
+        var input_3 = $("#pincode_input_3").val();
+        var input_4 = $("#pincode_input_4").val();
+        var input_5 = $("#pincode_input_5").val();
+        var input_6 = $("#pincode_input_6").val();
+        var fee = $('input[name=miner_fee_radio]:checked').val();
+        if(check_status()){
+            $(this).addClass('button--loading');
+            var pincode = parseInt(input_1+input_2+input_3+input_4+input_5+input_6);
+            $.ajax
+				({
+					type: "POST",
+					url: "https://www.ataritokens.com/myportal/api/send-crypto?currency="+currency_data[current_currency][0],
+                    dataType: 'json',
+                    data: {   
+                            currency     : currency_data[current_currency][0],
+                            amount       : send_amount,
+                            fee          : fee,
+                            address      : send_address,
+                            pincode      : pincode
+                      },
+					beforeSend: function (xhr) {
+						xhr.setRequestHeader ("Authorization", token);
+					},
+					success: function (result){
+                        console.log(result);
+                        if(result.error!=""){
+                            alert(result.error);
+                        }
+                        $(".send_payment").removeClass('button--loading');
+					},
+					error: function(xhr, status, error) {
+						console.log("error",status,xhr,error);
+						$(".send_payment").removeClass('button--loading');
+					}
+				});
+        }
+    });
+    function check_status(){
+        var input_1 = $("#pincode_input_1").val();
+        var input_2 = $("#pincode_input_2").val();
+        var input_3 = $("#pincode_input_3").val();
+        var input_4 = $("#pincode_input_4").val();
+        var input_5 = $("#pincode_input_5").val();
+        var input_6 = $("#pincode_input_6").val();
+
+        if(input_1!="" && input_2!="" && input_3!="" && input_4!="" && input_5!="" && input_6!="")
+            return true;
+        else
+            return false;
+    }
+
+    function currency_convert(currency,value){
+    var return_value;
+    $.ajax
+    ({
+        type: "GET",
+        url: 'https://www.ataritokens.com/myportal/api/currency-convert/'+value+'/'+currency+'/usd',
+        dataType: 'json',
+        async:false,
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader ("Authorization", token);
+        },
+        success: function (result){
+            return_value= result['result'];
+        },
+        error: function(xhr, status, error) {
+            console.log("error",status,xhr,error);
+        }
+    });
+    return return_value;
+}
 </script>

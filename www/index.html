@@ -61,7 +61,7 @@
 		<div class="modal-dialog" style="margin-top:27%">
 		  <!-- Modal content-->
 		  <div class="modal-content">
-			<img src="img/1.png" style="width: 101%;">
+			<img src="img/logo.gif" style="width: 101%;">
 			<div style="text-align: center;">
 				<p class="m-t-30" style="font-family: 'roboto'; font-size: 18px; color:black">
 					Visit Our Website
@@ -84,6 +84,9 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+	
+		
+
 		$(".txt1").click(function(){
 			$("#myModal").modal();
 		});
@@ -108,10 +111,22 @@
 						xhr.setRequestHeader ("Authorization", make_base_auth(userName,passWord));
 					},
 					success: function (result){
-						localStorage.setItem("login_data",JSON.stringify(result));
+						console.log(result);
+						localStorage.setItem("b_btc",result['data']['balance']['btc']);
+						localStorage.setItem("b_atri",result['data']['balance']['atri']);
+						localStorage.setItem("b_eth",result['data']['balance']['eth']);
+						localStorage.setItem("b_ltc",result['data']['balance']['ltc']);
+						localStorage.setItem("b_bch",result['data']['balance']['bch']);
+						localStorage.setItem("b_sum",result['data']['balance']['sum']);
+						localStorage.setItem("pincode",result['data']['pin_code']);
+
 						localStorage.setItem("token",make_base_auth(userName,passWord));
-						
-						window.location.href = "./component/balance/index.html";
+
+						if(result['data']['pin_code']!="")
+							window.location.href = "./component/balance/index.html";
+						else
+							window.location.href = "./component/set_pincode/index.html";
+							
 					},
 					error: function(xhr, status, error) {
 						console.log("error",status,xhr,error);
