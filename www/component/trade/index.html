@@ -4,6 +4,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="../../css/bootstrap.css">
         <link rel="stylesheet" href="../../css/cryptfont.css">
+    <link rel="stylesheet" type="text/css" href="../../css/light_mode.css">
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="../../css/login_util.css">
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/css/swiper.css">
@@ -13,7 +15,7 @@
         <div class="top_head">
             <img src="../../img/logo.png">
         </div>
-        <div style="text-align: center; color:white; margin-top:10px">
+        <div class="t_balance_div" style="text-align: center; color:white; margin-top:10px">
             <p class="fs-12" style="font-weight: 300; margin-bottom:1px">Total Balance </p>
             <p class="fs-13 total_balance_text" style="font-weight: 300;">$0.00</p>
         </div>
@@ -43,7 +45,7 @@
                     <div class="tabs__content">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <div style="text-align: center;">
+                                <div class="current_balance_text" style="text-align: center;">
                                     <p>Current Balance</p>
                                 </div>
                                 <div style="display: flex;">
@@ -80,7 +82,7 @@
                                 </div>
                             </div>
                             <div class="swiper-slide">
-                                <div style="text-align: center;">
+                                <div class="current_balance_text" style="text-align: center;">
                                     <p>Current Balance</p>
                                 </div>
                                 <div style="display: flex;">
@@ -116,7 +118,7 @@
 
                                 </div>
                             </div><div class="swiper-slide">
-                                <div style="text-align: center;">
+                                <div class="current_balance_text" style="text-align: center;">
                                     <p>Current Balance</p>
                                 </div>
                                 <div style="display: flex;">
@@ -152,7 +154,7 @@
 
                                 </div>
                             </div><div class="swiper-slide">
-                                <div style="text-align: center;">
+                                <div class="current_balance_text" style="text-align: center;">
                                     <p>Current Balance</p>
                                 </div>
                                 <div style="display: flex;">
@@ -188,7 +190,7 @@
 
                                 </div>
                             </div><div class="swiper-slide">
-                                <div style="text-align: center;">
+                                <div class="current_balance_text" style="text-align: center;">
                                     <p>Current Balance</p>
                                 </div>
                                 <div style="display: flex;">
@@ -323,7 +325,9 @@
 <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 
 <script type="text/javascript" src="../../cordova.js"></script>
-
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+<script src="../../js/notification.js"></script>
+<script src="../../js/theme_mode.js"></script>
 
 
 <script>

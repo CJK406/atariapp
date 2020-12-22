@@ -71,26 +71,26 @@ function get_transaction_history(index){
                 {
                     history_div+=`<i class="fa fa-arrow-down" aria-hidden="true"></i>
                         </div>
-                        <div style="width: 45%;">
+                        <div class="history_status" style="width: 45%;">
                             <p class="fs-15">Received</p>
                             <p class="fs-11">`+result[i]['created_at']+`</p></div>
                         <div style="width: 45%; text-align: right;">
                             
                                 <p class="fs-15" style="color:rgb(70,155,74)">`+result[i]['amount']+` `+result[i]['currency'].toUpperCase()+`</p>
-                                <p class="fs-14">$`+result[i]['amount_usd']+`</p>
+                                <p class="fs-14 history_amount_usd">$`+result[i]['amount_usd']+`</p>
                             </div>
                         </div>`;
                 }
                 else{
                     history_div+=`<i class="fa fa-arrow-up" aria-hidden="true"></i>
                         </div>
-                        <div style="width: 45%;">
+                        <div class="history_status"  style="width: 45%;">
                             <p class="fs-15">Sent</p>
                             <p class="fs-11">`+result[i]['created_at']+`</p></div>
                         <div style="width: 45%; text-align: right;">
                             
                                 <p class="fs-15" style='color:rgb(244,67,54)'>`+result[i]['amount']+` `+result[i]['currency'].toUpperCase()+`</p>
-                                <p class="fs-14">$`+result[i]['amount_usd']+`</p>
+                                <p class="fs-14 history_amount_usd">$`+result[i]['amount_usd']+`</p>
                             </div>
                         </div>`;
                 }
