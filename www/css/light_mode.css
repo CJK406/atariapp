@@ -1,0 +1,168 @@
+body.light_mode{
+    background-color: white !important;
+}
+.light_mode .top_head{
+    background: white;
+    color:black;
+}
+.light_mode .top_head i{
+    color:black;
+}
+.light_mode .balance_div{
+    background: white;
+    color:black
+}
+.light_mode .history_div{
+    background:white;
+    color:black;
+}
+.light_mode .history_div h4{
+    color:black !important;
+}
+.light_mode .history_div .history_status p,.light_mode .history_div  i 
+{
+    color: black !important;
+}
+.light_mode .history_div .history_amount_usd{
+    color: gray;
+}
+.light_mode .footer_navigation{
+    background-color: white;
+}
+.light_mode .footer_navigation i{
+    color:black;
+}
+.light_mode .footer_navigation .footer_tab.active i{
+    color:white;
+}
+
+/* balance */
+.light_mode .t_balance_div{
+    color:black !important
+}
+.light_mode .trade_main_div{
+    background-color: white;
+}
+.light_mode .btc_balance{
+    color: black;
+}
+.light_mode .btc_usd_balance{
+    color: black;
+}
+.light_mode .atri_balance{
+    color: black;
+}
+.light_mode .atri_usd_balance{
+    color: black;
+}
+.light_mode .eth_balance{
+    color: black;
+}
+.light_mode .eth_usd_balance{
+    color: black;
+}
+.light_mode .ltc_balance{
+    color: black;
+}
+.light_mode .ltc_usd_balance{
+    color: black;
+}
+.light_mode .bch_balance{
+    color: black;
+}
+.light_mode .bch_usd_balance{
+    color: black;
+}
+.light_mode .current_balance_text{
+    color:black;
+}
+.light_mode .trade_main_div{
+    border-bottom: 1px solid black;
+}
+.light_mode .tabs__controls{
+    background-color: white;
+}
+.light_mode #receive_modal .modal-content{
+    background-color: white;
+}
+.light_mode #receive_modal .modal-content p{
+    color: black !important;
+}
+.light_mode #receive_modal .modal-content div p{
+    border-bottom:1px solid black;
+}
+.light_mode #receive_modal .modal-content .receive_address_copy{
+    color:black !important
+}
+
+.light_mode #send_modal .modal-content{
+    background-color: white;
+}
+.light_mode #send_modal .modal-content p{
+    color:black !important
+}
+.light_mode #send_modal .modal-content i.fa-exchange, .light_mode #send_modal .modal-content input{
+    color:black !important;
+}
+.light_mode #send_modal .modal-content input{
+    border-bottom: 1px solid black;  
+}
+
+
+/* exchange */
+.light_mode .dd-select{
+    border: solid 1px black;
+}
+
+.light_mode .exchange_div{
+    background-color: white;
+}
+.light_mode .exchange_label{
+    color: black;
+}
+.light_mode .exchange_crypto_icon_span{
+    border:1px solid black;
+}
+
+/* setting  */
+
+.light_mode .setting_div h4{
+    color: black;
+}
+
+.light_mode .confirm_div{
+    background-color: white;
+}
+.light_mode .confirm_div i,.light_mode .confirm_div label{
+    color: black;
+}
+.light_mode .setting_reset_div p{
+    color:black !important
+}
+
+/* confirm */
+.light_mode .confirm_div p{
+    color:black !important
+}
+.light_mode.send_payment_qr_body #send_modal{
+    background-color: white !important;
+}
+
+.light_mode.send_payment_qr_body #send_modal p{
+    color: black !important
+}
+
+.light_mode.send_payment_qr_body .fa-exchange{
+    color: black !important;
+}
+
+.light_mode.send_payment_qr_body input{
+    color:black !important;
+}
+.light_mode.send_payment_qr_body .send_address{
+    border-bottom: 1px solid black !important;
+}
+.light_mode.send_payment_qr_body .fa-qrcode{
+    color: black !important
+}
+

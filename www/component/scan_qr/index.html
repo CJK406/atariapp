@@ -1,0 +1,25 @@
+<body style="background-color:black"></body>
+<script type="text/javascript" src="../../cordova.js"></script>
+<script>
+    setTimeout(() => {
+        cordova.plugins.barcodeScanner.scan(
+            function (result) {
+                if(!result.cancelled)
+                {
+                    address = result.text;
+					localStorage.setItem("send_address",address);
+				    window.location.href = "../../component/send_payment_qr/index.html";
+                    
+                }
+                else{
+			        window.location.href = "../../component/balance/index.html";
+                }
+            },
+            function (error) {
+                alert("Scanning failed: " + error);
+			    window.location.href = "../../component/balance/index.html";
+            }
+     )
+    }, 100);
+     
+</script>

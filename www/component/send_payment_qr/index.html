@@ -1,0 +1,172 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../css/index.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../../css/bootstrap.css">
+        <link rel="stylesheet" href="../../css/cryptfont.css">
+        <link rel="stylesheet" type="text/css" href="../../css/light_mode.css">
+
+        <link rel="stylesheet" type="text/css" href="../../css/login_util.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="../../js/jquery.js"></script>
+        <script src="../../js/bootstrap.js"></script>
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        <script type="text/javascript" src="../../cordova.js"></script>
+    </head>
+    <body class="send_payment_qr_body" style="background-color: rgb(33,33,33);">
+        <div class="top_head">
+            <a href="../trade/index.html" style="color: white;"><i class="fa fa-arrow-left" aria-hidden="true" style="position: absolute; left:0; margin:10px"></i></a>
+            <img src="../../img/logo.png">
+        </div>
+        <div id="send_modal" style="background-color:rgb(33,33,33);">
+            <div class="select_crypt_send_slide" style="text-align: center;">
+                <!-- <i class="fas fa-caret-left"></i> -->
+                <span class="send_address_icon">
+                    <i class="cf cf-btc" style="color:#f7931a"></i>
+                </span>
+                <!-- <i class="fas fa-caret-right"></i> -->
+            </div>
+            <p class="fs-20" style="color:white; padding-top:20px;text-align: center;">Send amount</p>
+            <div class="input_amount_send_div">
+                <div style="width:45%">
+                    <input class="send_amount" value="0.00" type="number" style="text-align:center; border:none; font-size: 24px;" class="fs-24" />
+                    <p class="send_amount_currency">BTC</p>
+                </div>
+                <div style="width:10%;align-self: center;"><i class="fa fa-exchange" style="font:normal normal normal 20px/1 FontAwesome; color:white"></i></div>
+                <div style="width:45%">
+                    <input class="send_amount_usd" value="0.00" type="number" style="text-align:center; border:none; font-size: 24px;" class="fs-24" />
+                    <p>USD</p>
+                </div>
+            </div>
+            <div style="width: 80%; display: flex; margin:auto; margin-bottom:20px; margin-top:20px">
+                <input class="fs-12 send_address" placeholder="Tap to paste address">
+                <span class="scan_qr" style="color:white; margin-top:15px"><i class="fas fa-qrcode"></i></span>
+            </div>
+            <div class="exchange_button_div" style="padding-bottom:50px">
+                <button class="form-control send_continue" style="width: 80%; margin:auto; margin-top:40px">CONTINUE</button>
+            </div>
+        </div>
+    </body>
+</html>
+<script src="../../js/theme_mode.js"></script>
+
+<script>
+    var token = localStorage.getItem('token');
+    var send_amount = localStorage.getItem('send_amount');
+    var current_currency = localStorage.getItem('current_currency');
+    var send_address = localStorage.getItem('send_address');
+    var currency_data = [['btc','bitcoin'],['atri','atri'],['eth','ethereum'],['ltc','litecoin'],['bch','bitcoincash']];
+    var address = "";
+    var full_address="";
+    var usd_value=0;
+
+    var currency = "btc";
+    if(send_address[0]=="b"){
+        if(send_address[7]==":"){
+            currency="btc";
+            current_currency=0;
+            $(".send_address_icon").html(' <i class="cf cf-btc" style="color:#f7931a"></i> ');
+        }
+        else
+        {
+            currency="bch";
+            current_currency=4;
+            $(".send_address_icon").html(' <i class="cf cf-btc" style="color:green"></i> ');
+        }
+    }
+    else if(send_address[0]=="l"){
+        currency = "ltc";
+        current_currency=3;
+        $(".send_address_icon").html('  <i class="cf cf-ltc" style="color:#345c9c"></i>  ');
+    }
+    else if(send_address[0]=="a"){
+            $(".send_address_icon").html(' <img src="../../img/atri.png" style="width: 20px; margin-right:20px"/> ');
+            currency = "atri";
+            current_currency=1;
+    }
+    else if(send_address[0]=="e"){
+        currency = "eth";
+        current_currency=2;
+        $(".send_address_icon").html(' <i class="cf cf-eth" style="color:aqua"></i>  ');
+    }
+    get_usd_value(1, currency);
+
+    localStorage.setItem("current_currency",current_currency);
+    
+    $(".send_amount_currency").html(currency.toUpperCase());
+    $(".send_address").val(get_address(send_address));
+
+    function get_usd_value(value,currency){
+        $.ajax
+        ({
+            type: "GET",
+            url: 'https://www.ataritokens.com/myportal/api/currency-convert/'+value+'/'+currency+'/usd',
+            dataType: 'json',
+            async:false,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader ("Authorization", token);
+            },
+            success: function (result){
+                usd_value= result['result'];
+            },
+            error: function(xhr, status, error) {
+                console.log("error",status,xhr,error);
+            }
+        });
+    }
+
+    function scan_qr(){
+        cordova.plugins.barcodeScanner.scan(
+            function (result) {
+                if(!result.cancelled)
+                {
+                    var split = result.text.split(":");
+                    full_address = result.text;
+                    if(split.length>1)
+                        address = split[1];
+                    else    
+                        address= split[0];
+                    console.log(address);
+                }
+            },
+            function (error) {
+                alert("Scanning failed: " + error);
+            }
+    );
+    }
+
+    function get_address(address){
+        console.log("aa",address);
+        var split = address.split(":");
+        if(split.length>1)
+            r_address = split[1];
+        else    
+            r_address= split[0];
+        return r_address;
+    }
+ 
+    
+   
+    $(".send_amount").keyup(function(){
+        var send_a = $(this).val();
+        $(".send_amount_usd").val((usd_value*send_a).toFixed(4));
+    });
+
+    $(".send_amount_usd").keyup(function(){
+        var send_a = $(this).val();
+        $(".send_amount").val((send_a/usd_value).toFixed(7));
+    });
+
+    $(".scan_qr").click(function(){
+        scan_qr();
+        $(".send_address").val(address);
+    });
+
+    $(".send_continue").click(function(){
+        var send_amount = $(".send_amount").val();
+        var send_address = $(".send_address").val();
+        localStorage.setItem("send_amount",send_amount);
+        localStorage.setItem("send_address",send_address);
+		window.location.href = "../../component/send_confirm/index.html";
+    })
+</script>

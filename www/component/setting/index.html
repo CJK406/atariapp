@@ -5,11 +5,14 @@
     <link rel="stylesheet" href="../../css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../../css/login_util.css">
     <link rel="stylesheet" href="../../css/cryptfont.css">
+    <link rel="stylesheet" type="text/css" href="../../css/light_mode.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="../../js/jquery.js"></script>
     <script src="../../js/bootstrap.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script src="../../js/notification.js"></script>
     </head>
     <body style="background-color: black;">
         <div class="top_head">
@@ -66,7 +69,7 @@
                 </div>
                 <div class="setting_detail_div">
                     <label class="notification_toggle">
-                        <input type="checkbox" class="checkbox" checked />
+                        <input type="checkbox" class="checkbox switch_theme_mode"  checked />
                         
                         <div class="slider" aria-hidden="true">
                         <div class="thumb" />
@@ -90,7 +93,7 @@
                 </div>
                 
             </div>
-            <div class="setting_sub_div">
+            <div class="setting_sub_div" id="logout">
                 <i class="fas fa-sign-out-alt"></i>
                 <div class="setting_subtitle_div">
                     <p >Logout</p>
@@ -108,7 +111,7 @@
                     <i class="fa fa-line-chart" style="font:normal normal normal 14px/1 FontAwesome"></i>
                 </a>
             </div><div class="footer_tab ">
-                <a><i class="fas fa-qrcode"></i></a>
+                <a href="../scan_qr/index.html"><i class="fas fa-qrcode"></i></a>
             </div><div class="footer_tab">
                 <a href="../exchange/index.html"><i class="fa fa-exchange" style="font:normal normal normal 14px/1 FontAwesome"></i></a>
             </div><div class="footer_tab active">
@@ -118,7 +121,18 @@
         </div>
     </body>
 </html>
+<script src="../../js/theme_mode.js"></script>
+
 <script>
+    var theme = localStorage.getItem('theme');
+    console.log(theme);
+    if(theme=="1"){
+        $(".switch_theme_mode").prop('checked',true);
+    }
+    else{
+        $(".switch_theme_mode").prop('checked',false);
+    }
+
     $("#currency_setting").click(function(){
 	    window.location.href = "../../component/setting_sub/currency.html";
     });
@@ -135,5 +149,25 @@
 	    window.location.href = "../../component/setting_sub/reset_pin.html";
     });
 
+    $("#logout").click(function(){
+        localStorage.setItem("token","");
+        var r = confirm("Are you sure you want to logout?");
+        if (r == true) {
+            window.location.href = "../../index.html";
+        } else {
+        }
+    });
+
+    $(".switch_theme_mode").change(function(){
+        var value = $(this).prop('checked');
+        if(value){
+            localStorage.setItem("theme","1");
+            $("body").removeClass("light_mode");
+        }
+        else{
+            localStorage.setItem("theme","0");
+            $("body").addClass("light_mode");
+        }
+    })
    
 </script>

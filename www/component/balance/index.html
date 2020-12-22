@@ -7,14 +7,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../css/morris.css">
     <link rel="stylesheet" type="text/css" href="../../css/login_util.css">
+    <link rel="stylesheet" type="text/css" href="../../css/light_mode.css">
+
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
     <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
     <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
-    <script src="../../js/bootstrap.js"></script>
     <script src="../../js/jquery.js"></script>
+    <script src="../../js/bootstrap.js"></script>
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script src="../../js/notification.js"></script>
+
     </head>
-    <body style="background-color: rgb(33,33,33);">
+    <body class="body" style="background-color: rgb(33,33,33);">
         <div class="top_head">
             <img src="../../img/logo.png">
         </div>
@@ -70,7 +75,7 @@
                     <i class="fa fa-line-chart" style="font:normal normal normal 14px/1 FontAwesome"></i>
                 </a>
             </div><div class="footer_tab ">
-                <a><i class="fas fa-qrcode"></i></a>
+                <a href="../scan_qr/index.html"><i class="fas fa-qrcode"></i></a>
             </div><div class="footer_tab">
                 <a href="../exchange/index.html"><i class="fa fa-exchange" style="font:normal normal normal 14px/1 FontAwesome"></i></a>
             </div><div class="footer_tab">
@@ -79,27 +84,27 @@
         </div>
     </body>
 </html>
-<script>
-	var login_data = JSON.parse(localStorage.getItem("login_data"));
-    var token = localStorage.getItem('token');
-    var btc_v = login_data['data']['balance']['btc'];
-    var atri_v = login_data['data']['balance']['atri'];
-    var eth_v = login_data['data']['balance']['eth'];
-    var ltc_v = login_data['data']['balance']['ltc'];
-    var bch_v = login_data['data']['balance']['bch'];
-    var sum_v = login_data['data']['balance']['sum'];
+<script src="../../js/theme_mode.js"></script>
 
-    $(".btc_balance").html(btc_v.toFixed(7));
-    $(".atri_balance").html(atri_v.toFixed(2));
-    $(".eth_balance").html(eth_v.toFixed(7));
-    $(".ltc_balance").html(ltc_v.toFixed(7));
-    $(".bch_balance").html(bch_v.toFixed(7));
-    $(".total_balance").html('$'+sum_v.toFixed(2));
+<script>
+    
+
+    var token = localStorage.getItem('token');
+    var btc_v = localStorage.getItem('b_btc');
+    var atri_v = localStorage.getItem('b_atri');
+    var eth_v = localStorage.getItem('b_eth');
+    var ltc_v = localStorage.getItem('b_ltc');
+    var bch_v = localStorage.getItem('b_bch');
+    var sum_v = localStorage.getItem('b_sum');
+    $(".btc_balance").html(parseFloat(btc_v).toFixed(7));
+    $(".atri_balance").html(parseFloat(atri_v).toFixed(2));
+    $(".eth_balance").html(parseFloat(eth_v).toFixed(7));
+    $(".ltc_balance").html(parseFloat(ltc_v).toFixed(7));
+    $(".bch_balance").html(parseFloat(bch_v).toFixed(7));
+    $(".total_balance").html('$'+parseFloat(sum_v).toFixed(2));
 
     get_history();
     
-
-
     var btc_u_v = 0;var atri_u_v = 0;var eth_u_v = 0;var ltc_u_v = 0;var bch_u_v = 0;
     currency_convert("btc",btc_v);
     currency_convert("atri",atri_v);
@@ -108,7 +113,7 @@
     currency_convert("bch",bch_v);
     setTimeout(() => {
         pie_chart_generate();
-    }, 2000);
+    }, 3000);
     function currency_convert(currency,value){
         $.ajax
         ({
@@ -156,26 +161,26 @@
                     {
                         history_div+=`<i class="fa fa-arrow-down" aria-hidden="true"></i>
                             </div>
-                            <div style="width: 45%;">
+                            <div class="history_status" style="width: 45%;">
                                 <p class="fs-15">Received</p>
                                 <p class="fs-11">`+result[i]['created_at']+`</p></div>
                             <div style="width: 45%; text-align: right;">
                                 
                                     <p class="fs-15" style="color:rgb(70,155,74)">`+result[i]['amount']+` `+result[i]['currency'].toUpperCase()+`</p>
-                                    <p class="fs-14">$`+result[i]['amount_usd']+`</p>
+                                    <p class="fs-14 history_amount_usd">$`+result[i]['amount_usd']+`</p>
                                 </div>
                             </div>`;
                     }
                     else{
                         history_div+=`<i class="fa fa-arrow-up" aria-hidden="true"></i>
                             </div>
-                            <div style="width: 45%;">
+                            <div class="history_status" style="width: 45%;">
                                 <p class="fs-15">Sent</p>
                                 <p class="fs-11">`+result[i]['created_at']+`</p></div>
                             <div style="width: 45%; text-align: right;">
                                 
                                     <p class="fs-15" style='color:rgb(244,67,54)'>`+result[i]['amount']+` `+result[i]['currency'].toUpperCase()+`</p>
-                                    <p class="fs-14">$`+result[i]['amount_usd']+`</p>
+                                    <p class="fs-14 history_amount_usd" >$`+result[i]['amount_usd']+`</p>
                                 </div>
                             </div>`;
                     }
@@ -235,17 +240,21 @@
             pieSeries.slices.template.propertyFields.fill = "color";
             pieSeries.labels.template.disabled = true;
             
-            var label1 = pieChart.seriesContainer.createChild(am4core.Label);
-            label1.text = "";
-            label1.horizontalCenter = "middle";
-            label1.fontSize = 25;
-            label1.fontWeight = 600;
-            label1.dy = -15;
+            // var label1 = pieChart.seriesContainer.createChild(am4core.Label);
+            // label1.text = "";
+            // label1.horizontalCenter = "middle";
+            // label1.fontSize = 25;
+            // label1.fontWeight = 600;
+            // label1.dy = -12;
             
             pieChart.events.on("ready", function(ev) {
             pieSeries.slices.getIndex(0).isActive = true;
             });
-            pieSeries.slices.template.stroke = am4core.color("rgb(0,0,0)");
+            console.log(theme);
+            if(theme=="0")
+                pieSeries.slices.template.stroke = am4core.color("rgb(255,255,255)");
+            else
+                pieSeries.slices.template.stroke = am4core.color("rgb(0,0,0)");
             pieSeries.slices.template.strokeWidth = 2;
             pieSeries.slices.template.strokeOpacity = 1;
             
@@ -256,8 +265,8 @@
                     slice.isActive = false;
                 }
                 });
-                label1.text = pieChart.numberFormatter.format(ev.target.dataItem.values.value.value);
-                label1.fill = ev.target.fill;
+                // label1.text = pieChart.numberFormatter.format(ev.target.dataItem.values.value.value);
+                // label1.fill = ev.target.fill;
             }
         });
         });
