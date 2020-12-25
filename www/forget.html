@@ -5,14 +5,13 @@
     <link rel="stylesheet" type="text/css" href="css/login.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="js/jquery.js"></script>
-	<script src="js/login.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 	
 </head>
 <body>
 	<div class="limiter" >
         <div style="padding:20px; background-color:rgb(33,33,33); color:white; border-bottom: 1px solid black;">
-            <a href="index.html">
+            <a href="login.html">
                 <i class="fa fa-arrow-left" aria-hidden="true"></i>
             </a>
         </div>
@@ -30,13 +29,13 @@
                         <span style="color:white;text-align:center; font-family: 'roboto'; font-size:14px" class="m-t-10 m-b-30">
                             We just need your registered email to send you password reset instructions
 						</span>
-						<div class="wrap-input100 validate-input m-t-25 m-b-25" style="text-align:left" data-validate = "Enter username">
-							<input class="input100 username" type="text" style="font-family: Consolas !important;" name="username">
+						<div class="wrap-input100 validate-input m-t-25 m-b-25" style="text-align:left;width:100%" data-validate = "Enter username">
+							<input class="input100 username" type="text" style="font-family: Consolas !important; color:white;" name="username">
 							<span class="focus-input1001" style="font-family: Consolas; color:white" data-placeholder="Email"></span>
 						</div>
                         <div class="container-login100-form-btn m-t-50">
-							<button class="login100-form-btn">
-								SEND EMAIL
+							<button class="login100-form-btn send_email">
+								<span class="button__text">SEND EMAIL</span>
 							</button>
 						</div>
 			</div>
@@ -44,8 +43,27 @@
 	</div>
 </body>
 </html>
+<script src="js/login.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		$(".send_email").click(function(){
+			$(this).addClass('button--loading');
+			var email = $(".username").val();
+			$.ajax
+			({
+				type: "POST",
+				url: 'https://www.ataritokens.com/myportal/api/forgot-password?email='+email,
+				dataType: 'json',
+				success: function (result){
+					$(".send_email").removeClass('button--loading');
+					alert("We have e-mailed your password reset link!");
+				},
+				error: function(xhr, status, error) {
+					console.log("error",status,xhr,error);
+					$(".send_email").removeClass('button--loading');
+				}
+			});
+		});
 	});
 </script> 

@@ -12,8 +12,8 @@
     </head>
     <body style="background-color: black;">
         <div class="top_head">
-            <a href="../setting/index.html" style="color: white;"><i class="fa fa-arrow-left" aria-hidden="true" style="position: absolute; left:0; margin:10px"></i></a>
-            <span class="fs-16">Support</span>
+            <a href="../dashboard/index.html" style="color: white;"><i class="fa fa-arrow-left" aria-hidden="true" style="position: absolute; left:0; margin:10px"></i></a>
+            <span class="fs-16">Reset Pincode</span>
         </div>
         <div class="setting_reset_div">
             <div style="text-align: center;">
@@ -23,10 +23,36 @@
                 <p style="text-align: center; color:white; width: 80%; margin:auto">An email will be sent to your registered email address</p>
             </div>
             <div class="exchange_button_div">
-                <button class="form-control" style="width: 60%; margin:auto; height: 40px; margin-top:40px">RESET</button>
+                <button class="form-control reset" style="width: 60%; margin:auto; height: 40px; margin-top:40px"><span class="button__text">RESET</span></button>
             </div>
         </div>
     </body>
 </html>
 <script src="../../js/theme_mode.js"></script>
 
+<script>
+    var token = localStorage.getItem('token');
+
+    $(".reset").click(function(){
+        $(this).addClass('button--loading');
+        $.ajax
+        ({
+            type: "POST",
+            url: 'https://www.ataritokens.com/myportal/api/forgot-pincode',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader ("Authorization", token);
+            },
+            success: function (result){
+                alert("You can retrieve your pincode from there");
+                $(".reset").removeClass('button--loading');
+
+            },
+            error: function(xhr, status, error) {
+                console.log("error",status,xhr,error);
+                $(".reset").removeClass('button--loading');
+
+            }
+        });
+    })
+</script>

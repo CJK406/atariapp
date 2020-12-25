@@ -158,7 +158,7 @@ h1 {
 }
 .history_div, .exchange_div{
     background-color: rgb(33,33,33);
-    padding:20px;
+    padding:10px;
 
 }
 .history_div p{
@@ -171,7 +171,12 @@ h1 {
     padding:20px;
     height: 91%;
 }
-
+.t_balance_div{
+    background-color:black;
+}
+.total_balance_text{
+    margin-bottom:0;
+}
 #pie_chart svg text[fill="#000000"]{
         fill:  #CFD8DC;
 }
@@ -180,6 +185,9 @@ h1 {
 }
 
 #chartdiv svg g[aria-labelledby="id-43-title"]{
+    display:none
+}
+#chartdiv svg g[aria-labelledby="id-487-title"]{
     display:none
 }
 .wrapper-dropdown{
@@ -323,9 +331,7 @@ h1 {
     border-width: 0;
   }
   
-  .notification_toggle .checkbox:focus + .slider {
-    box-shadow: 0 0 0 3px red;
-  }
+
   
   .notification_toggle .checkbox:checked + .slider {
     background-color: red;
@@ -797,6 +803,8 @@ h1 {
   border-top-color: #fff;
   animation: spin 1s ease-in-out infinite;
   -webkit-animation: spin 1s ease-in-out infinite;
+  position:absolute;
+  left:45%;
 }
 @keyframes spin {
     to { -webkit-transform: rotate(360deg); }

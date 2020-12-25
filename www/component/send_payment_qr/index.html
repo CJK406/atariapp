@@ -10,12 +10,14 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="../../js/jquery.js"></script>
         <script src="../../js/bootstrap.js"></script>
+        <script src="../../js/wallet-address-validator.min.js"></script>
+
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
         <script type="text/javascript" src="../../cordova.js"></script>
     </head>
     <body class="send_payment_qr_body" style="background-color: rgb(33,33,33);">
         <div class="top_head">
-            <a href="../trade/index.html" style="color: white;"><i class="fa fa-arrow-left" aria-hidden="true" style="position: absolute; left:0; margin:10px"></i></a>
+            <a href="../dashboard/index.html" style="color: white;"><i class="fa fa-arrow-left" aria-hidden="true" style="position: absolute; left:0; margin:10px"></i></a>
             <img src="../../img/logo.png">
         </div>
         <div id="send_modal" style="background-color:rgb(33,33,33);">
@@ -59,42 +61,45 @@
     var address = "";
     var full_address="";
     var usd_value=0;
-
-    var currency = "btc";
-    if(send_address[0]=="b"){
-        if(send_address[7]==":"){
-            currency="btc";
-            current_currency=0;
-            $(".send_address_icon").html(' <i class="cf cf-btc" style="color:#f7931a"></i> ');
-        }
-        else
-        {
-            currency="bch";
-            current_currency=4;
-            $(".send_address_icon").html(' <i class="cf cf-btc" style="color:green"></i> ');
-        }
-    }
-    else if(send_address[0]=="l"){
-        currency = "ltc";
-        current_currency=3;
-        $(".send_address_icon").html('  <i class="cf cf-ltc" style="color:#345c9c"></i>  ');
-    }
-    else if(send_address[0]=="a"){
+    validate();
+    function validate(){
+        var currency = "btc";
+        if(send_address[0]=="a" && send_address[1]=="t"){
             $(".send_address_icon").html(' <img src="../../img/atri.png" style="width: 20px; margin-right:20px"/> ');
             currency = "atri";
             current_currency=1;
-    }
-    else if(send_address[0]=="e"){
-        currency = "eth";
-        current_currency=2;
-        $(".send_address_icon").html(' <i class="cf cf-eth" style="color:aqua"></i>  ');
-    }
-    get_usd_value(1, currency);
+        }
+        else{
+            send_address =get_address(send_address)
+            if(WAValidator.validate(send_address,'BTC')){
+                currency="btc";
+                current_currency=0;
+                $(".send_address_icon").html(' <i class="cf cf-btc" style="color:#f7931a"></i> ');
+            }
+            else if(WAValidator.validate(send_address,'LTC')){
+                currency = "ltc";
+                current_currency=3;
+                $(".send_address_icon").html('  <i class="cf cf-ltc" style="color:#345c9c"></i>  ');
+            }
+            else if(WAValidator.validate(send_address,'ETH')){
+                currency = "eth";
+                current_currency=2;
+                $(".send_address_icon").html(' <i class="cf cf-eth" style="color:aqua"></i>  ');
+            }
+            else {
+                currency="bch";
+                current_currency=4;
+                $(".send_address_icon").html(' <i class="cf cf-btc" style="color:green"></i> ');
+            }
+        }
+        get_usd_value(1, currency);
 
-    localStorage.setItem("current_currency",current_currency);
+        localStorage.setItem("current_currency",current_currency);
+        $(".send_amount_currency").html(currency.toUpperCase());
+        $(".send_address").val(send_address);
+    }
+
     
-    $(".send_amount_currency").html(currency.toUpperCase());
-    $(".send_address").val(get_address(send_address));
 
     function get_usd_value(value,currency){
         $.ajax
@@ -121,12 +126,8 @@
                 if(!result.cancelled)
                 {
                     var split = result.text.split(":");
-                    full_address = result.text;
-                    if(split.length>1)
-                        address = split[1];
-                    else    
-                        address= split[0];
-                    console.log(address);
+                    send_address = result.text;
+                    validate();
                 }
             },
             function (error) {
@@ -136,7 +137,6 @@
     }
 
     function get_address(address){
-        console.log("aa",address);
         var split = address.split(":");
         if(split.length>1)
             r_address = split[1];
@@ -159,7 +159,6 @@
 
     $(".scan_qr").click(function(){
         scan_qr();
-        $(".send_address").val(address);
     });
 
     $(".send_continue").click(function(){

@@ -30,7 +30,7 @@ body.light_mode{
     background-color: white;
 }
 .light_mode .footer_navigation i{
-    color:black;
+    color:white;
 }
 .light_mode .footer_navigation .footer_tab.active i{
     color:white;
@@ -166,3 +166,9 @@ body.light_mode{
     color: black !important
 }
 
+.light_mode .t_balance_div{
+    background-color: white;
+}
+.light_mode .t_balance_div p{
+    color:black !important
+}
