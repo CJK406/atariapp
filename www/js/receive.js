@@ -29,13 +29,13 @@ function receive(currency){
     });
 }
 
-
-$(".btn_receive").click(function(){
+$('body').on('click', '.btn_receive', function () {
+    console.log("asefsaf");
     $("#receive_modal").modal('show');
     receive(current_tab);
 });
 
-$(".receive_address_copy").click(function(){
+$('body').on('click', '.receive_address_copy', function () {
     var copyText = document.getElementsByClassName("receive_address_input")[0];
     copyText.select();
     copyText.setSelectionRange(0, 99999)

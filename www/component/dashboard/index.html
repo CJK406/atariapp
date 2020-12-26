@@ -1,0 +1,978 @@
+<html>
+    <head>
+    <link rel="stylesheet" type="text/css" href="../../css/index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../css/bootstrap.css">
+    <link rel="stylesheet" href="../../css/cryptfont.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../css/morris.css">
+    <link rel="stylesheet" type="text/css" href="../../css/login_util.css">
+    <link rel="stylesheet" type="text/css" href="../../css/light_mode.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/css/swiper.css">
+    <link rel="stylesheet" type="text/css" href="../../css/menu.css">
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../js/bootstrap.js"></script>
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script src="../../js/notification.js"></script>
+    <script src="../../js/dropdown.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/5.4.5/js/swiper.min.js" ></script>
+    <script src="../../js/jquery.slimscroll.min.js"></script>
+    <script src="../../js/apexcharts.min.js"></script>
+    <script src="../../js/get_crypt_data.js"></script>
+    <script src="../../js/receive.js"></script>
+    <script src="../../js/send_payment.js"></script>
+    <script src="../../js/jquery-qrcode.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="../../cordova.js"></script>
+
+    </head>
+    <style>
+        .tab_div{
+            display:none;
+        }
+        .tab_div.active{
+            display:block;
+        }
+    </style>
+    <body class="body" style="background-color: rgb(33,33,33);">
+        <div class="top_head">
+            <img src="../../img/logo.png">
+        </div>
+        <div id="first_tab" class="tab_div active">
+            <div class="balance_div">
+                <p class="fs-17" style="font-weight: 500;">Total Balance </p>
+                <p class="fs-16 total_balance" style="font-weight: 500;">$0.00 </p>
+                <div style="display: flex; margin-top:20px">
+                    <div class="w_55">
+                        <div class="crypt_balance_text">
+                            <i class="cf cf-btc" style="color:#f7931a"></i> 
+                            <span class="crypt_amount_text btc_balance">0.00</span>
+                            <span>BTC</span>
+                        </div>
+                        <div class="crypt_balance_text">
+                            <img src="../../img/atri.png" style="width: 20px; margin-right:20px"/>
+                            <span class="crypt_amount_text atri_balance">0.00 </span>
+                            <span>ATRI</span>
+
+                        </div>  <div class="crypt_balance_text">
+                            <i class="cf cf-eth" style="color:aqua"></i> 
+                            <span class="crypt_amount_text eth_balance">0.00 </span>
+                            <span>ETH</span>
+                        </div>  
+                        <div class="crypt_balance_text">
+                            <i class="cf cf-ltc" style="color:#345c9c"></i> 
+                            <span class="crypt_amount_text ltc_balance">0.00</span>
+                            <span>LTC</span>
+                        </div>
+                        <div class="crypt_balance_text">
+                            <i class="cf cf-btc" style="color:green"></i> 
+                            <span class="crypt_amount_text bch_balance">0.00</span>
+                            <span>BCH</span>
+                        </div>
+                    </div>
+                    <div style="width: 45%;">
+                        <div id="chartdiv"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="history_div">
+                <h4 class="fs-16 m-b-10" style="color:white">History</h4>
+                <div id="history_div" style="overflow-y: auto;  margin-bottom: 55px;">
+                </div> 
+            </div>
+        </div>
+
+        <div id="second_tab" class="tab_div">
+            <div class="t_balance_div" style="text-align: center; color:white;">
+                <p class="fs-12" style="font-weight: 300; margin-bottom:1px">Total Balance </p>
+                <p class="fs-13 total_balance_text" style="font-weight: 300;">$0.00</p>
+            </div>
+    
+            <div class="trade_main_div">
+                
+                <div class="tab_main">
+                    <div class="tabs">
+                        <div class="tabs__controls">
+                            <div data-tab="0" class="tabs__tab tabs__tab--active">
+                                <i class="fa fa-btc" aria-hidden="true" style="color:#f7931a;"></i>
+                            </div>
+                            <div data-tab="1" class="tabs__tab">
+                                 <img src="../../img/atri.png" style="width: 20px; margin-right:15px; margin-left:15px"/>
+                            </div>
+                            <div data-tab="2" class="tabs__tab ">
+                                <i class="cf cf-eth" style="color:aqua"></i> 
+                            </div>
+                            <div data-tab="3" class="tabs__tab">
+                                <i class="cf cf-ltc" style="color:#345c9c"></i> 
+                            </div>
+                            <div data-tab="4" class="tabs__tab">
+                                <i class="cf cf-btc" style="color:green"></i> 
+                            </div>
+                        </div>
+                
+                        <div class="tabs__content">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="current_balance_text" style="text-align: center;">
+                                        <p>Current Balance</p>
+                                    </div>
+                                    <div style="display: flex;">
+                                        <div style="width: 15%;">
+                                            <button class="c_to_btn form-control btn_receive" id="btc">
+                                                <i class="fas fa-arrow-left"></i>
+                                                Receive
+                                            </button>
+                                        </div>
+                                        <div style="width: 70%; text-align: center;">
+                                            <p class="fs-23 btc_balance" style="margin-bottom:3px">0.00</p>
+                                            <p class="fs-20 btc_usd_balance">$0.00</p>
+                                        </div>
+                                        <div style="width:15%">
+                                            <button class="c_send_btn form-control btn_send" id="btc">
+                                                <i class="fas fa-arrow-right"></i>
+                                                Send
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div style="text-align:center" class="m-t-3">
+                                        <span class="btc_price_text">BTC $22,494.56</span>
+                                        <span class="btc_percent_text">0%</span>
+                                    </div>
+                                    <div class="m-t-20" style="text-align: center;">
+                                        <div class="loading"></div>
+                                        <div id="btc_graph" class="apex-charts"></div>
+                                    </div>
+                                    <div class="period_button_group">
+                                        <button class="form-control btc_1_hour_btn btc_period_button active" id="1h"> 1 hour</button>
+                                        <button class="form-control btc_24_hour_btn btc_period_button" id='1d'> 24 hours</button>
+                                        <button class="form-control btc_7_day_btn btc_period_button" id='7d'> 7 days</button>
+    
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="current_balance_text" style="text-align: center;">
+                                        <p>Current Balance</p>
+                                    </div>
+                                    <div style="display: flex;">
+                                        <div style="width: 15%;">
+                                            <button class="c_to_btn form-control btn_receive" id="btc">
+                                                <i class="fas fa-arrow-left"></i>
+                                                Receive
+                                            </button>
+                                        </div>
+                                        <div style="width: 70%; text-align: center;">
+                                            <p class="fs-23 atri_balance" style="margin-bottom:3px">0.00 ATRI</p>
+                                            <p class="fs-20 atri_usd_balance">$0.00</p>
+                                        </div>
+                                        <div style="width:15%">
+                                            <button class="c_send_btn form-control btn_send" id="btc">
+                                                <i class="fas fa-arrow-right"></i>
+                                                Send
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div style="text-align:center" class="m-t-10">
+                                        <span class="atri_price_text">ATRI $0.12</span>
+                                        <span class="atri_percent_text">0.0%</span>
+                                    </div>
+                                    <div class="m-t-20" style="text-align:center">
+                                        <div class="loading"></div>
+                                        <div id="atri_graph" class="apex-charts"></div>
+                                    </div>
+                                    <div class="period_button_group">
+                                        <button class="form-control btc_1_hour_btn btc_period_button active" id="1h"> 1 hour</button>
+                                        <button class="form-control btc_24_hour_btn btc_period_button" id='1d'> 24 hours</button>
+                                        <button class="form-control btc_7_day_btn btc_period_button" id='7d'> 7 days</button>
+    
+                                    </div>
+                                </div><div class="swiper-slide">
+                                    <div class="current_balance_text" style="text-align: center;">
+                                        <p>Current Balance</p>
+                                    </div>
+                                    <div style="display: flex;">
+                                        <div style="width: 15%;">
+                                            <button class="c_to_btn form-control btn_receive" id="btc">
+                                                <i class="fas fa-arrow-left"></i>
+                                                Receive
+                                            </button>
+                                        </div>
+                                        <div style="width: 70%; text-align: center;">
+                                            <p class="fs-23 eth_balance" style="margin-bottom:3px">0.00</p>
+                                            <p class="fs-20 eth_usd_balance">$0.00</p>
+                                        </div>
+                                        <div style="width:15%">
+                                            <button class="c_send_btn form-control btn_send" id="btc">
+                                                <i class="fas fa-arrow-right"></i>
+                                                Send
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div style="text-align:center" class="m-t-10">
+                                        <span class="eth_price_text">ETH $647.34</span>
+                                        <span class="eth_percent_text">0%</span>
+                                    </div>
+                                    <div class="m-t-20" style="text-align:center">
+                                        <div class="loading"></div>
+                                        <div id="eth_graph" class="apex-charts"></div>
+                                    </div>
+                                    <div class="period_button_group">
+                                        <button class="form-control btc_1_hour_btn btc_period_button active" id="1h"> 1 hour</button>
+                                        <button class="form-control btc_24_hour_btn btc_period_button" id='1d'> 24 hours</button>
+                                        <button class="form-control btc_7_day_btn btc_period_button" id='7d'> 7 days</button>
+    
+                                    </div>
+                                </div><div class="swiper-slide">
+                                    <div class="current_balance_text" style="text-align: center;">
+                                        <p>Current Balance</p>
+                                    </div>
+                                    <div style="display: flex;">
+                                        <div style="width: 15%;">
+                                            <button class="c_to_btn form-control btn_receive" id="btc">
+                                                <i class="fas fa-arrow-left"></i>
+                                                Receive
+                                            </button>
+                                        </div>
+                                        <div style="width: 70%; text-align: center;">
+                                            <p class="fs-23 ltc_balance" style="margin-bottom:3px">0.00</p>
+                                            <p class="fs-20 ltc_usd_balance">$0.00</p>
+                                        </div>
+                                        <div style="width:15%">
+                                            <button class="c_send_btn form-control btn_send" id="btc">
+                                                <i class="fas fa-arrow-right"></i>
+                                                Send
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div style="text-align:center" class="m-t-10">
+                                        <span class="ltc_price_text">LTC $106.06</span>
+                                        <span class="ltc_percent_text">0%</span>
+                                    </div>
+                                    <div class="m-t-20" style="text-align:center">
+                                        <div class="loading"></div>
+                                        <div id="ltc_graph" class="apex-charts"></div>
+                                    </div>
+                                    <div class="period_button_group">
+                                        <button class="form-control btc_1_hour_btn btc_period_button active" id="1h"> 1 hour</button>
+                                        <button class="form-control btc_24_hour_btn btc_period_button" id='1d'> 24 hours</button>
+                                        <button class="form-control btc_7_day_btn btc_period_button" id='7d'> 7 days</button>
+    
+                                    </div>
+                                </div><div class="swiper-slide">
+                                    <div class="current_balance_text" style="text-align: center;">
+                                        <p>Current Balance</p>
+                                    </div>
+                                    <div style="display: flex;">
+                                        <div style="width: 15%;">
+                                            <button class="c_to_btn form-control btn_receive" id="btc">
+                                                <i class="fas fa-arrow-left"></i>
+                                                Receive
+                                            </button>
+                                        </div>
+                                        <div style="width: 70%; text-align: center;">
+                                            <p class="fs-23 bch_balance" style="margin-bottom:3px">0.00</p>
+                                            <p class="fs-20 bch_usd_balance">$0.00</p>
+                                        </div>
+                                        <div style="width:15%">
+                                            <button class="c_send_btn form-control btn_send" id="btc">
+                                                <i class="fas fa-arrow-right"></i>
+                                                Send
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div style="text-align:center" class="m-t-10">
+                                        <span class="bch_price_text">BCH $307.34</span>
+                                        <span class="bch_percent_text">0%</span>
+                                    </div>
+                                    <div class="m-t-20" style="text-align:center">
+                                        <div class="loading"></div>
+                                        <div id="bch_graph" class="apex-charts"></div>
+                                    </div>
+                                    <div class="period_button_group">
+                                        <button class="form-control btc_1_hour_btn btc_period_button active" id="1h"> 1 hour</button>
+                                        <button class="form-control btc_24_hour_btn btc_period_button" id='1d'> 24 hours</button>
+                                        <button class="form-control btc_7_day_btn btc_period_button" id='7d'> 7 days</button>
+    
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>            
+            </div>
+            <div class="history_div">
+               <h4 class="fs-16 m-b-20" style="color:white; font-family: 'roboto_bold'; letter-spacing: 1px; ">Activity</h4>
+               <div id="history_div_second" style="overflow-y: auto; height: 32%; margin-bottom:35px">
+                  
+               </div> 
+            </div>
+            <div class="modal fade" id="receive_modal" role="dialog">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                        <p class="fs-20" style="color:white; padding-top:20px;">Address</p>
+                        <div style="width: 80%; display: flex; margin:auto">
+                            <input type="text" style="position:absolute; left:999999" value="efsefsef" class="receive_address_input">
+                            <p class="fs-9 receive_address"></p>
+                            <span class="receive_address_copy" style="color:white; margin-top:13px"><i class="fas fa-copy"></i></span>
+                        </div>
+                        <div class="receive_qr" >
+                        </div>
+                  </div>
+                  
+                </div>
+              </div>
+        
+              <div class="modal fade" id="send_modal" role="dialog">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                        <div class="select_crypt_send_slide">
+                            <!-- <i class="fas fa-caret-left"></i> -->
+                            <span>
+                                <i class="cf cf-eth fs-30" style="color:aqua"></i> 
+                            </span>
+                            <!-- <i class="fas fa-caret-right"></i> -->
+                        </div>
+                        <p class="fs-20" style="color:white; padding-top:20px;">Send amount</p>
+                        <div class="input_amount_send_div">
+                            <div style="width:45%">
+                                <input class="send_amount" value="0.00" type="number" style="text-align:center; border:none; font-size: 24px;" class="fs-24" />
+                                <p class="send_amount_currency">BTC</p>
+                            </div>
+                            <div style="width:10%;align-self: center;"><i class="fa fa-exchange" style="font:normal normal normal 20px/1 FontAwesome; color:white"></i></div>
+                            <div style="width:45%">
+                                <input class="send_amount_usd" value="0.00" type="number" style="text-align:center; border:none; font-size: 24px;" class="fs-24" />
+                                <p>USD</p>
+                            </div>
+                        </div>
+                        <div style="width: 80%; display: flex; margin:auto; margin-bottom:20px; margin-top:20px">
+                            <input class="fs-12 send_address" placeholder="Tap to paste address">
+                            <span class="scan_qr" style="color:white; margin-top:15px"><i class="fas fa-qrcode"></i></span>
+                        </div>
+                        <div class="exchange_button_div" style="padding-bottom:50px">
+                            <button class="form-control send_continue" style="width: 80%; margin:auto; margin-top:40px">CONTINUE</button>
+                        </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+        <div id="firth_tab" class="tab_div">
+            <div class="exchange_div">
+                <p class="exchange_label">From: </p>
+                <div id="exchange_from_select"></div>
+                <p class="exchange_label m-t-20">To: </p>
+                <div id="exchange_to_select"></div>
+                <div>
+                    <p class="exchange_label m-t-20">Buy now </p>
+                    <div class="flex-row">
+                        <input type="number" style="width: 38%; height: 50px;">
+                        <span class="exchange_crypto_icon_span" >
+                            <i class="fa fa-btc" aria-hidden="true" style="color:rgb(242,169,0);"></i>
+                        </span>
+                        
+                        <input type="number" style="width: 38%;">
+                        <span class="exchange_crypto_icon_span"> 
+                         <i class="fa fa-usd" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                </div>
+                <div>
+                    <p class="exchange_label m-t-20">Receive </p>
+                    <div class="flex-row">
+                        <input type="number" style="width: 38%; height: 50px;">
+                        <span class="exchange_crypto_icon_span" >
+                            <i class="fa fa-btc" aria-hidden="true" style="color:#f7931a;"></i>
+                        </span>
+                        
+                        <input type="number" style="width: 38%;">
+                        <span class="exchange_crypto_icon_span"> 
+                         <i class="fa fa-usd" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                </div>
+    
+                <div class="exchange_button_div">
+                    <button class="form-control">Buy Now</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="fifth_tab" class="tab_div">
+            <div class="setting_div">
+                <h4>General</h4>
+                <div class="setting_sub_div" id="currency_setting">
+                    <i class="fa fa-dollar"></i>
+                    <div class="setting_subtitle_div">
+                        <p >Currency</p>
+                        <span>Set your preferred local currency</span>
+                    </div>
+                    <div class="setting_detail_div">
+                        <span>
+                            USD
+                        </span>
+                    </div>
+                </div>
+                <div class="setting_sub_div">
+                    <i class="fa fa-bell" aria-hidden="true"></i>
+                    <div class="setting_subtitle_div">
+                        <p >Notification</p>
+                        <span>Allow notifications for fund updates</span>
+                    </div>
+                        <div class="setting_detail_div">
+                            <label class="notification_toggle">
+                                <input type="checkbox" class="checkbox" checked />
+                                
+                                <div class="slider" aria-hidden="true">
+                                <div class="thumb" />
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="setting_sub_div" id="language_setting">
+                    <i class="fa fa-language"></i>
+                    <div class="setting_subtitle_div">
+                        <p >Language</p>
+                        <span>Change app language</span>
+                    </div>
+                    <div class="setting_detail_div">
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <h4 class="m-t-30">Advanced</h4>
+                <div class="setting_sub_div">
+                    <i class="fas fa-palette"></i>
+    
+                    <div class="setting_subtitle_div">
+                        <p >Theme</p>
+                        <span>Select between dark and light theme</span>
+                    </div>
+                    <div class="setting_detail_div">
+                        <label class="notification_toggle">
+                            <input type="checkbox" class="checkbox switch_theme_mode"  checked />
+                            
+                            <div class="slider" aria-hidden="true">
+                            <div class="thumb" />
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                </div>
+                <div class="setting_sub_div" id="support_setting">
+                    <i class="fas fa-question"></i>
+                    <div class="setting_subtitle_div">
+                        <p >Support</p>
+                    </div>
+                   
+                </div>
+                <div class="setting_sub_div" id="reset_pin_setting">
+                    <i class="fa fa-bell" aria-hidden="true"></i>
+    
+                    <div class="setting_subtitle_div">
+                        <p >Reset pincode</p>
+                    </div>
+                    
+                </div>
+                <div class="setting_sub_div" id="logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <div class="setting_subtitle_div">
+                        <p >Logout</p>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer_navigation">
+            <div class="phone">
+                <input type="radio" name="s" id="s1" checked="checked"  >
+                <input type="radio" name="s" id="s2" >
+                <input type="radio" name="s" id="s3">
+                <input type="radio" name="s" id="s4">
+                <input type="radio" name="s" id="s5">
+            
+                <label for="s1" class="s1 first_tab"><i class="fas fa-align-justify"></i></label>
+                <label for="s2" class="s2 second_tab"><i class="fa fa-line-chart" style="font:normal normal normal 16px/1 FontAwesome"></i></label>
+                <label for="s3" class="s3 third_tab"><i class="fas fa-qrcode"></i></label>
+                <label for="s4" class="s4 firth_tab"><i class="fa fa-exchange" style="font:normal normal normal 16px/1 FontAwesome"></i></label>
+            
+                <label for="s5" class="s5 fifth_tab"><i class="fas fa-cog"></i></label>
+            
+                <div class="circle"></div>
+                <div class="phone_content">
+                  <div class="phone_bottom">
+                    <span class="indicator"></span>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </body>
+</html>
+<script src="../../js/theme_mode.js"></script>
+
+<script>
+    var count=0;
+    var btc_u_v = 0;var atri_u_v = 0;var eth_u_v = 0;var ltc_u_v = 0;var bch_u_v = 0;
+    first_tab_function();
+    $(".first_tab").click(function(){
+        $(".tab_div").removeClass('active');
+        $("#first_tab").addClass('active');
+        first_tab_function();
+    });
+    $(".second_tab").click(function(){
+        $(".tab_div").removeClass('active');
+        $("#second_tab").addClass('active');
+        second_tab_function();
+    });
+    $(".firth_tab").click(function(){
+        $(".tab_div").removeClass('active');
+        $("#firth_tab").addClass('active');
+        firth_tab_function();
+    });
+
+    $(".fifth_tab").click(function(){
+        $(".tab_div").removeClass('active');
+        $("#fifth_tab").addClass('active');
+        fifth_tab_function();
+    });
+
+    $(".third_tab").click(function(){
+        window.location.href="../scan_qr/index.html";
+    })
+    function first_tab_function(){
+        var token = localStorage.getItem('token');
+        var btc_v = localStorage.getItem('b_btc');
+        var atri_v = localStorage.getItem('b_atri');
+        var eth_v = localStorage.getItem('b_eth');
+        var ltc_v = localStorage.getItem('b_ltc');
+        var bch_v = localStorage.getItem('b_bch');
+        var sum_v = localStorage.getItem('b_sum');
+        $(".btc_balance").html(parseFloat(btc_v).toFixed(7));
+        $(".atri_balance").html(parseFloat(atri_v).toFixed(2));
+        $(".eth_balance").html(parseFloat(eth_v).toFixed(7));
+        $(".ltc_balance").html(parseFloat(ltc_v).toFixed(7));
+        $(".bch_balance").html(parseFloat(bch_v).toFixed(7));
+        $(".total_balance").html('$'+parseFloat(sum_v).toFixed(2));
+        // currency_convert1("btc",btc_v);
+        // currency_convert1("atri",atri_v);
+        get_history1();
+        currency_convert1("eth",eth_v);
+        currency_convert1("ltc",ltc_v);
+        currency_convert1("bch",bch_v);
+        $.when( currency_convert1("btc",btc_v),currency_convert1("atri",atri_v),currency_convert1("eth",eth_v),currency_convert1("ltc",ltc_v),currency_convert1("bch",bch_v)).then(function() {
+            pie_chart_generate()
+        });
+            
+    }
+    
+    function second_tab_function(){
+        var current_tab =0;
+        if(localStorage.getItem("current_currency")!=0){
+            current_tab=localStorage.getItem("current_currency");
+        }
+        $(".loading").css("display","block");
+        setTimeout(() => {
+            get_crypt_data(current_tab);
+            
+        }, 1000);
+        
+        var currency_data = [['btc','bitcoin'],['atri','atri'],['eth','ethereum'],['ltc','litecoin'],['bch','bitcoincash']];
+        localStorage.setItem("current_currency",current_tab);
+
+        const tabControls = [...document.querySelectorAll(".tabs__controls")];
+        const tabsContent = document.querySelector(".tabs__content");
+        const tabsActiveClass = "tabs__tab--active";
+        let tabsSwiper;
+        const initTabs = () => {
+            tabsSwiper = new Swiper(tabsContent, {
+                autoHeight: true,
+                allowTouchMove:false,
+                on: {
+                    slideChange: function () {
+                        tabControls.forEach((tab) => {
+                            [...tab.children].forEach((t) => {
+                                t.classList.remove(tabsActiveClass);
+                            });
+                        });
+                        const setActive = document.querySelector(
+                            `.tabs__tab[data-tab="${this.activeIndex}"]`
+                        );
+                        setActive && setActive.classList.add(tabsActiveClass);
+                    }
+                }
+            });
+        };
+
+        const initTabControls = (swiper) => {
+            tabControls.forEach((tab) => {
+                tab.addEventListener("click", (event) => {
+                    if (event.target.classList.contains("tabs__tab")) {
+                        [...tab.children].forEach((t) => {
+                            t.classList.remove(tabsActiveClass);
+                        });
+                        swiper.slideTo(event.target.dataset.tab);
+                        event.target.classList.add(tabsActiveClass);
+                        var tab_count = $(event.target).attr('data-tab');
+                        $(".loading").css("display","block");
+                        $(".apex-charts").html("");
+                        setTimeout(() => {
+                            get_crypt_data(tab_count);
+                        }, 10);
+                        current_tab = tab_count;
+                        localStorage.setItem("current_currency",current_tab);
+
+                    }
+                });
+            });
+        };
+        initTabs();
+        initTabControls(tabsSwiper);
+        $(".send_continue").click(function(){
+            var send_amount = $(".send_amount").val();
+            var send_address = $(".send_address").val();
+            if(send_amount!=0 && send_address!=""){
+                localStorage.setItem("send_amount",send_amount);
+                localStorage.setItem("send_address",send_address);
+                window.location.href = "../../component/send_confirm/index.html";
+            }
+        })
+        $(".btn_send").click(function(){
+            $(".send_amount_currency").html(currency_data[current_tab][0].toUpperCase());
+            if(current_tab==0)
+                $(".select_crypt_send_slide").html(' <span><i class="cf cf-btc" style="color:#f7931a"></i></span>');
+            if(current_tab==1)
+                $(".select_crypt_send_slide").html('<span> <img src="../../img/atri.png" style="width: 20px; margin-right:20px"/></span>');
+            if(current_tab==2)
+                $(".select_crypt_send_slide").html('<span> <i class="cf cf-eth" style="color:aqua"></i></span>  ');
+            if(current_tab==3)
+                $(".select_crypt_send_slide").html('<span><i class="cf cf-ltc" style="color:#345c9c"></i></span>  ');
+            if(current_tab==4)
+                $(".select_crypt_send_slide").html(' <span><i class="cf cf-btc" style="color:green"></i></span> ');
+            $(".send_amount").val(0.00);
+            $(".send_amount_usd").val(0.00);
+            $("#send_modal").modal('show');
+        });
+
+        $(".send_amount").keyup(function(){
+            var send_a = $(this).val();
+            $(".send_amount_usd").val((usd_value*send_a).toFixed(4));
+        });
+
+        $(".send_amount_usd").keyup(function(){
+            var send_a = $(this).val();
+            $(".send_amount").val((send_a/usd_value).toFixed(7));
+        });
+        $(".scan_qr").click(function(){
+                cordova.plugins.barcodeScanner.scan(
+                    function (result) {
+                        console.log(result);
+                        if(!result.cancelled)
+                        {
+                            console.log(result);
+                            var qr_address;
+                            var split = result.text.split(":");
+                            if(split.length>1)
+                                qr_address=split[1];
+                            else    
+                                qr_address = split[0];
+                            $(".send_address").val(qr_address);
+                        }
+                        else{
+                            // window.location.href = "../../component/balance/index.html";
+                        }
+                    },
+                    function (error) {
+                        alert("Scanning failed: " + error);
+                        // window.location.href = "../../component/balance/index.html";
+                    }
+            );
+        })
+        $(".btc_period_button").click(function(){
+            var period = $(this).attr('id');
+            $(".btc_period_button").removeClass('active');
+            $(this).addClass('active');
+            $(".apex-charts").html("");
+
+            $(".loading").css("display","block");
+            setTimeout(() => {
+                draw_graph(current_tab,period);
+            }, 10);
+        });
+
+        $('body').on('click', '.btn_receive', function () {
+
+            console.log("asefsaf");
+            $("#receive_modal").modal('show');
+            receive(current_tab);
+        });
+
+        $('body').on('click', '.receive_address_copy', function () {
+            var copyText = document.getElementsByClassName("receive_address_input")[0];
+            copyText.select();
+            copyText.setSelectionRange(0, 99999)
+            document.execCommand("copy");
+            alert("Copied to clipboard");
+        })
+
+    }
+    
+    function firth_tab_function(){
+        var ddData = [
+        {
+            text: "BTC Bitcoin",
+            value: 1,
+            selected: false,
+            description: "0.000 BTC | $0.00",
+            imageSrc: "../../img/btc.png",
+        },
+        {
+            text: "ATRI Atari token",
+            value: 2,
+            selected: false,
+            description: "0.000 BTC | $0.00",
+            imageSrc: "../../img/atri.png"
+        },
+        {
+            text: "ETH Ethereum",
+            value: 3,
+            selected: true,
+            description: "0.000 BTC | $0.00",
+            imageSrc: "../../img/eth.png"
+        },
+        {
+            text: "LTC litcoin",
+            value: 4,
+            selected: false,
+            description: "0.000 BTC | $0.00",
+            imageSrc: "../../img/ltc.png"
+        },
+        {
+            text: "BCH Bitcoin cash",
+            value: 4,
+            selected: false,
+            description: "0.000 BTC | $0.00",
+            imageSrc: "../../img/bch.png"
+        }
+    ];
+        $('#exchange_from_select').ddslick({
+            data: ddData,
+            defaultSelectedIndex:1
+        });
+        $('#exchange_to_select').ddslick({
+            data: ddData,
+            defaultSelectedIndex:1
+        });
+    }
+
+    function fifth_tab_function(){
+        $("#chartdiv").html("");
+        var theme = localStorage.getItem('theme');
+        if(theme=="0"){
+            $(".switch_theme_mode").prop('checked',false);
+        }
+        else{
+            $(".switch_theme_mode").prop('checked',true);
+        }
+
+        $("#currency_setting").click(function(){
+            window.location.href = "../../component/setting_sub/currency.html";
+        });
+
+        $("#language_setting").click(function(){
+            window.location.href = "../../component/setting_sub/language.html";
+        });
+
+        $("#support_setting").click(function(){
+            window.location.href = "../../component/setting_sub/support.html";
+        });
+
+        $("#reset_pin_setting").click(function(){
+            window.location.href = "../../component/setting_sub/reset_pin.html";
+        });
+
+        $("#logout").click(function(){
+            localStorage.setItem("token","");
+            var r = confirm("Are you sure you want to logout?");
+            if (r == true) {
+                window.location.href = "../../index.html";
+            } else {
+            }
+        });
+
+        $(".switch_theme_mode").change(function(){
+            var value = $(this).prop('checked');
+            if(value){
+                localStorage.setItem("theme","1");
+                $("body").removeClass("light_mode");
+            }
+            else{
+                localStorage.setItem("theme","0");
+                $("body").addClass("light_mode");
+            }
+        })
+    
+    }
+
+    function currency_convert1(currency,value){
+        return $.ajax('https://www.ataritokens.com/myportal/api/currency-convert/'+value+'/'+currency+'/usd', {
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                    xhr.setRequestHeader ("Authorization", token);
+                },
+            success:  function(result){
+                if(currency=="btc")
+                    btc_u_v=result['result'];
+                if(currency=="atri")
+                    atri_u_v=result['result'];
+                if(currency=="eth")
+                    eth_u_v=result['result'];
+                if(currency=="ltc")
+                    ltc_u_v=result['result'];
+                if(currency=="bch")
+                    bch_u_v=result['result'];
+            }
+        });
+    }
+    function get_history1(){
+        $.ajax
+        ({
+            type: "GET",
+            url: 'https://www.ataritokens.com/myportal/api/transactions/all',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader ("Authorization", token);
+            },
+            success: function (value){
+                var result = value['result'];
+                console.log("result",result);
+                var history_div = "";
+
+                for(var i=0; i<result.length; i++){
+                    history_div+=`<div class="m-b-10" style="display:flex; color:white">
+                        <div style="width: 10%; align-items: center; align-self:center">`;
+                    if(result[i]['type']=="received")
+                    {
+                        history_div+=`<i class="fa fa-arrow-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="history_status" style="width: 45%;">
+                                <p class="fs-15">Received</p>
+                                <p class="fs-11">`+result[i]['created_at']+`</p></div>
+                            <div style="width: 45%; text-align: right;">
+                                
+                                    <p class="fs-15" style="color:rgb(70,155,74)">`+result[i]['amount']+` `+result[i]['currency'].toUpperCase()+`</p>
+                                    <p class="fs-14 history_amount_usd">$`+result[i]['amount_usd']+`</p>
+                                </div>
+                            </div>`;
+                    }
+                    else{
+                        history_div+=`<i class="fa fa-arrow-up" aria-hidden="true"></i>
+                            </div>
+                            <div class="history_status" style="width: 45%;">
+                                <p class="fs-15">Sent</p>
+                                <p class="fs-11">`+result[i]['created_at']+`</p></div>
+                            <div style="width: 45%; text-align: right;">
+                                
+                                    <p class="fs-15" style='color:rgb(244,67,54)'>`+result[i]['amount']+` `+result[i]['currency'].toUpperCase()+`</p>
+                                    <p class="fs-14 history_amount_usd" >$`+result[i]['amount_usd']+`</p>
+                                </div>
+                            </div>`;
+                    }
+                }
+                $("#history_div").html(history_div);
+            },
+            error: function(xhr, status, error) {
+                console.log("error",status,xhr,error);
+            }
+        });
+    }
+    function pie_chart_generate(){
+        console.log(atri_u_v,"asfasef");
+        am4core.ready(function() {
+            am4core.useTheme(am4themes_animated);
+            var data = [{
+            "category": "BTC",
+            "value": btc_u_v.toFixed(2),
+            "color": am4core.color("#f7931a"),
+            
+            }, {
+            "category": "ATRI",
+            "value": atri_u_v.toFixed(2),
+            "color": am4core.color("#ce2424"),
+            
+            }, {
+            "category": "ETH",
+            "value": eth_u_v.toFixed(2),
+            "color": am4core.color("aqua"),
+            }, {
+            "category": "LTC",
+            "value": ltc_u_v.toFixed(2),
+            "color": am4core.color("#345c9c"),
+            }, {
+            "category": "BCH",
+            "value": bch_u_v.toFixed(2),
+            "color": am4core.color("green"),
+            }]
+            
+            /**
+             * Chart container
+             */
+            
+            // Create chart instance
+            var chart = am4core.create("chartdiv", am4core.Container);
+            chart.width = am4core.percent(100);
+            chart.height = am4core.percent(100);
+            chart.layout = "horizontal";
+            
+            var pieChart = chart.createChild(am4charts.PieChart);
+            pieChart.data = data;
+            pieChart.innerRadius = am4core.percent(65);
+            
+            var pieSeries = pieChart.series.push(new am4charts.PieSeries());
+            pieSeries.dataFields.value = "value";
+            pieSeries.dataFields.category = "category";
+            pieSeries.slices.template.propertyFields.fill = "color";
+            pieSeries.labels.template.disabled = true;
+            // chart.legend.itemContainers.template.togglable = false;
+            let hs = pieSeries.slices.template.states.getKey("hover");
+            hs.properties.scale = 1;
+            let as = pieSeries.slices.template.states.getKey("active");
+            as.properties.shiftRadius = 0;
+            // var label1 = pieChart.seriesContainer.createChild(am4core.Label);
+            // label1.text = "";
+            // label1.horizontalCenter = "middle";
+            // label1.fontSize = 25;
+            // label1.fontWeight = 600;
+            // label1.dy = -12;
+            
+            pieChart.events.on("ready", function(ev) {
+            pieSeries.slices.getIndex(0).isActive = true;
+            });
+            var theme = localStorage.getItem('theme');
+
+            if(theme=="0")
+                pieSeries.slices.template.stroke = am4core.color('rgb(255,255,255)');
+            else
+                pieSeries.slices.template.stroke = am4core.color('rgb(0,0,0)');
+            pieSeries.slices.template.strokeWidth = 2;
+            pieSeries.slices.template.strokeOpacity = 1;
+            
+            pieSeries.slices.template.events.on("toggled", function(ev) {
+            if (ev.target.isActive) {
+                pieSeries.slices.each(function(slice) {
+                if (slice != ev.target) {
+                    slice.isActive = false;
+                }
+                });
+                // label1.text = pieChart.numberFormatter.format(ev.target.dataItem.values.value.value);
+                // label1.fill = ev.target.fill;
+            }
+        });
+        });
+    }
+    
+    </script>

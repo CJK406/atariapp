@@ -51,7 +51,7 @@ function currency_convert(currency,value){
 
 
 function get_transaction_history(index){
-    $("#history_div").html("");
+    $("#history_div_second").html("");
     $.ajax
     ({
         type: "GET",
@@ -96,7 +96,7 @@ function get_transaction_history(index){
                 }
                     
             }
-            $("#history_div").html(history_div);
+            $("#history_div_second").html(history_div);
         },
         error: function(xhr, status, error) {
             console.log("error",status,xhr,error);

@@ -26,12 +26,6 @@ $(".send_amount_usd").keyup(function(){
     $(".send_amount").val((send_a/usd_value).toFixed(7));
 });
 
-// $(".send_address").focus(function(){
-//     var clipboard = window.clipboardData.getData('Text');
-//     if($(this).val()!=""){
-//         $(this).val(clipboard);
-//     }
-// });
 
 $(".scan_qr").click(function(){
         cordova.plugins.barcodeScanner.scan(
