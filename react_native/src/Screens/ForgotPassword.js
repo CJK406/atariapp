@@ -11,7 +11,6 @@ class ForgotPasswordScreen extends React.Component {
 	state = {
 		email: ''
 	}
-
 	goNext = async () => {
 		const { email } = this.state;
 		if (email.length === 0) {
@@ -22,7 +21,6 @@ class ForgotPasswordScreen extends React.Component {
 			Toast.show('Invalid Email Format');
 			return;
 		}
-
 		try {
 			const response = await requestResetPasswordApi(email);
 			if (response && response.data) {
@@ -43,11 +41,9 @@ class ForgotPasswordScreen extends React.Component {
 			Toast.show('An error occured. Please try again later');
 		}
 	}
-
 	goBack = () => {
 		this.props.navigation.navigate('Login');
 	}
-
   render() {
 		const { primaryColor, secondaryColor, thirdcolor, forthColor } = this.props.theme.palette;
 		const { email } = this.state;
@@ -75,16 +71,12 @@ class ForgotPasswordScreen extends React.Component {
 						<TouchableOpacity onPress={() => this.goBack()} style={{marginTop: 20, borderRadius:10, ...CustomStyles.buttonStyle, ...CustomStyles.smallBtn, ...CustomStyles.longBtn, backgroundColor: thirdcolor}}>
 							<Text style={{fontSize: 18, color: 'white'}}>BACK TO LOGIN</Text>
 						</TouchableOpacity>
-
-						
 					</View>
-					
 				</View>
       </SafeAreaView>
     );
   }
 }
-
 const styles = StyleSheet.create({
 	customWriting: {
 		fontSize: 18,
@@ -94,10 +86,8 @@ const styles = StyleSheet.create({
 		marginBottom:40
 	}
 });
-
 function mapStateToProps(state) {
-  return {
-  };
-}
-
+	return {
+	};
+  }
 export default connect(mapStateToProps, {})(withTheme(ForgotPasswordScreen));

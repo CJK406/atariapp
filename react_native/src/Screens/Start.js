@@ -12,11 +12,10 @@ class StartScreen extends React.Component {
 	componentDidMount() {
 		setTimeout(() => {
 			this.goNext('Login');
-		}, 6500);
+		}, 4500);
 	}
-
   render() {
-		const { primaryColor, secondaryColor } = this.props.theme.palette;
+	const { primaryColor, secondaryColor } = this.props.theme.palette;
     return (
       <SafeAreaView style={{...CustomStyles.container, backgroundColor: primaryColor}}>
 		<View style={[CustomStyles.container]}>
@@ -26,10 +25,8 @@ class StartScreen extends React.Component {
     );
   }
 }
-
 function mapStateToProps(state) {
-  return {
-  };
-}
-
+	return {
+	};
+  }
 export default connect(mapStateToProps, {})(withTheme(StartScreen));

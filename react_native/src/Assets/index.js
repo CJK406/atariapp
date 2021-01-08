@@ -3,6 +3,7 @@ export const Images = {
 	Forget_icon: require('./crypt.png'),
 	logo_animation: require('./animation.gif'),
 	start_animation: require('./start.gif'),
+	reset_pin_animation: require('./reset.gif'),
 
 	Eth_icon: require('./eth.png'),
 	Ltc_icon: require('./ltc.png'),
@@ -10,5 +11,6 @@ export const Images = {
 	btc_icon: require('./btc.png'),
 	bch_icon: require('./bch.png'),
 
+	exchange_gif : require('./giphy.gif'),
 
 };

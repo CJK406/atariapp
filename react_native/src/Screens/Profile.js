@@ -9,25 +9,14 @@ import Logo from '../Assets/logo.png';
 import { settingTheme } from '../Redux/Actions';
 
 const Menus = [
-	{ name: 'Currency', page: 'MyEvents', icon: 'logo-usd', description:'Set your preferred local currency'},
+	{ name: 'Currency', page: '', icon: 'logo-usd', description:'Set your preferred local currency'},
 	{ name: 'Notifications', page: 'Notifications', icon: 'notifications-outline',description:'Allow notifications for fund updates' },
-	{ name: 'Language', page: 'EditProfile', icon: 'language-outline',description:'Change app language' },
-	{ name: 'Theme', page: 'PaymentHistory', icon: 'contrast-outline',description:'Select between dark and light theme' },
-	{ name: 'Support', page: 'DailyIncome', icon: 'help-buoy-outline',description:'' },
-	{ name: 'Reset Pincode', page: 'Calendar', icon: 'refresh-outline',description:'' },
-	{ name: 'Logout', page: 'UpdatePassword', icon: 'log-out-outline',description:'' },
+	{ name: 'Language', page: '', icon: 'language-outline',description:'Change app language' },
+	{ name: 'Theme', page: '', icon: 'contrast-outline',description:'Select between dark and light theme' },
+	{ name: 'Support', page: '', icon: 'help-buoy-outline',description:'' },
+	{ name: 'Reset Pincode', page: 'ResetPin', icon: 'refresh-outline',description:'' },
+	{ name: 'Logout', page: '', icon: 'log-out-outline',description:'' },
 ];
-
-// const Menus = [
-// 	{ name: 'Currency', page: 'MyEvents', icon: 'currency-usd', description:'Set your preferred local currency'},
-// 	{ name: 'Notifications', page: 'Notifications', icon: 'notifications-outline',description:'Allow notifications for fund updates' },
-// 	{ name: 'Language', page: 'EditProfile', icon: 'language',description:'Change app language' },
-// 	{ name: 'Theme', page: 'PaymentHistory', icon: 'theme-light-dark',description:'Select between dark and light theme' },
-// 	{ name: 'Support', page: 'DailyIncome', icon: 'contact-support',description:'' },
-// 	{ name: 'Reset Pincode', page: 'Calendar', icon: 'lock-reset',description:'' },
-// 	{ name: 'Logout', page: 'UpdatePassword', icon: 'logout-variant',description:'' },
-// ];
-
 class ProfileScreen extends React.Component {
 	state = {
 		themeToggle:true,
@@ -45,19 +34,9 @@ class ProfileScreen extends React.Component {
   }
 
 	goToDetail = (item) => {
-		// if (item.page !== 'CloseAccount') { this.props.navigation.navigate(item.page); return; }
-		// Alert.alert('Close Account', 'You will not access your account again!', [
-		// 	{
-		// 		text: 'Cancel',
-		// 		style: 'cancel'
-		// 	},
-		// 	{
-		// 		text: 'OK',
-		// 		onPress: () => { this.props.authLogout(); }
-		// 	}
-		// ]);
-	}
 
+		this.props.navigation.navigate(item);
+	}
 	doLogOut = () => {
 		this.props.authLogout();
 	}
@@ -72,8 +51,8 @@ class ProfileScreen extends React.Component {
 	}
 
 	changeTheme = (key) => {
+		this.setState({themeToggle:key})
 		this.props.settingTheme(key);
-	 	this.setState({themeToggle:key})
 	}
 
   render() {
@@ -86,9 +65,9 @@ class ProfileScreen extends React.Component {
 						<LogoBox style={{position: 'absolute', left: 0}}/>
 						<Image source={Logo} style={{width:160, height:50}} />
 					</View>
-					<ScrollView style={{flex: 1, margin:30}} contentContainerStyle={{paddingBottom: 15}}>
+					<ScrollView showsVerticalScrollIndicator={false} style={{flex: 1, margin:30}} contentContainerStyle={{paddingBottom: 15}}>
 						<Text style={[themeToggle ? {color:'white'}:{color:'black'},{fontSize:15,marginBottom:14}]}>General</Text>
-						<TouchableOpacity onPress={() => this.goToDetail(Menus[0])} style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+						<TouchableOpacity  style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
 							<View style={{flexDirection: 'row', alignItems: 'center', position: 'relative'}}>
 								<View style={{width:'10%'}}><Ionicons name={Menus[0].icon} size={26} color="white" /></View>
 								<View style={{width:'75%'}}>
@@ -100,7 +79,7 @@ class ProfileScreen extends React.Component {
 								</View>
 							</View>
 						</TouchableOpacity>
-						<TouchableOpacity onPress={() => this.goToDetail(Menus[1])} style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+						<TouchableOpacity style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
 							<View style={{flexDirection: 'row', alignItems: 'center', position: 'relative'}}>
 								<View style={{width:'10%'}}>
 									<Ionicons name={Menus[1].icon} size={26} color="white" />
@@ -121,7 +100,7 @@ class ProfileScreen extends React.Component {
 
 							</View>
 						</TouchableOpacity>
-						<TouchableOpacity onPress={() => this.goToDetail(Menus[2])} style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+						<TouchableOpacity  style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
 							<View style={{flexDirection: 'row', alignItems: 'center', position: 'relative'}}>
 								<View style={{width:'10%'}}>
 									<Ionicons name={Menus[2].icon} size={26} color="white" />
@@ -137,7 +116,7 @@ class ProfileScreen extends React.Component {
 							</View>
 						</TouchableOpacity>
 						<Text style={[themeToggle ? {color:'white'}:{color:'black'},{fontSize:15,marginBottom:14}]}>Advanced</Text>
-						<TouchableOpacity onPress={() => this.goToDetail(Menus[3])} style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+						<TouchableOpacity  style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
 							<View style={{flexDirection: 'row', alignItems: 'center', position: 'relative'}}>
 								<View style={{width:'10%'}}>
 									<Ionicons name={Menus[3].icon} size={26} color="white" />
@@ -159,7 +138,7 @@ class ProfileScreen extends React.Component {
 								
 							</View>
 						</TouchableOpacity>
-						<TouchableOpacity onPress={() => this.goToDetail(Menus[4])} style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+						<TouchableOpacity style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
 							<View style={{flexDirection: 'row', alignItems: 'center', position: 'relative'}}>
 								<Ionicons name={Menus[4].icon} size={26} color="white" />
 								<View>
@@ -167,7 +146,7 @@ class ProfileScreen extends React.Component {
 								</View>
 							</View>
 						</TouchableOpacity>
-						<TouchableOpacity onPress={() => this.goToDetail(Menus[5])} style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+						<TouchableOpacity onPress={() => this.goToDetail('ResetPin')} style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
 							<View style={{flexDirection: 'row', alignItems: 'center', position: 'relative'}}>
 								<Ionicons name={Menus[5].icon} size={26} color="white" />
 								<View>
@@ -175,7 +154,7 @@ class ProfileScreen extends React.Component {
 								</View>
 							</View>
 						</TouchableOpacity>
-						<TouchableOpacity onPress={() => this.goToDetail(Menus[6])} style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+						<TouchableOpacity style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
 							<View style={{flexDirection: 'row', alignItems: 'center', position: 'relative'}}>
 								<Ionicons name={Menus[6].icon} size={26} color="white" />
 								<View>

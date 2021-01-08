@@ -2,20 +2,13 @@ import * as React from 'react';
 import { SafeAreaView, StyleSheet, Text,Image,TextInput,TouchableOpacity, View, ScrollView,ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
-import { CustomStyles } from '../Constant';
+import { CustomStyles,Headers } from '../Constant';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Images } from '../Assets';
 import Modal from 'react-native-modal';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { confirm_payment} from '../Api';
-
-
-const Headers = [{Image:Images.btc_icon,text:'BTC',color:'#f7931a',full_text:'bitcoin'},
-{Image:Images.Atri_icon,text:'ATRI',color:'#ce2424',full_text:'atri'},
-{Image:Images.Eth_icon,text:'ETH',color:'aqua',full_text:'ethereum'},
-{Image:Images.Ltc_icon,text:'LTC',color:'#345c9c',full_text:'litecoin'},
-{Image:Images.bch_icon,text:'BCH',color:'green',full_text:'bitcoincash'}];
 
 class SendConfirmScreen extends React.Component {
     state = {
@@ -36,14 +29,11 @@ class SendConfirmScreen extends React.Component {
 	goBack = () => {
 		this.props.navigation.goBack();
 	}
-
-	
     toggleModal = () => {
 		this.setState({
 			show_miner_fee_modal:!this.state.show_miner_fee_modal
 		})
     }
-    
     changeEvent = (e,index) => {
         const input_value = this.state.input_value;
         input_value[index] = e[e.length-1];
@@ -63,7 +53,6 @@ class SendConfirmScreen extends React.Component {
     }
 
 	SendConfirm = async () => {
-        
         const {input_value, miner_fee, info} = this.state;
         if(input_value[0]!=="" && input_value[1]!=="" && input_value[2]!=="" && input_value[3]!==""&& input_value[4]!==""&& input_value[5]!==""){
             this.setState({isLoading:true});
@@ -83,11 +72,8 @@ class SendConfirmScreen extends React.Component {
                 alert(result.error);
             }
             this.setState({isLoading:false});
-
-
         }
     }
-
   render() {
         const radio_props = [
             {label: 'Economic', value: 1 },

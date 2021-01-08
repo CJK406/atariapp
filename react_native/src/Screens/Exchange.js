@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { CustomStyles } from '../Constant';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-// import { authLogout, getMyRelation, getMyTickets, getMarketTickets, getNotifications, getPaymentHistory } from '../Redux/Actions';
 import { LogoBox } from '../Components';
 import { Images } from '../Assets';
+import Modal from 'react-native-modal';
 
 class ExchangeScreen extends React.Component {
     state = {
@@ -15,11 +15,8 @@ class ExchangeScreen extends React.Component {
         drop1_key:0,
         drop2_key:0,
         darkmode:true,
+        show_modal:false
 	}
-	componentDidMount() {
-	}
-	componentWillUnmount() {
-    }
     static getDerivedStateFromProps(props, state) {
         return {
             darkmode:props.darkmode,
@@ -28,14 +25,8 @@ class ExchangeScreen extends React.Component {
 	navigate = (pagename) => {
 		this.props.navigation.navigate(pagename);
 	}
-  render() {
+    render() {
         const {drop1_flag,drop2_flag,drop1_key,drop2_key,darkmode} = this.state;
-        // const data = [{color:'#f7931a',value:'40'},{color:'rgb(244,67,54)',value:'10'},{color:'#00ffff',value:'60'},{color:'#345c9c',value:'0.9'},{color:'green',value:'100'}];
-        const data = [32,65,1,54,78];
-        const color_data = ['#f7931a','rgb(244,67,54)','#00ffff','#345c9c','green'];
-        const getColor = (key) => color_data[key];
-
-
         const exchage_from_data = [{image:Images.btc_icon,value:'0.00',u_v:'0.0', f_text:'BTC', text:'Bitcoin'},
                                     {image:Images.Atri_icon,value:'0.00',u_v:'0.0',f_text:'ATRI', text:'Atari token'},
                                     {image:Images.Eth_icon,value:'0.00',u_v:'0.0', f_text:'ETH', text:'Ethereum'},
@@ -165,17 +156,25 @@ class ExchangeScreen extends React.Component {
                     </View>
                     <TouchableOpacity  
                         style={{backgroundColor:'rgb(227,30,45)',marginTop:20, padding:15,borderRadius:10,textAlign:'center',justifyContent:'center'}}
-                    >
+                        onPress={() =>{this.setState({show_modal:true})}}
+                   >
                         <Text style={{fontSize: 18,color:'white',textAlign:'center',justifyContent:'center',fontWeight:'bold'}}>Buy Now</Text>
                     </TouchableOpacity>
-                     
-                        
-                    
-                    
-                    
-                    
-                    
                 </View>
+                <Modal
+					isVisible={this.state.show_modal}
+					>
+					<View style={{ backgroundColor:'white',borderRadius:10}}>
+						<Image source={Images.exchange_gif} style={{justifyContent:'center', width:'100%',height:200,marginTop:40}} />
+						<Text style={{fontSize:30, textAlign:'center',marginTop:40,marginBottom:20}}>Available Soon</Text>
+						<Text style={{textAlign:'center',padding:20,fontSize:20}}>Exchange feature will be available soon.</Text>
+						<TouchableOpacity onPress={() => this.setState({show_modal:false})} 
+							style={{backgroundColor:'rgb(227,30,45)', width:'60%',marginBottom:20,textAlign:'center',justifyContent:'center',marginLeft:'18%',padding:20,borderRadius:10,textAlign:'center',justifyContent:'center'}}
+						>
+							<Text style={{fontSize: 18,color:'white',textAlign:'center',justifyContent:'center',fontWeight:'bold'}}>OK</Text>
+						</TouchableOpacity>
+					</View>
+				</Modal>
             </View>
             
       </SafeAreaView>

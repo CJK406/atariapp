@@ -8,6 +8,7 @@ export { default as ExchangeScreen } from './Exchange';
 
 export { default as NotificationScreen } from './Notification';
 export { default as SendConfirmScreen } from './SendConfirm';
+export { default as ResetPinScreen } from './ResetPin';
 
 export { default as QRScanScreen } from './QRScan';
 export { default as SendPaymentScreen } from './SendPayment';

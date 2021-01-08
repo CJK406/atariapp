@@ -6,10 +6,8 @@ import { CustomStyles } from '../Constant';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { LogoBox } from '../Components';
 import { Images } from '../Assets';
-
 import FontawesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { PieChart } from 'react-native-svg-charts';
-
 import { currency_convert as currency_convertApi,get_allHistory as get_allHistoryApi,login as loginApi} from '../Api';
 import { authSetUserInfo } from '../Redux/Actions';
 class DashboardScreen extends React.Component {
@@ -31,9 +29,7 @@ class DashboardScreen extends React.Component {
             this.currentConvert();
             this.getHistory();
         });
-
     }
-
 	componentWillUnmount() {
         this._unsubscribe();
     }
@@ -44,7 +40,6 @@ class DashboardScreen extends React.Component {
     };
   }
 	currentConvert = async () => {
-        
         const {usd_balance} = this.state;
         usd_balance.flag=false;
         this.setState({usd_balance:usd_balance});
@@ -62,16 +57,15 @@ class DashboardScreen extends React.Component {
         usd_balance.flag=true;
 
         this.setState({usd_balance:usd_balance});
-        console.log("asefsafesaefasef");
-        const response = await loginApi();
-        if (response && response.data) {
-            if (response.errors && response.errors.length > 0) {
-                Toast.show(response.errors[0].message);
-                this.props.navigation.navigate('Activate', { email });
-            } else {
-                this.props.authSetUserInfo(response.data);
-            }
-        }
+        // const response = await loginApi();
+        // if (response && response.data) {
+        //     if (response.errors && response.errors.length > 0) {
+        //         Toast.show(response.errors[0].message);
+        //         this.props.navigation.navigate('Activate', { email });
+        //     } else {
+        //         this.props.authSetUserInfo(response.data);
+        //     }
+        // }
     }
 
 	getHistory = async () => {
@@ -79,9 +73,6 @@ class DashboardScreen extends React.Component {
         const history = await get_allHistoryApi();
         this.setState({history:history.result});
     }
-
-
-
   render() {
         const {balance,usd_balance,darkmode} = this.state;
         const data = [usd_balance.atri,usd_balance.btc,usd_balance.eth,usd_balance.ltc,usd_balance.bch];
@@ -97,7 +88,7 @@ class DashboardScreen extends React.Component {
             }))
     return (
       <SafeAreaView style={{...CustomStyles.container, backgroundColor: darkmode? 'rgb(33,33,33)' : 'white' }}>
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <View style={[CustomStyles.container, styles.innerContainer]}>
                 <View style={[darkmode ? CustomStyles.d_back : CustomStyles.w_back,{height: 70, alignItems: 'center', justifyContent: 'center', position: 'relative',width:'100%'}]}>
                     <LogoBox style={{position: 'absolute', left: 0}}/>
@@ -153,7 +144,7 @@ class DashboardScreen extends React.Component {
                     </View>
                     
                 </View>
-                <View style={{padding:20, color:darkmode ? 'white':'black'}}>
+                <View style={{padding:20,paddingBottom:45, color:darkmode ? 'white':'black'}}>
                     <Text style={{fontSize:16,color:darkmode ? 'white':'black',marginBottom:10}}>History</Text>
                     {this.state.history.length===0 && 
                         <ActivityIndicator size="large" color={darkmode ? "white" :"black"} />

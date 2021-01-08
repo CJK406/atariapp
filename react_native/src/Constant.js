@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-
+import { Images } from './Assets';
 export const CustomStyles = StyleSheet.create({
 	container: {
 		flex: 1,
@@ -62,3 +62,9 @@ export const CustomStyles = StyleSheet.create({
 export const STRIPE_KEY = 'pk_test_zGTST6gDIDz7PxiSF6tc1vmG00lHgZqsEu';
 export const GOOGLE_API_KEY = 'AIzaSyAm-gRSVrsjGjc00jQSkNDVKIzxU8SlkSM';
 export const PAYPAL_CLIENT = 'ARHm04t5sDvIMQXlvT4wXU__A2LGmAITVa7M666dqKnzQSGiGXlKm_X8e18G4HUsuenHmZfmsbj-oSLe';
+
+export const Headers = [{Image:Images.btc_icon,text:'BTC',color:'#f7931a',full_text:'bitcoin'},
+{Image:Images.Atri_icon,text:'ATRI',color:'#ce2424',full_text:'atri'},
+{Image:Images.Eth_icon,text:'ETH',color:'aqua',full_text:'ethereum'},
+{Image:Images.Ltc_icon,text:'LTC',color:'#345c9c',full_text:'litecoin'},
+{Image:Images.bch_icon,text:'BCH',color:'green',full_text:'bitcoincash'}];

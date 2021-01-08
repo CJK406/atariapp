@@ -1,12 +1,15 @@
 import * as React from 'react';
-import { SafeAreaView, StyleSheet, Text,TextInput, Image, TouchableOpacity, View, ScrollView, Alert } from 'react-native';
+import { SafeAreaView, StyleSheet, Text,TextInput, Image, TouchableOpacity, View, Dimensions,ScrollView, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
-import { CustomStyles } from '../Constant';
+import { CustomStyles,Headers } from '../Constant';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-// import { authLogout, getMyRelation, getMyTickets, getMarketTickets, getNotifications, getPaymentHistory } from '../Redux/Actions';
-import { LogoBox } from '../Components';
-import { Images } from '../Assets';
+import WAValidator from '../Assets/js/wallet-address-validator';
+import { currency_convert as currency_convertApi} from '../Api';
+import Logo from '../Assets/logo.png';
+import QRCodeScanner from 'react-native-qrcode-scanner';
+import { RNCamera } from 'react-native-camera';
+import Modal from 'react-native-modal';
 
 class SendPaymentScreen extends React.Component {
     state = {
@@ -15,9 +18,17 @@ class SendPaymentScreen extends React.Component {
         drop1_key:0,
         drop2_key:0,
         darkmode:true,
-        address:""
+        address:"",
+        currency:0,
+        usd_val:0,
+        send_amount:0,
+        send_usd_amount:0,
+        qr_code_modal:false,
+        r_address:"",
+
 	}
 	componentDidMount() {
+        this.currencyCheck();
 	}
 	componentWillUnmount() {
     }
@@ -29,23 +40,85 @@ class SendPaymentScreen extends React.Component {
       }
 	navigate = (pagename) => {
 		this.props.navigation.navigate(pagename);
+    }
+    currencyCheck = async () => {
+        const {address} = this.state;
+        let r_address;
+        let currency=0;
+        if(address[0]=="a" && address[1]=="t")
+            currency = 1;
+        else{
+            r_address =this.getAddress(address)
+            if(WAValidator.validate(r_address,'BTC'))
+                currency=0;
+            else if(WAValidator.validate(r_address,'LTC'))
+                currency = 3;
+            else if(WAValidator.validate(r_address,'ETH'))
+                currency = 2;
+            else 
+                currency=4;
+        }
+        const current_usd_val = await currency_convertApi(Headers[currency]['text'].toLowerCase(),1);
+        this.setState({
+            usd_val:current_usd_val.result,
+            currency:currency,
+            r_address:r_address,
+        })
+    }
+    onSuccess = async e => {
+		let split = e.data.split(":");
+		let address = split.length>1 ? split[1]:split[0];
+		this.setState({
+			r_address:address,
+			qr_code_modal:false
+		})
+    };
+    SendConfirm = () => {
+		const {send_usd_amount, send_amount, r_address, currency} = this.state;
+		if(r_address!=="" && send_amount!=="0.00"){
+			
+			let info= {send_usd_amount:send_usd_amount,send_amount:send_amount, address:r_address, currentTab:currency}
+			this.props.navigation.navigate('SendConfirm',{ info: info });
+		}
 	}
+    changeSendUsdValue(e){
+		const {usd_val} = this.state;
+		let send_amount1 = e!=="" ?  (parseFloat(e)/parseFloat(usd_val)).toFixed(5) : "0.00";
+		this.setState({
+			send_amount:send_amount1,
+			send_usd_amount:e
+		})
+	}
+	changeSendValue(e){
+		const {usd_val} = this.state;
+		let send_amount1 = e!=="" ?  (parseFloat(e)*parseFloat(usd_val)) : 0;
+		this.setState({
+			send_usd_amount:send_amount1.toFixed(2),
+			send_amount:e
+		})
+	}
+    getAddress(address){
+        let split = address.split(":");
+        let r_address="";
+        if(split.length>1)
+            r_address = split[1];
+        else    
+            r_address= split[0];
+        return r_address;
+    }
   render() {
-        const {darkmode} =this.state;
+        const {darkmode,currency,usd_val,r_address} =this.state;
     return (
-      <SafeAreaView style={{...CustomStyles.container, backgroundColor: darkmode?'rgb(33,33,33)':'white' }}>
-          <View>
-              <Text>asef</Text>
-          </View>
-            {/* <View style={[CustomStyles.container, CustomStyles.innerContainer, styles.innerContainer]}>
+      <SafeAreaView style={{...CustomStyles.container, backgroundColor: darkmode?'rgb(33,33,33)':'white',paddingTop:10}}>
+            <View style={[CustomStyles.container, CustomStyles.innerContainer, styles.innerContainer]}>
                 <View style={{height: 44, alignItems: 'center', justifyContent: 'center', position: 'relative'}}>
                     <TouchableOpacity style={{position: 'absolute', left: 0}} onPress={() => this.goBack()}>
                         <Ionicons name="arrow-back-outline" size={20} color="white" />
                     </TouchableOpacity>
-                    <Text style={{fontSize: 18, color: 'white'}}>Notifications</Text>
+					<Image source={Logo} style={{width:160, height:50}} />
                 </View>
-                <View style={{ backgroundColor:darkmode?'rgb(33,33,33)':'white',borderRadius:10,top:'30%',width:'100%',margin:0,borderTopRightRadius:50,borderTopLeftRadius:50}}>
-                    <Image source={Images.btc_icon} style={{width:25,height:25,marginTop:20,justifyContent:'center',alignItems:'center',alignSelf:'center'}}></Image>
+                <View style={{ backgroundColor:darkmode?'rgb(33,33,33)':'white',borderRadius:10,width:'100%',margin:0,borderTopRightRadius:50,borderTopLeftRadius:50,marginTop:40}}>
+                    <Image source={Headers[currency]['Image']} style={{width:25,height:25,marginTop:20,justifyContent:'center',alignItems:'center',alignSelf:'center'}}></Image>
                     <Text style={{fontSize:30, color:darkmode?'white':'black',textAlign:'center',marginTop:10,marginBottom:20}}>Send amount</Text>
                     <View style={{flexDirection:'row',textAlign:'center',alignSelf:'center',alignItems:'center'}}>
                         <View style={{width:'45%',textAlign:'center',alignItems:'center',alignSelf:'center'}}>
@@ -56,7 +129,7 @@ class SendPaymentScreen extends React.Component {
                                 placeholderTextColor="white" 
                                 keyboardType={'numeric'} 
                                 style={{color:darkmode?'white':'black',backgroundColor:'transparent',fontSize:24}}></TextInput>
-                            <Text style={{color:darkmode?'white':'black',fontSize:24}}>{Headers[currentTab]['text']}</Text>
+                            <Text style={{color:darkmode?'white':'black',fontSize:24}}>{Headers[currency]['text']}</Text>
                         </View>
                         <View style={{width:'10%'}}>
                             <Ionicons name='swap-horizontal-outline'  size={24} color={darkmode?"white":'black'} style={{justifyContent:'center',alignSelf:'center',alignItems:'center'}} />
@@ -73,10 +146,10 @@ class SendPaymentScreen extends React.Component {
                         </View>
                     </View>
                     <View style={{flexDirection:'row',textAlign:'center',justifyContent:'center',marginBottom:30,marginTop:40}}>
-                        <TextInput placeholder="Tap to paste address" onChangeText={(key) => this.setState({send_address:key})} placeholderTextColor={darkmode?"white":"black"} style={{backgroundColor:'transparent',color:darkmode?'white':'black',width:'90%',height:50,borderBottomWidth:1,borderBottomColor:darkmode?'white':'black'}} >
-                            {this.state.send_address}
+                        <TextInput placeholder="Tap to paste address" onChangeText={(key) => this.setState({r_address:key})} placeholderTextColor={darkmode?"white":"black"} style={{backgroundColor:'transparent',color:darkmode?'white':'black',width:'90%',height:50,borderBottomWidth:1,borderBottomColor:darkmode?'white':'black'}} >
+                            {this.state.r_address}
                         </TextInput>
-                        <TouchableOpacity onPress={() =>this.setState({qr_code_modal:true})} >
+                        <TouchableOpacity onPress={() =>this.setState({qr_code_modal:true})} style={{marginTop:20}} >
                             <Ionicons name='qr-code-outline'  size={20} color={darkmode?"white":'black'} style={{justifyContent:'center',alignSelf:'center',alignItems:'center'}} />
                         </TouchableOpacity>
                     </View>
@@ -86,7 +159,20 @@ class SendPaymentScreen extends React.Component {
                         <Text style={{fontSize: 18,color:'white',textAlign:'center',justifyContent:'center',fontWeight:'bold'}}>Continue</Text>
                     </TouchableOpacity>
                 </View>
-            </View> */}
+                <Modal isVisible={this.state.qr_code_modal}
+						style={{margin:0,zIndex:99999}}
+					>
+						<View style={{ backgroundColor:'rgb(33,33,33)',borderRadius:10,width:'100%',height:'100%',margin:0}}>
+						<QRCodeScanner
+							onRead={this.onSuccess}
+							topViewStyle={{flex: 0}}
+							bottomViewStyle={{flex: 0}}
+							cameraStyle={{height: Dimensions.get('window').height}}
+							flashMode={RNCamera.Constants.FlashMode.torch}
+							/>
+						</View>
+					</Modal>
+            </View>
       </SafeAreaView>
     );
   }
@@ -106,8 +192,6 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
   return {
         darkmode:state.Auth.darkmode
-
   };
 }
-
 export default connect(mapStateToProps, {})(withTheme(SendPaymentScreen));

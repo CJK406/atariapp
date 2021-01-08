@@ -21,4 +21,6 @@ export async function confirm_payment(currency,data){
   return await postAPI('send-crypto?currency='+currency,data);
 }
 
-
+export async function reset_pin(data){
+  return await postAPI('forgot-pincode',data);
+}
