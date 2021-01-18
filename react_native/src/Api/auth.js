@@ -47,3 +47,7 @@ export async function requestResetPassword(email){
 export async function resetPassword(data){
   return await postAPI('auth/reset_password', data);
 }
+
+export async function setPincode(data){
+  return await postAPI('create-pincode?pin_code='+data.pincode, data);
+}

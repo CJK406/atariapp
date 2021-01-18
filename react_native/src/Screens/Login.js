@@ -90,9 +90,9 @@ class LoginScreen extends React.Component {
 		const { email, password } = this.state;
 		const parsedIcon = parseIconFromClassName('fa fa-envelope');
     return (
-      <SafeAreaView style={{...CustomStyles.container, backgroundColor: primaryColor }}>
+      <SafeAreaView style={{backgroundColor: primaryColor }}>
 			<View style={styles.containerlogin100}>
-				<View style={{width:390,backgroundColor:'black'}}>
+				<View style={{backgroundColor:'black'}}>
 					<View style={{width:150, marginLeft:'20%',marginTop:40}}>
 						<Image source={Images.Logo} style={{justifyContent:'center'}} />
 					</View>
@@ -157,7 +157,7 @@ class LoginScreen extends React.Component {
 							</View>
 							<View style={{flexDirection: 'row', marginTop: 'auto',justifyContent:'center',marginTop:20}}>
 								<Text style={{color: 'black', fontSize: 16, marginRight: 5}}>Don't have an account?</Text>
-								<TouchableOpacity onPress={() => this.toggleModal()}>
+								<TouchableOpacity onPress={() => this.goNext('Signup')}>
 									<Text style={{color: 'red', fontSize: 16, textDecorationLine: 'underline', fontWeight: 'bold', textDecorationStyle: 'solid', textDecorationColor: '#97DC21'}}>Sign Up</Text>
 								</TouchableOpacity>
 							</View>

@@ -12,7 +12,7 @@ class StartScreen extends React.Component {
 	componentDidMount() {
 		setTimeout(() => {
 			this.goNext('Login');
-		}, 4500);
+		}, 4000);
 	}
   render() {
 	const { primaryColor, secondaryColor } = this.props.theme.palette;

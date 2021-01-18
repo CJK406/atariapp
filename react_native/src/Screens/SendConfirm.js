@@ -9,6 +9,7 @@ import Modal from 'react-native-modal';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { confirm_payment} from '../Api';
+import { updateBallance} from '../Redux/Actions';
 
 class SendConfirmScreen extends React.Component {
     state = {
@@ -68,8 +69,12 @@ class SendConfirmScreen extends React.Component {
                         pincode:pincode       
             }
             const result = await confirm_payment(Headers[info.currentTab]['text'].toLowerCase(),data);
-            if(result.error!=="null"){
+            console.log("asefresult",result)
+            if(result.error!==null && result.error!=="null"){
                 alert(result.error);
+            }
+            else{
+                this.props.updateBallance();
             }
             this.setState({isLoading:false});
         }
@@ -82,8 +87,8 @@ class SendConfirmScreen extends React.Component {
           ];
         const {info,darkmode} = this.state;
     return (
-        <KeyboardAwareScrollView>
-<SafeAreaView style={{...CustomStyles.container, backgroundColor: darkmode?'rgb(33,33,33)':'white', height:'100%' }}>
+        <KeyboardAwareScrollView style={{backgroundColor:darkmode?'rgb(33,33,33)':'white'}}>
+        <SafeAreaView style={{...CustomStyles.container, backgroundColor: darkmode?'rgb(33,33,33)':'white', height:'100%' }}>
         <View style={[CustomStyles.container,  styles.innerContainer]}>
             <View style={{height: 70, alignItems: 'center', justifyContent: 'center', position: 'relative', backgroundColor:darkmode?'black':'white', width:'100%'}}>
                 <TouchableOpacity style={{position: 'absolute', left: 10}} onPress={() => this.goBack()}>
@@ -236,4 +241,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {  })(withTheme(SendConfirmScreen));
+export default connect(mapStateToProps, { updateBallance })(withTheme(SendConfirmScreen));

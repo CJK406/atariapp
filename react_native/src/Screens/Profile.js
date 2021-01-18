@@ -6,7 +6,7 @@ import { CustomStyles } from '../Constant';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { LogoBox } from '../Components';
 import Logo from '../Assets/logo.png';
-import { settingTheme } from '../Redux/Actions';
+import { settingTheme,authLogout,settingNotification } from '../Redux/Actions';
 
 const Menus = [
 	{ name: 'Currency', page: '', icon: 'logo-usd', description:'Set your preferred local currency'},
@@ -20,43 +20,46 @@ const Menus = [
 class ProfileScreen extends React.Component {
 	state = {
 		themeToggle:true,
+		notificationToggle:true,
 	}
 	static getDerivedStateFromProps(props, state) {
 		return {
 			themeToggle:props.darkmode,
+			notificationToggle:props.notification_Flag,
 		};
 	  }
 	componentDidMount() {
-	
 	}
-
 	componentWillUnmount() {
-  }
-
+	}
 	goToDetail = (item) => {
-
 		this.props.navigation.navigate(item);
 	}
-	doLogOut = () => {
+	logout = () => {
+		this.props.navigation.navigate('Login');
 		this.props.authLogout();
-	}
 
+	}
 	navigate = (pagename) => {
 		this.props.navigation.navigate(pagename);
 	}
-
 	checkUnread = () => {
 		let index = this.props.notifications.findIndex(temp => temp.read === 0);
 		return index > -1;
 	}
-
 	changeTheme = (key) => {
 		this.setState({themeToggle:key})
 		this.props.settingTheme(key);
 	}
 
+	changeNotificationSetting = (key) => {
+		this.setState({notificationToggle:key})
+		this.props.settingNotification(key);
+	}
+
   render() {
-	  const {themeToggle} = this.state;
+	  const {themeToggle,notificationToggle} = this.state;
+	  console.log("notificationToggle",notificationToggle);
 		let me = this.props.me || {};
     return (
       <SafeAreaView style={[themeToggle ? {backgroundColor: 'rgb(33,33,33)'} : {backgroundColor: 'white'},{...CustomStyles.container}]}>
@@ -75,7 +78,7 @@ class ProfileScreen extends React.Component {
 									<Text style={{color: 'white', marginLeft: 10, fontSize: 10,color:'#a7a7a7'}}>{Menus[0].description}</Text>
 								</View>
 								<View style={{width:'15%'}}> 
-									<View style={{backgroundColor:'#545454',padding:5,borderRadius:5,fontSize:10}}><Text style={{textAlign:'center',justifyContent:'center',color:'white'}}>USD</Text></View>
+									<View style={{backgroundColor:'#545454',padding:5,borderRadius:5}}><Text style={{textAlign:'center',justifyContent:'center',color:'white',fontSize:10}}>USD</Text></View>
 								</View>
 							</View>
 						</TouchableOpacity>
@@ -93,11 +96,10 @@ class ProfileScreen extends React.Component {
 									trackColor={{ false: "#767577", true: "red" }}
 									thumbColor="white"
 									ios_backgroundColor="#3e3e3e"
-									 onValueChange={(key) => this.setState({notificationToggle:key})}
-									value={this.state.notificationToggle}
+									onValueChange={(key) => this.changeNotificationSetting(key)}
+									value={notificationToggle}
 								/>
 								</View>
-
 							</View>
 						</TouchableOpacity>
 						<TouchableOpacity  style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
@@ -134,8 +136,6 @@ class ProfileScreen extends React.Component {
 									value={this.state.themeToggle}
 								/>
 								</View>
-
-								
 							</View>
 						</TouchableOpacity>
 						<TouchableOpacity style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
@@ -154,7 +154,7 @@ class ProfileScreen extends React.Component {
 								</View>
 							</View>
 						</TouchableOpacity>
-						<TouchableOpacity style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+						<TouchableOpacity onPress={() => this.logout()}  style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
 							<View style={{flexDirection: 'row', alignItems: 'center', position: 'relative'}}>
 								<Ionicons name={Menus[6].icon} size={26} color="white" />
 								<View>
@@ -188,8 +188,9 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-	darkmode:state.Auth.darkmode
+	darkmode:state.Auth.darkmode,
+	notification_Flag:state.Auth.notification_Flag,
   };
 }
 
-export default connect(mapStateToProps, {settingTheme})(withTheme(ProfileScreen));
+export default connect(mapStateToProps, {settingTheme,authLogout,settingNotification})(withTheme(ProfileScreen));

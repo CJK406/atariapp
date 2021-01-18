@@ -13,25 +13,38 @@ class ExchangeScreen extends React.Component {
         drop1_flag:false,
         drop2_flag:false,
         drop1_key:0,
-        drop2_key:0,
+        drop2_key:1,
         darkmode:true,
-        show_modal:false
+        show_modal:false,
+		balance:{},
+        usd_balance:{
+            atri:0,
+            btc:0,
+            eth:0,
+            ltc:0,
+            bch:0,
+            flag:false,
+        },
 	}
     static getDerivedStateFromProps(props, state) {
         return {
             darkmode:props.darkmode,
+            usd_balance:props.usd_balance,
+			balance:props.balance,
         };
       }
 	navigate = (pagename) => {
 		this.props.navigation.navigate(pagename);
 	}
     render() {
-        const {drop1_flag,drop2_flag,drop1_key,drop2_key,darkmode} = this.state;
-        const exchage_from_data = [{image:Images.btc_icon,value:'0.00',u_v:'0.0', f_text:'BTC', text:'Bitcoin'},
-                                    {image:Images.Atri_icon,value:'0.00',u_v:'0.0',f_text:'ATRI', text:'Atari token'},
-                                    {image:Images.Eth_icon,value:'0.00',u_v:'0.0', f_text:'ETH', text:'Ethereum'},
-                                    {image:Images.Ltc_icon,value:'0.00',u_v:'0.0', f_text:'LTC', text:'Litecoin'},
-                                    {image:Images.bch_icon,value:'0.00',u_v:'0.0', f_text:'BCH', text:'Bitcoincash'}
+
+        const {drop1_flag,drop2_flag,drop1_key,drop2_key,darkmode,usd_balance,balance} = this.state;
+        console.log("usd_balanc",usd_balance)
+        const exchage_from_data = [{image:Images.btc_icon,value:balance.btc.toFixed(5),u_v:(usd_balance.btc*balance.btc).toFixed(2), f_text:'BTC', text:'Bitcoin'},
+                                    {image:Images.Atri_icon,value:balance.atri.toFixed(2),u_v:(usd_balance.atri*balance.atri).toFixed(2),f_text:'ATRI', text:'Atari token'},
+                                    {image:Images.Eth_icon,value:balance.eth.toFixed(4),u_v:(usd_balance.eth*balance.eth).toFixed(2), f_text:'ETH', text:'Ethereum'},
+                                    {image:Images.Ltc_icon,value:balance.ltc.toFixed(4),u_v:(usd_balance.ltc*balance.ltc).toFixed(2), f_text:'LTC', text:'Litecoin'},
+                                    {image:Images.bch_icon,value:balance.bch.toFixed(4),u_v:(usd_balance.bch*balance.bch).toFixed(2), f_text:'BCH', text:'Bitcoincash'}
                                 ]
     return (
       <SafeAreaView style={{...CustomStyles.container, backgroundColor: darkmode?'rgb(33,33,33)':'white' }}>
@@ -44,15 +57,15 @@ class ExchangeScreen extends React.Component {
                     <View style={{position:'relative'}}>
                         <Text style={{fontSize:14, letterSpacing:2, color:darkmode?'white':'black', marginBottom:20}}>From:</Text>
                         <TouchableOpacity onPress={() => this.setState({drop1_flag:!drop1_flag})}>
-                            <View style={{width:'100%',paddingLeft:20,paddingRight:20,height:50,borderWidth:1,borderColor:'black',backgroundColor:'white', flexDirection:'row'}}>
+                            <View style={{width:'100%',paddingLeft:20,paddingTop:6,paddingBottom:6,paddingRight:20,borderWidth:1,borderColor:'black',backgroundColor:'white', flexDirection:'row'}}>
                                 <View style={{width:'20%'}}>
-                                    <Image source={exchage_from_data[drop1_key]['image']} style={{width:20, height:20, marginTop:13,marginRight:10}} />
+                                    <Image source={exchage_from_data[drop1_key]['image']} style={{width:20, height:20, marginTop:13,marginRight:20}} />
                                 </View>
-                                <View style={{width:'40%', alignSelf:'center'}}>
+                                <View style={{width:'65%', alignSelf:'center'}}>
                                     <Text style={{fontSize:15,fontWeight:'600'}}>{exchage_from_data[drop1_key]['f_text']} {exchage_from_data[drop1_key]['text']}</Text>
                                     <Text style={{fontSize:12}}>{exchage_from_data[drop1_key]['value']} {exchage_from_data[drop1_key]['f_text']} | ${exchage_from_data[drop1_key]['u_v']}</Text>
                                 </View>
-                                <View style={{textAlign:'right', width:'40%'}}>
+                                <View style={{textAlign:'right', width:'15%'}}>
                                     {drop1_flag ? (
                                         <Ionicons name="caret-up-outline" style={{marginTop:13,marginRight:15,textAlign:'right'}} size={20} color="black" />
                                     ) : (
@@ -67,13 +80,13 @@ class ExchangeScreen extends React.Component {
                                 // {drop1_flag &&
                                     <View>
                                         <TouchableOpacity onPress={() => this.setState({drop1_flag:false,drop1_key:index})}>
-                                            <View style={{width:'100%',paddingLeft:20,paddingRight:20,height:50,borderTopWidth:1,borderLeftWidth:1,borderRightWidth:1,borderColor:'black',backgroundColor:'white', flexDirection:'row'}}>
+                                            <View style={{width:'100%',paddingLeft:20,paddingRight:20,paddingTop:6,paddingBottom:6,borderTopWidth:1,borderLeftWidth:1,borderRightWidth:1,borderColor:'black',backgroundColor:'white', flexDirection:'row'}}>
                                                 <View style={{width:'20%'}}>
                                                     <Image source={item['image']} style={{width:20, height:20, marginTop:13,marginRight:10}} />
                                                 </View>
-                                                <View style={{width:'40%', alignSelf:'center'}}>
+                                                <View style={{width:'80%', alignSelf:'center'}}>
                                                     <Text style={{fontSize:15,fontWeight:'600'}}>{item.f_text} {item.text}</Text>
-                                                    <Text style={{fontSize:12}}>0.000 {item.f_text} | $0.0</Text>
+                                                    <Text style={{fontSize:12}}>{item.value} {item.f_text} | ${item.u_v}</Text>
                                                 </View>
                                             </View>
                                         </TouchableOpacity>
@@ -87,15 +100,15 @@ class ExchangeScreen extends React.Component {
                     <View style={{position:'relative'}}>
                         <Text style={{fontSize:14, letterSpacing:2, color:darkmode?'white':'black', marginBottom:20,marginTop:20}}>To:</Text>
                         <TouchableOpacity onPress={() => this.setState({drop2_flag:!drop2_flag})}>
-                            <View style={{width:'100%',paddingLeft:20,paddingRight:20,height:50,borderWidth:1,borderColor:'black',backgroundColor:'white', flexDirection:'row'}}>
+                            <View style={{width:'100%',paddingLeft:20,paddingRight:20,paddingTop:6,paddingBottom:6,borderWidth:1,borderColor:'black',backgroundColor:'white', flexDirection:'row'}}>
                                 <View style={{width:'20%'}}>
                                     <Image source={exchage_from_data[drop2_key]['image']} style={{width:20, height:20, marginTop:13,marginRight:10}} />
                                 </View>
-                                <View style={{width:'40%', alignSelf:'center'}}>
+                                <View style={{width:'65%', alignSelf:'center'}}>
                                     <Text style={{fontSize:15,fontWeight:'600'}}>{exchage_from_data[drop2_key]['f_text']} {exchage_from_data[drop2_key]['text']}</Text>
                                     <Text style={{fontSize:12}}>{exchage_from_data[drop2_key]['value']} {exchage_from_data[drop2_key]['f_text']} | ${exchage_from_data[drop2_key]['u_v']}</Text>
                                 </View>
-                                <View style={{textAlign:'right', width:'40%'}}>
+                                <View style={{textAlign:'right', width:'15%'}}>
                                     {drop2_flag ? (
                                         <Ionicons name="caret-up-outline" style={{marginTop:13,marginRight:15,textAlign:'right'}} size={20} color="black" />
                                     ) : (
@@ -109,13 +122,13 @@ class ExchangeScreen extends React.Component {
                             {exchage_from_data.map((item, index) => 
                                     <View >
                                         <TouchableOpacity onPress={() => this.setState({drop2_flag:false,drop2_key:index})}>
-                                            <View style={{width:'100%',paddingLeft:20,paddingRight:20,height:50,borderTopWidth:1,borderLeftWidth:1,borderRightWidth:1,borderColor:'black',backgroundColor:'white', flexDirection:'row'}}>
+                                            <View style={{width:'100%',paddingLeft:20,paddingRight:20,paddingTop:6,paddingBottom:6,borderTopWidth:1,borderLeftWidth:1,borderRightWidth:1,borderColor:'black',backgroundColor:'white', flexDirection:'row'}}>
                                                 <View style={{width:'20%'}}>
                                                     <Image source={item['image']} style={{width:20, height:20, marginTop:13,marginRight:10}} />
                                                 </View>
-                                                <View style={{width:'40%', alignSelf:'center'}}>
+                                                <View style={{width:'80%', alignSelf:'center'}}>
                                                     <Text style={{fontSize:15,fontWeight:'600'}}>{item.f_text} {item.text}</Text>
-                                                    <Text style={{fontSize:12}}>0.000 {item.f_text} | $0.0</Text>
+                                                    <Text style={{fontSize:12}}>{item.value} {item.f_text} | ${item.u_v}</Text>
                                                 </View>
                                             </View>
                                         </TouchableOpacity>
@@ -195,7 +208,9 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-        darkmode:state.Auth.darkmode
+        darkmode:state.Auth.darkmode,
+        usd_balance:state.Auth.usd_balance,
+		balance: state.Auth.balance,
 
   };
 }

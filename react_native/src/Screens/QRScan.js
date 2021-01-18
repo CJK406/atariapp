@@ -30,7 +30,7 @@ class QRScanScreen extends React.Component {
           topViewStyle={{flex: 0}}
           bottomViewStyle={{flex: 0}}
           cameraStyle={{height: Dimensions.get('window').height}}
-          flashMode={RNCamera.Constants.FlashMode.torch}
+          flashMode={RNCamera.Constants.FlashMode.off}
       />
       </SafeAreaView>
     );

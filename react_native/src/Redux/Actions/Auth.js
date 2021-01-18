@@ -2,8 +2,13 @@ import {
   AUTH_LOGOUT,
   AUTH_SET_USER_INFO, 
   AUTH_SET_TOKEN,
-  SETTING_THEME
-
+  SETTING_THEME,
+  AUTH_SET_PINCODE,
+  AUTH_SET_USD_BALANCE,
+  NOTIFICATIONFLAG,
+  AUTH_SET_ALL_HISTORY,
+  AUTH_GET_ALL_ADDRESS,
+  AUTH_UPDATE_BALLANCE,
 } from '../type';
 
 export const authSetUserInfo = (data) => {
@@ -27,9 +32,53 @@ export const authSetToken = (data) => {
   }
 }
 
+export const authSetUsdBalance = (data) => {
+  return {
+    type:AUTH_SET_USD_BALANCE,
+    data:data
+  }
+}
+
+
 export const authLogout = () => {
   return {
     type: AUTH_LOGOUT,
     data: { }
   }
 }
+
+export const authSetPincode = (data) => {
+  return {
+    type: AUTH_SET_PINCODE,
+    data:data
+  }
+}
+export const settingNotification = (data) => {
+  return {
+      type: NOTIFICATIONFLAG,
+      data: data
+  }
+}
+
+export const setAllHistory = (data) => {
+  return {
+    type: AUTH_SET_ALL_HISTORY,
+    data:data
+  }
+}
+
+
+export const getAllAddress = () => {
+  return {
+    type: AUTH_GET_ALL_ADDRESS,
+    data:{}
+  }
+}
+
+export const updateBallance = () => {
+  return {
+    type: AUTH_UPDATE_BALLANCE,
+    data:{}
+  }
+}
+

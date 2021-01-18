@@ -25,6 +25,8 @@ class SendPaymentScreen extends React.Component {
         send_usd_amount:0,
         qr_code_modal:false,
         r_address:"",
+        balance:{},
+        usd_balance:{}
 
 	}
 	componentDidMount() {
@@ -36,11 +38,14 @@ class SendPaymentScreen extends React.Component {
         return {
             darkmode:props.darkmode,
             address: props.route.params.address,
+            usd_balance:props.usd_balance,
+            balance:props.balance
         };
       }
 	navigate = (pagename) => {
 		this.props.navigation.navigate(pagename);
     }
+    
     currencyCheck = async () => {
         const {address} = this.state;
         let r_address;
@@ -106,13 +111,29 @@ class SendPaymentScreen extends React.Component {
             r_address= split[0];
         return r_address;
     }
+    setFullBallance(){
+		const {balance,currency,usd_balance} = this.state;
+		const currency_data1 = [['btc',balance.btc,'#f7931a',usd_balance.btc],['atri',balance.atri,'#c42626',usd_balance.atri],['eth',balance.eth,'aqua',usd_balance.eth],['ltc',balance.ltc,'#345c9c',usd_balance.ltc],['bch',balance.bch,'green',usd_balance.bch]];
+		let full_balance = currency_data1[currency][1];
+		let send_amount1 = currency_data1[currency][3];
+
+		this.setState({
+			send_amount:full_balance.toFixed(5),
+			send_usd_amount:send_amount1.toFixed(2)
+		})
+		// this.setTab({send_amount,full_balance,
+		// 	send_usd_amount:send_amount1.toFixed(2)});
+		
+	}
   render() {
-        const {darkmode,currency,usd_val,r_address} =this.state;
+        const {darkmode,currency,usd_val,usd_balance,balance} =this.state;
+		const currency_data = [['btc',balance.btc,'#f7931a',usd_balance.btc],['atri',balance.atri,'#c42626',usd_balance.atri],['eth',balance.eth,'aqua',usd_balance.eth],['ltc',balance.ltc,'#345c9c',usd_balance.ltc],['bch',balance.bch,'green',usd_balance.bch]];
+
     return (
       <SafeAreaView style={{...CustomStyles.container, backgroundColor: darkmode?'rgb(33,33,33)':'white',paddingTop:10}}>
             <View style={[CustomStyles.container, CustomStyles.innerContainer, styles.innerContainer]}>
                 <View style={{height: 44, alignItems: 'center', justifyContent: 'center', position: 'relative'}}>
-                    <TouchableOpacity style={{position: 'absolute', left: 0}} onPress={() => this.goBack()}>
+                    <TouchableOpacity style={{position: 'absolute', left: 0}} onPress={() => this.navigate('Trade')}>
                         <Ionicons name="arrow-back-outline" size={20} color="white" />
                     </TouchableOpacity>
 					<Image source={Logo} style={{width:160, height:50}} />
@@ -145,6 +166,14 @@ class SendPaymentScreen extends React.Component {
                             <Text style={{color:darkmode?'white':'black',fontSize:24}}>USD</Text>
                         </View>
                     </View>
+                    <View style={{flexDirection:'row',textAlign:'center',alignItems:'center',alignSelf:'center'}}>
+						<Text style={{color:darkmode?'white':'black',fontSize:20,marginTop:30}}>*Available: {currency_data[currency][1]} {Headers[currency]['text']}</Text>
+						<TouchableOpacity 
+							style={{marginTop:35,borderWidth:1,borderColor:'white',justifyContent:'center',alignItems:'center',alignSelf:'center',marginLeft:20,padding:5,borderRadius:10,backgroundColor:'rgb(227,30,45)',width:50,height:25,textAlign:'right'}} 
+							onPress={() =>this.setFullBallance()} >
+							<Text style={{color:'white'}}>Full</Text>	
+						</TouchableOpacity>
+					</View>
                     <View style={{flexDirection:'row',textAlign:'center',justifyContent:'center',marginBottom:30,marginTop:40}}>
                         <TextInput placeholder="Tap to paste address" onChangeText={(key) => this.setState({r_address:key})} placeholderTextColor={darkmode?"white":"black"} style={{backgroundColor:'transparent',color:darkmode?'white':'black',width:'90%',height:50,borderBottomWidth:1,borderBottomColor:darkmode?'white':'black'}} >
                             {this.state.r_address}
@@ -168,7 +197,7 @@ class SendPaymentScreen extends React.Component {
 							topViewStyle={{flex: 0}}
 							bottomViewStyle={{flex: 0}}
 							cameraStyle={{height: Dimensions.get('window').height}}
-							flashMode={RNCamera.Constants.FlashMode.torch}
+							flashMode={RNCamera.Constants.FlashMode.off}
 							/>
 						</View>
 					</Modal>
@@ -191,7 +220,9 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-        darkmode:state.Auth.darkmode
+        darkmode:state.Auth.darkmode,
+        balance:state.Auth.balance,
+        usd_balance:state.Auth.usd_balance
   };
 }
 export default connect(mapStateToProps, {})(withTheme(SendPaymentScreen));
