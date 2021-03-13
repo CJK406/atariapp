@@ -1,32 +1,75 @@
 import * as React from 'react';
-import { SafeAreaView, Text, Image, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, Text, Image, Dimensions, View } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { Images } from '../Assets';
 import { CustomStyles } from '../Constant';
+import Video from "react-native-video";
+const { width, height } = Dimensions.get("window");
+import { updateMenuStatus} from '../Redux/Actions';
+
 
 class StartScreen extends React.Component {
-	goNext = (location) => {
-		this.props.navigation.navigate(location);
+	state = {
+		activeTab: 1,
+		page:0,
+		menuDelay:false,
+		user_id:"",
+		loggedin:false,
+		pincode:"",
+		start_screen_flag:false
 	}
+	static getDerivedStateFromProps(props, state) {
+		return {
+			loggedin:props.loggedin,
+			start_screen_flag:props.start_screen_flag
+		};
+	  }
+	goNext = () => {
+		console.log("gonext----0-0000-0-0--00-0-0--00-")
+		if(this.state.loggedin){
+			this.props.updateMenuStatus(true);
+
+			this.props.navigation.navigate('Dashboard1');
+		}
+		else
+			this.props.navigation.navigate('Login');
+	}
+
 	componentDidMount() {
-		setTimeout(() => {
-			this.goNext('Login');
-		}, 4000);
+		console.log("START INIT")
+		this.props.updateMenuStatus(false);
+
 	}
   render() {
-	const { primaryColor, secondaryColor } = this.props.theme.palette;
+	if(this.state.start_screen_flag===true){
+		this.props.navigation.navigate('Dashboard1');
+		this.props.updateMenuStatus(true);
+
+	}
     return (
-      <SafeAreaView style={{...CustomStyles.container, backgroundColor: primaryColor}}>
-		<View style={[CustomStyles.container]}>
-			<Image source={Images.start_animation} style={{justifyContent:'center', width:'100%',height:'100%'}} />
-		</View>
+      <SafeAreaView style={{...CustomStyles.container}}>
+			<Video
+				source={Images.start_video}
+				style={{height: height,
+					position: "absolute",
+					top: 0,
+					left: 0,
+					alignItems: "stretch",
+					bottom: 0,
+					right: 0}}
+				resizeMode={"cover"}
+				onEnd={() => this.goNext()}
+				/>
+		
       </SafeAreaView>
     );
   }
 }
 function mapStateToProps(state) {
 	return {
+		loggedin: state.Auth.loggedin,
+		start_screen_flag:state.Auth.start_screen_flag,
 	};
   }
-export default connect(mapStateToProps, {})(withTheme(StartScreen));
+export default connect(mapStateToProps, {updateMenuStatus})(withTheme(StartScreen));

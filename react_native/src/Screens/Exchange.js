@@ -17,19 +17,11 @@ class ExchangeScreen extends React.Component {
         darkmode:true,
         show_modal:false,
 		balance:{},
-        usd_balance:{
-            atri:0,
-            btc:0,
-            eth:0,
-            ltc:0,
-            bch:0,
-            flag:false,
-        },
+       
 	}
     static getDerivedStateFromProps(props, state) {
         return {
             darkmode:props.darkmode,
-            usd_balance:props.usd_balance,
 			balance:props.balance,
         };
       }
@@ -38,13 +30,14 @@ class ExchangeScreen extends React.Component {
 	}
     render() {
 
-        const {drop1_flag,drop2_flag,drop1_key,drop2_key,darkmode,usd_balance,balance} = this.state;
-        console.log("usd_balanc",usd_balance)
-        const exchage_from_data = [{image:Images.btc_icon,value:balance.btc.toFixed(5),u_v:(usd_balance.btc*balance.btc).toFixed(2), f_text:'BTC', text:'Bitcoin'},
-                                    {image:Images.Atri_icon,value:balance.atri.toFixed(2),u_v:(usd_balance.atri*balance.atri).toFixed(2),f_text:'ATRI', text:'Atari token'},
-                                    {image:Images.Eth_icon,value:balance.eth.toFixed(4),u_v:(usd_balance.eth*balance.eth).toFixed(2), f_text:'ETH', text:'Ethereum'},
-                                    {image:Images.Ltc_icon,value:balance.ltc.toFixed(4),u_v:(usd_balance.ltc*balance.ltc).toFixed(2), f_text:'LTC', text:'Litecoin'},
-                                    {image:Images.bch_icon,value:balance.bch.toFixed(4),u_v:(usd_balance.bch*balance.bch).toFixed(2), f_text:'BCH', text:'Bitcoincash'}
+        const {drop1_flag,drop2_flag,drop1_key,drop2_key,darkmode,balance} = this.state;
+        const exchage_from_data = [{image:Images.btc_icon,value:balance.btc.toFixed(5),u_v:(balance.btc_usd).toFixed(2), f_text:'BTC', text:'Bitcoin'},
+                                    {image:Images.Atri_icon,value:balance.atri.toFixed(2),u_v:(balance.atri_usd).toFixed(2),f_text:'ATRI', text:'Atari token'},
+                                    {image:Images.Eth_icon,value:balance.eth.toFixed(4),u_v:(balance.eth_usd).toFixed(2), f_text:'ETH', text:'Ethereum'},
+                                    {image:Images.Ltc_icon,value:balance.ltc.toFixed(4),u_v:(balance.ltc_usd).toFixed(2), f_text:'LTC', text:'Litecoin'},
+                                    // {image:Images.bch_icon,value:balance.bch.toFixed(4),u_v:(balance.bch_usd).toFixed(2), f_text:'BCH', text:'Bitcoincash'}
+                                    {image:Images.bch_icon,value:0.00,u_v:0.00, f_text:'USDT', text:'USDT'},
+
                                 ]
     return (
       <SafeAreaView style={{...CustomStyles.container, backgroundColor: darkmode?'rgb(33,33,33)':'white' }}>
@@ -120,19 +113,19 @@ class ExchangeScreen extends React.Component {
                         {drop2_flag &&
                         <View style={{position:'absolute', width:'100%',top:110, zIndex:999999}}>
                             {exchage_from_data.map((item, index) => 
-                                    <View >
-                                        <TouchableOpacity onPress={() => this.setState({drop2_flag:false,drop2_key:index})}>
-                                            <View style={{width:'100%',paddingLeft:20,paddingRight:20,paddingTop:6,paddingBottom:6,borderTopWidth:1,borderLeftWidth:1,borderRightWidth:1,borderColor:'black',backgroundColor:'white', flexDirection:'row'}}>
-                                                <View style={{width:'20%'}}>
-                                                    <Image source={item['image']} style={{width:20, height:20, marginTop:13,marginRight:10}} />
-                                                </View>
-                                                <View style={{width:'80%', alignSelf:'center'}}>
-                                                    <Text style={{fontSize:15,fontWeight:'600'}}>{item.f_text} {item.text}</Text>
-                                                    <Text style={{fontSize:12}}>{item.value} {item.f_text} | ${item.u_v}</Text>
-                                                </View>
+                                <View >
+                                    <TouchableOpacity onPress={() => this.setState({drop2_flag:false,drop2_key:index})}>
+                                        <View style={{width:'100%',paddingLeft:20,paddingRight:20,paddingTop:6,paddingBottom:6,borderTopWidth:1,borderLeftWidth:1,borderRightWidth:1,borderColor:'black',backgroundColor:'white', flexDirection:'row'}}>
+                                            <View style={{width:'20%'}}>
+                                                <Image source={item['image']} style={{width:20, height:20, marginTop:13,marginRight:10}} />
                                             </View>
-                                        </TouchableOpacity>
-                                    </View>
+                                            <View style={{width:'80%', alignSelf:'center'}}>
+                                                <Text style={{fontSize:15,fontWeight:'600'}}>{item.f_text} {item.text}</Text>
+                                                <Text style={{fontSize:12}}>{item.value} {item.f_text} | ${item.u_v}</Text>
+                                            </View>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
                             )}
                         </View>
                         }
@@ -209,7 +202,6 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
   return {
         darkmode:state.Auth.darkmode,
-        usd_balance:state.Auth.usd_balance,
 		balance: state.Auth.balance,
 
   };

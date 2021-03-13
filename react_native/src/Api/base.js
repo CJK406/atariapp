@@ -29,8 +29,6 @@ export async function getAPI(url) {
     result = result && result.data
     return result;
   } catch (error) {
-    console.log(error);
-
     if (error.response) {
       return error.response.data;
     }
@@ -47,7 +45,6 @@ export async function postAPI(url, data) {
     if (error.response) {
       return error.response.data;
     }
-    console.log(error);
     throw error;
   }
 }

@@ -4,11 +4,12 @@ import {
   AUTH_SET_TOKEN,
   SETTING_THEME,
   AUTH_SET_PINCODE,
-  AUTH_SET_USD_BALANCE,
   NOTIFICATIONFLAG,
   AUTH_SET_ALL_HISTORY,
   AUTH_GET_ALL_ADDRESS,
   AUTH_UPDATE_BALLANCE,
+  AUTH_UPDATE_STARTSCREEN,
+  AUTH_UPDATE_MENUSTATUS
 } from '../type';
 
 export const authSetUserInfo = (data) => {
@@ -31,13 +32,23 @@ export const authSetToken = (data) => {
     data:data
   }
 }
-
-export const authSetUsdBalance = (data) => {
+export const updateStartScreenState = (data) => {
   return {
-    type:AUTH_SET_USD_BALANCE,
+    type:AUTH_UPDATE_STARTSCREEN,
     data:data
   }
 }
+
+export const updateMenuStatus = (data) => {
+  return {
+    type:AUTH_UPDATE_MENUSTATUS,
+    data:data
+  }
+}
+
+
+
+
 
 
 export const authLogout = () => {

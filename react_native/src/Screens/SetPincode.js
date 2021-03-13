@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SafeAreaView, StyleSheet, Text, Image, TouchableOpacity, View, TextInput } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, Image, ActivityIndicator,TouchableOpacity, View, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { Images } from '../Assets';
@@ -12,7 +12,21 @@ class SetPincodeScreen extends React.Component {
 	state = {
         email: '',
         input_value:['','','','','',''],
+        pincode:null,
+        loading:false,
 
+    }
+    static getDerivedStateFromProps(props, state) {
+        return{
+            pincode:props.pincode,
+        };
+        
+    }
+    goNext(page){
+        this.props.navigation.navigate(page);
+        // this.setState({
+        //     loading:false,
+        // })
     }
     changeEvent = (e,index) => {
         const input_value = this.state.input_value;
@@ -32,7 +46,7 @@ class SetPincodeScreen extends React.Component {
             this.SixthTextInput.focus();
     }
 
-    SetPin(){
+    SetPin = () => {
         const {input_value} =this.state;
         let pincode = "";
             for(let i=0; i<6; i++){
@@ -42,14 +56,21 @@ class SetPincodeScreen extends React.Component {
         let data = {pincode:pincode};
         if(input_value[0]!=="" && input_value[1]!=="" && input_value[2]!=="" && input_value[3]!=="" &&input_value[4]!=="" &&input_value[5]!=="")
         {
+            this.setState({
+                loading:true,
+            })
             this.props.authSetPincode(data);
-		    this.props.navigation.navigate('Dashboard');
         }
         else{
 			Toast.show('Please fill up all the cells properly.');
         }
     }
   render() {
+      const {pincode} = this.state;
+      if(pincode!==null){
+        this.goNext('Dashboard1');
+      }
+        console.log("pincode",pincode);
     return (
         <KeyboardAwareScrollView>
 
@@ -140,7 +161,6 @@ const styles = StyleSheet.create({
 	}
 });
 function mapStateToProps(state) {
-    console.log(state.Auth);
 	return {
         pincode:state.Auth.pincode
 	};

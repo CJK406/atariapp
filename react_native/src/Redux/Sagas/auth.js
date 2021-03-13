@@ -68,7 +68,6 @@ export function* watchgetAllAddress(){
 
 function* updateBallance(payload) {
   const update_result = yield login();
-  console.log("update_result=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=",update_result);
   yield put({ type: AUTH_UPDATE_BALLANCE_SUCCESS, data:update_result.data})
 	// yield scheduleUpdateToken();
 }

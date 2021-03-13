@@ -22,23 +22,15 @@ class ForgotPasswordScreen extends React.Component {
 			return;
 		}
 		try {
-			const response = await requestResetPasswordApi(email);
-			if (response && response.data) {
-				Toast.show('Please check your email inbox.');
-				this.props.navigation.navigate('ResetPassword', { email });
+			let data = {email:email};
+			const response = await requestResetPasswordApi(data);
+			console.log(response.message);
+			if (response && response.error===null) {
+				Toast.show("We have e-mailed your password reset link!");
 			} else {
-				let errors = response.errors || [];
-				let messages = [];
-				for (var i=0; i< errors.length; i++) {
-					messages.push(errors[i].message)
-				}
-				if (messages.length === 0) {
-					messages.push('Unknown error')
-				}
-				Toast.show(messages[0]);
+				Toast.show(response.error);
 			}
 		} catch (err) {
-			Toast.show('An error occured. Please try again later');
 		}
 	}
 	goBack = () => {
@@ -56,13 +48,13 @@ class ForgotPasswordScreen extends React.Component {
 					<Text style={{...styles.customWriting}}>We just need your registered email to send you password reset instructions</Text>
 					<View style={{justifyContent: 'center', alignItems: 'center'}}>
 						<TextInput
-							style={{...CustomStyles.textInput, marginBottom: 20}}
+							style={{...CustomStyles.textInput, marginBottom: 20,color:'white'}}
 							onChangeText={text => this.setState({email: text})}
 							value={email}
 							autoCompleteType="email"
 							keyboardType="email-address"
 							placeholder="Email"
-							placeholderTextColor={forthColor}
+							placeholderTextColor="white"
 							/>
 						<TouchableOpacity onPress={() => this.goNext()} style={{backgroundColor:'rgb(227,30,45)',width:'100%', padding:20,borderRadius:10,textAlign:'center',justifyContent:'center',shadowColor: '#000',
     						shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.8, shadowRadius: 2}}>

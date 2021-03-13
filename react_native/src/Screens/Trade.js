@@ -5,7 +5,6 @@ import { withTheme } from 'react-native-material-ui';
 import { CustomStyles,Headers } from '../Constant';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Logo from '../Assets/logo.png';
-import { Images } from '../Assets';
 import QRCode from 'react-native-qrcode-svg';
 import { AreaChart } from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
@@ -16,7 +15,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import { get_History as get_HistoryApi, get_Graph} from '../Api';
 import Clipboard from '@react-native-community/clipboard';
 import PTRView from 'react-native-pull-to-refresh';
-import { updateBallance} from '../Redux/Actions';
+import { Images } from '../Assets';
 
 class TradeScreen extends React.Component {
 	state = {
@@ -25,8 +24,8 @@ class TradeScreen extends React.Component {
 		show_receive_modal:false,
 		show_send_modal:false,
 		qr_code_modal:false,
-		balance:{},
-        usd_balance:{},
+		show_comingsoon_modal:false,
+		balance:null,
 		usd_val:0,
 		history:[],
 		history_finish:false,
@@ -36,7 +35,9 @@ class TradeScreen extends React.Component {
 		send_usd_amount:"0.00",
 		send_amount:"0.00",
 		darkmode:true,
-        get_address:{atri:"",btc:"",eth:"",ltc:"",bch:"",flag:false},
+		get_address:{atri:"",btc:"",eth:"",ltc:"",bch:"",flag:false},
+		price:null,
+		
 
 	}
 	componentDidMount() {
@@ -45,7 +46,6 @@ class TradeScreen extends React.Component {
 			this.getHistory();
 			this.getGraphData();
 		});
-
 	}
 	componentWillUnmount() {
         this._unsubscribe();
@@ -54,8 +54,8 @@ class TradeScreen extends React.Component {
 		return {
 			balance:props.balance,
 			darkmode:props.darkmode,
-			usd_balance:props.usd_balance,
-			get_address:props.get_address
+			get_address:props.get_address,
+			price:props.price,
 		};
 	}
 	format(){
@@ -74,7 +74,6 @@ class TradeScreen extends React.Component {
 			send_amount:"0.00",
 		})
 	}
-	
 	getHistory = async () => {
 		const {currentTab} = this.state;
 		const history = await get_HistoryApi(Headers[currentTab]['text'].toLowerCase());
@@ -83,9 +82,8 @@ class TradeScreen extends React.Component {
 			history_finish:true,
 		})
 	}
-
 	getGraphData = async () => {
-		const {currentTab,currentPeriodIndex,chart_data,usd_val} = this.state;
+		const {currentTab,currentPeriodIndex,chart_data} = this.state;
 		const graph_data = await get_Graph(Headers[currentTab]['text'].toLowerCase(),currentPeriodIndex);
 		const graph_result = graph_data.data;
 		let min = graph_result[0]['value'];
@@ -104,22 +102,27 @@ class TradeScreen extends React.Component {
 			chart_data:chart_data
 		});
 	}
-
 	setTab = (index) => {
-		this.setState({
-			currentTab: index,
-			currentPeriodIndex:'1h',
-			usd_val:0,
-			history:[],
-			chart_data:{x:[],y:[],min:0,max:0},
+		if(index===4){
+			this.setState({show_comingsoon_modal:true});
+		}
+		else{
+			this.setState({
+				currentTab: index,
+				currentPeriodIndex:'1h',
+				usd_val:0,
+				history:[],
+				chart_data:{x:[],y:[],min:0,max:0},
 
-			percentage:0,
-			send_usd_amount:"0.00",
-			send_amount:"0.00",
-		}, () => {
-			this.getHistory();
-			this.getGraphData();
-		});
+				percentage:0,
+				send_usd_amount:"0.00",
+				send_amount:"0.00",
+			}, () => {
+				this.getHistory();
+				this.getGraphData();
+			});
+		}
+		
 	}
 	setPeriod = (period) =>{
 		this.setState({
@@ -159,28 +162,26 @@ class TradeScreen extends React.Component {
 		})
 	};
 	changeSendUsdValue(e){
-		const {currentTab,balance,usd_balance,get_address} =this.state;
-
-		const currency_data = [['btc',balance.btc,'#f7931a',usd_balance.btc,get_address.btc],
-								['atri',balance.atri,'#c42626',usd_balance.atri,get_address.atri],
-								['eth',balance.eth,'aqua',usd_balance.eth,get_address.eth],
-								['ltc',balance.ltc,'#345c9c',usd_balance.ltc,get_address.ltc],
-								['bch',balance.bch,'green',usd_balance.bch,get_address.bch]];
-		let send_amount1 = e!=="" ?  (parseFloat(e)/parseFloat(currency_data[currentTab][3])).toFixed(5) : "0.00";
+		const {currentTab,balance,get_address,price} =this.state;
+		const currency_data = [['btc',balance.btc,'#f7931a',balance.btc_usd,get_address.btc],
+								['atri',balance.atri,'#c42626',balance.atri_usd,get_address.atri],
+								['eth',balance.eth,'aqua',balance.eth_usd,get_address.eth],
+								['ltc',balance.ltc,'#345c9c',balance.ltc_usd,get_address.ltc],
+								['bch',balance.bch,'green',balance.bch_usd,get_address.bch]];
+		let send_amount1 = e!=="" ?  (parseFloat(e)/parseFloat(price[currency_data[currentTab][0]])).toFixed(5) : "0.00";
 		this.setState({
 			send_amount:send_amount1,
 			send_usd_amount:e
 		})
 	}
 	changeSendValue(e){
-		const {currentTab,balance,usd_balance,get_address} =this.state;
-
-		const currency_data = [['btc',balance.btc,'#f7931a',usd_balance.btc,get_address.btc],
-								['atri',balance.atri,'#c42626',usd_balance.atri,get_address.atri],
-								['eth',balance.eth,'aqua',usd_balance.eth,get_address.eth],
-								['ltc',balance.ltc,'#345c9c',usd_balance.ltc,get_address.ltc],
-								['bch',balance.bch,'green',usd_balance.bch,get_address.bch]];
-		let send_amount1 = e!=="" ?  (parseFloat(e)*parseFloat(currency_data[currentTab][3])) : 0;
+		const {currentTab,balance,get_address,price} =this.state;
+		const currency_data = [['btc',balance.btc,'#f7931a',balance.btc_usd,get_address.btc],
+								['atri',balance.atri,'#c42626',balance.atri_usd,get_address.atri],
+								['eth',balance.eth,'aqua',balance.eth_usd,get_address.eth],
+								['ltc',balance.ltc,'#345c9c',balance.ltc_usd,get_address.ltc],
+								['bch',balance.bch,'green',balance.bch_usd,get_address.bch]];
+		let send_amount1 = e!=="" ?  (parseFloat(e)*parseFloat(price[currency_data[currentTab][0]])) : 0;
 		console.log(parseFloat(currency_data[currentTab][3]))
 		this.setState({
 			send_usd_amount:send_amount1.toFixed(2),
@@ -196,16 +197,16 @@ class TradeScreen extends React.Component {
 		})
 	};
 	setFullBallance(){
-		const {send_amount,send_usd_amount,balance,currentTab,usd_val,usd_balance,get_address} = this.state;
-		const currency_data1 = [['btc',balance.btc,'#f7931a',usd_balance.btc,get_address.btc],
-								['atri',balance.atri,'#c42626',usd_balance.atri,get_address.atri],
-								['eth',balance.eth,'aqua',usd_balance.eth,get_address.eth],
-								['ltc',balance.ltc,'#345c9c',usd_balance.ltc,get_address.ltc],
-								['bch',balance.bch,'green',usd_balance.bch,get_address.bch]];
+		const {balance,currentTab,get_address,price} = this.state;
+		const currency_data1 = [['btc',balance.btc,'#f7931a',balance.btc_usd,get_address.btc,8],
+			['atri',balance.atri,'#c42626',balance.atri_usd,get_address.atri,4],
+			['eth',balance.eth,'aqua',balance.eth_usd,get_address.eth,8],
+			['ltc',balance.ltc,'#345c9c',balance.ltc_usd,get_address.ltc,8],
+			['bch',balance.bch,'green',balance.bch_usd,get_address.bch,6]];
 		let full_balance = currency_data1[currentTab][1];
-		let send_amount1 = currency_data1[currentTab][3]*currency_data1[currentTab][1];
+		let send_amount1 =currency_data1[currentTab][3];
 		this.setState({
-			send_amount:full_balance.toFixed(5),
+			send_amount:full_balance.toFixed(currency_data1[currentTab][5]),
 			send_usd_amount:send_amount1.toFixed(2)
 		})
 	}
@@ -217,20 +218,15 @@ class TradeScreen extends React.Component {
 		}, () => {
 			this.getHistory();
 			this.getGraphData();
-			this.props.updateBallance();
 		});
-		
 	}
   render() {
-	  
-		const { currentTab,currentPeriodIndex,balance,chart_data,darkmode,usd_balance,get_address,usd_val } = this.state;
-		const currency_data = [['btc',balance.btc,'#f7931a',usd_balance.btc,get_address.btc],
-								['atri',balance.atri,'#c42626',usd_balance.atri,get_address.atri],
-								['eth',balance.eth,'aqua',usd_balance.eth,get_address.eth],
-								['ltc',balance.ltc,'#345c9c',usd_balance.ltc,get_address.ltc],
-								['bch',balance.bch,'green',usd_balance.bch,get_address.bch]];
-
-		
+		const { currentTab,currentPeriodIndex,balance,chart_data,darkmode,get_address,price } = this.state;
+		const currency_data = [['btc',balance.btc,'#f7931a',balance.btc_usd,get_address.btc,8],
+								['atri',balance.atri,'#c42626',balance.atri_usd,get_address.atri,4],
+								['eth',balance.eth,'aqua',balance.eth_usd,get_address.eth,8],
+								['ltc',balance.ltc,'#345c9c',balance.ltc_usd,get_address.ltc,8],
+								['bch',balance.bch,'green',balance.bch_usd,get_address.bch,6]];
     return (
       <SafeAreaView style={{...CustomStyles.container, backgroundColor: darkmode?'rgb(33,33,33)':'white' }}>
           <PTRView onRefresh={()=>this.refresh()} >
@@ -242,14 +238,12 @@ class TradeScreen extends React.Component {
 				<View style={{backgroundColor:darkmode?'black':'white',paddingBottom:10}}>
 					<Text style={{color:darkmode?'white':'black', alignSelf:'center', alignItems:'center'}}>Total Balance</Text>
 					<Text style={{color:darkmode?'white':'black', alignSelf:'center', alignItems:'center'}}>${balance.sum.toFixed(2)}</Text>
-
 				</View>
 				<View style={[{height: 44, marginLeft: -15, marginRight: -15, alignItems: 'center', flexDirection: 'row', backgroundColor: darkmode?'black':'white'}, styles.topTabBar]}>
 					{Headers.map((item, index) => <TouchableHighlight onPress={() => this.setTab(index)} style={[styles.topTab, currentTab === index && styles.activeTab]} key={index}>
 						<Image source={item.Image} style={{width:25, height:25, alignItems:'center',alignSelf:'center'}}></Image>							
 					</TouchableHighlight>)}
 				</View>
-				
 				<View >
 					<Text style={{color:darkmode?'white':'black',fontSize:15,alignItems:'center',alignSelf:'center',marginTop:20}}>Current Balance</Text>
 					<View style={{flexDirection:'row'}}>
@@ -262,8 +256,8 @@ class TradeScreen extends React.Component {
 							</TouchableHighlight>
 						</View>
 						<View style={{width:'60%'}}>
-							<Text style={{fontSize:23,marginTop:20,color:darkmode?'white':'black',alignSelf:'center'}}>{currency_data[currentTab][1]} {Headers[currentTab]['text']}</Text>
-							<Text style={{fontSize:20,marginTop:5,color:darkmode?'white':'black',alignSelf:'center'}}>${(currency_data[currentTab][1] * currency_data[currentTab][3]).toFixed(2)}</Text>
+							<Text style={{fontSize:23,marginTop:20,color:darkmode?'white':'black',alignSelf:'center'}}>{currency_data[currentTab][1].toFixed(currency_data[currentTab][5])} {Headers[currentTab]['text']}</Text>
+							<Text style={{fontSize:20,marginTop:5,color:darkmode?'white':'black',alignSelf:'center'}}>${currency_data[currentTab][3].toFixed(2)}</Text>
 						</View>
 						<View style={{width:'20%'}}>
 						<TouchableHighlight onPress={() => this.toggleSendModal()} style={{alignItems:'flex-end',backgroundColor:'#ce2424',borderTopLeftRadius:100,borderBottomLeftRadius:100, height:48,marginTop:40,paddingRight:5,paddingTop:5}}>
@@ -275,12 +269,10 @@ class TradeScreen extends React.Component {
 						</View>
 					</View>
 					<View style={{flexDirection:'row',marginTop:10,alignSelf:'center',alignItems:'center'}}>
-						<Text style={{color:Headers[currentTab]['color'],fontSize:19}}>{Headers[currentTab]['text']} ${currency_data[currentTab][3].toFixed(2)}</Text>
+						<Text style={{color:Headers[currentTab]['color'],fontSize:19}}>{Headers[currentTab]['text']} ${price[currency_data[currentTab][0]].toFixed(2)}</Text>
 						{/* <View style={{backgroundColor:Headers[currentTab]['color'],padding:5,borderRadius:20,marginLeft:10}}><Text style={{fontWeight:'700'}}>{chart_data.y.length>0 ? ((chart_data.max-currency_data[currentTab][3])/chart_data.average*100).toFixed(2) : '0.00'}%</Text></View> */}
-						<View style={{backgroundColor:Headers[currentTab]['color'],padding:5,borderRadius:20,marginLeft:10}}><Text style={{fontWeight:'700'}}>{chart_data.y.length>0 ? ((currency_data[currentTab][3]-chart_data.y[0])/currency_data[currentTab][3]*100).toFixed(2) : '0.00'}%</Text></View>
-					
+						<View style={{backgroundColor:Headers[currentTab]['color'],padding:5,borderRadius:20,marginLeft:10}}><Text style={{fontWeight:'700'}}>{chart_data.y.length>0 ? ((price[currency_data[currentTab][0]]-chart_data.y[0])/chart_data.y[chart_data.y.length-1]*100).toFixed(2) : '0.00'}%</Text></View>
 					</View>
-					
 				</View>
 				<View style={{height:130}}>
 					{chart_data.y.length>0 ? (
@@ -298,7 +290,6 @@ class TradeScreen extends React.Component {
 							<ActivityIndicator size="large" color={darkmode?"white":'black'} />
 						</View>
 					)}
-					
 				</View>
 				<View style={{flexDirection:'row',alignSelf:'center',alignItems:'center', textAlign:'center',justifyContent:'center', borderBottomColor:darkmode?'white':'black', borderBottomWidth:1, width:'100%', paddingBottom:30,marginTop:20}}>
 					<TouchableOpacity onPress={() => this.setPeriod('1h')} style={[currentPeriodIndex==='1h' ? {backgroundColor:'#d24646'} : {backgroundColor:'#c42626'}, { borderRadius:5,width:'21%',height:29,marginLeft:10, borderWidth:0.8,borderColor:'white',alignItems:'center',alignSelf:'center',justifyContent:'center'}]}>
@@ -311,7 +302,7 @@ class TradeScreen extends React.Component {
 						<Text style={{color:'white',fontSize:11}}>7days</Text>
 					</TouchableOpacity>
 				</View>
-				<View style={{padding:20, color:'white',paddingBottom:40}}>
+				<View style={{padding:20, color:'white',paddingBottom:70}}>
 				<Text style={{fontSize:16,color:darkmode?'white':'black',marginBottom:10}}>Activity</Text>
 				{!this.state.history_finish && 
 					<ActivityIndicator size="large" color={darkmode?"white":'black'}  />
@@ -326,7 +317,7 @@ class TradeScreen extends React.Component {
 							<Text style={{color:darkmode?'white':'black',fontSize:11}}>{item.created_at}</Text>
 						</View>
 						<View style={{width:'44%'}}>
-							<Text style={{color:item.type==="received" ? 'rgb(70,155,74)': 'rgb(244,67,54)',fontSize:15,textAlign:'right'}}>{item.amount.toFixed(4)} {item.currency.toUpperCase()}</Text>
+							<Text style={{color:item.type==="received" ? 'rgb(70,155,74)': 'rgb(244,67,54)',fontSize:15,textAlign:'right'}}>{item.amount} {item.currency.toUpperCase()}</Text>
 							<Text style={{color:darkmode?'white':'black',fontSize:15,textAlign:'right'}}>${item.amount_usd}</Text>
 						</View>
 					</View> 
@@ -435,6 +426,20 @@ class TradeScreen extends React.Component {
 					</TouchableOpacity>
 				</View>
 			</Modal>
+			<Modal
+					isVisible={this.state.show_comingsoon_modal}
+					>
+					<View style={{ backgroundColor:'white',borderRadius:10}}>
+						<Image source={Images.exchange_gif} style={{justifyContent:'center', width:'100%',height:200,marginTop:40}} />
+						<Text style={{fontSize:30, textAlign:'center',marginTop:40,marginBottom:20}}>Coming Soon</Text>
+						{/* <Text style={{textAlign:'center',padding:20,fontSize:20}}>USDT crypto will be available soon.</Text> */}
+						<TouchableOpacity onPress={() => this.setState({show_comingsoon_modal:false})} 
+							style={{backgroundColor:'rgb(227,30,45)', width:'60%',marginBottom:20,textAlign:'center',justifyContent:'center',marginLeft:'18%',padding:20,borderRadius:10,textAlign:'center',justifyContent:'center'}}
+						>
+							<Text style={{fontSize: 18,color:'white',textAlign:'center',justifyContent:'center',fontWeight:'bold'}}>OK</Text>
+						</TouchableOpacity>
+					</View>
+				</Modal>
 			</ScrollView>
 		</PTRView>
 	  </SafeAreaView>
@@ -483,9 +488,9 @@ function mapStateToProps(state) {
   return {
 		balance: state.Auth.balance,
 		darkmode: state.Auth.darkmode,
-        usd_balance:state.Auth.usd_balance,
 		get_address:state.Auth.get_address,
+		price:state.Auth.price,
   };
 }
 
-export default connect(mapStateToProps, {updateBallance  })(withTheme(TradeScreen));
+export default connect(mapStateToProps, {  })(withTheme(TradeScreen));

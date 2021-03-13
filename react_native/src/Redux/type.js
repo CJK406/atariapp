@@ -8,7 +8,6 @@ export const AUTH_SET_USER_INFO_SUCCESS				= 'AUTH_SET_USER_INFO_SUCCESS';
 export const AUTH_SET_TOKEN								= 'AUTH_SET_TOKEN';
 export const AUTH_SET_TOKEN_SUCCESS				= 'AUTH_SET_TOKEN_SUCCESS';
 
-export const AUTH_SET_USD_BALANCE							= 'AUTH_SET_USD_BALANCE';
 
 
 export const AUTH_LOGOUT                      = 'AUTH_LOGOUT';
@@ -29,4 +28,9 @@ export const AUTH_GET_ALL_ADDRESS_SUCCESS              = 'AUTH_GET_ALL_ADDRESS_S
 
 export const AUTH_UPDATE_BALLANCE              = 'AUTH_UPDATE_BALLANCE';
 export const AUTH_UPDATE_BALLANCE_SUCCESS              = 'AUTH_UPDATE_BALLANCE_SUCCESS';
+export const AUTH_UPDATE_STARTSCREEN              = 'AUTH_UPDATE_STARTSCREEN';
+export const AUTH_UPDATE_MENUSTATUS              = 'AUTH_UPDATE_MENUSTATUS';
+
+
+
 

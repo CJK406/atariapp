@@ -7,13 +7,14 @@ import {
   AUTH_SET_USER_INFO_SUCCESS,
   AUTH_SET_TOKEN,AUTH_SET_TOKEN_SUCCESS,
   SETTING_THEME, AUTH_SET_PINCODE, AUTH_SET_PINCODE_SUCCESS,
-  AUTH_SET_USD_BALANCE,
   NOTIFICATIONFLAG,
   AUTH_SET_ALL_HISTORY,
   AUTH_GET_ALL_ADDRESS,
   AUTH_GET_ALL_ADDRESS_SUCCESS,
   AUTH_UPDATE_BALLANCE,
-  AUTH_UPDATE_BALLANCE_SUCCESS
+  AUTH_UPDATE_BALLANCE_SUCCESS,
+  AUTH_UPDATE_STARTSCREEN,
+  AUTH_UPDATE_MENUSTATUS
 } from '../type';
 const INITIAL = {
   loading: false,
@@ -28,19 +29,14 @@ const INITIAL = {
   password: '',
   darkmode:true,
   notification_Flag:true,
-  pincode:'null',
+  pincode:null,
   user_id:"",
-  usd_balance:{
-    atri:0,
-    btc:0,
-    eth:0,
-    ltc:0,
-    bch:0,
-    sum:0,
-    flag:false,
-  },
+  
   all_history:[],
   get_address:{atri:"",btc:"",eth:"",ltc:"",bch:"",flag:false},
+  price:null,
+  start_screen_flag:false,
+  menustatus:false
 }
 
 export default (state = INITIAL, action) => {
@@ -49,7 +45,7 @@ export default (state = INITIAL, action) => {
       if (!action.payload) return state;
       
       const { Auth } = action.payload;
-      let { loggedin, token, balance,darkmode,pincode,usd_balance,notification_Flag,all_history,get_address} = Auth;
+      let { loggedin, token, balance,darkmode,pincode,notification_Flag,all_history,get_address,price} = Auth;
       return {
         ...Auth,
         loggedin,
@@ -58,9 +54,9 @@ export default (state = INITIAL, action) => {
         darkmode,
         pincode,
         notification_Flag,
-        usd_balance,
         all_history,
         get_address,
+        price,
       };
 		}
 
@@ -78,32 +74,43 @@ export default (state = INITIAL, action) => {
    
       return { ...state, token};
     }
+    case AUTH_UPDATE_MENUSTATUS: {
+      const data = action.data;
+   
+      return { ...state, menustatus:data};
+    }
+    
+
     
     case AUTH_SET_PINCODE_SUCCESS: {
       const data = action.data;
       return { ...state, pincode:data.pincode};
     }
-
-    case AUTH_SET_USD_BALANCE: {
+    case AUTH_UPDATE_STARTSCREEN: {
       const data = action.data;
-      return { ...state, usd_balance:data};
+
+      return { ...state, start_screen_flag:data};
     }
+
+    
+
+   
     case AUTH_SET_USER_INFO_SUCCESS: {
-      const { balance,pin_code,id } = action.data;
+      const { balance,pin_code,id,price } = action.data;
       // const userActivated = action.data=='null';
       // initFirebase();
 
-      return { ...state, loading: false, loggedin: true,pincode:pin_code,user_id:id, balance: balance, messages: null };
+      return { ...state, loading: false, loggedin: true,all_history:[],price:price,pincode:pin_code,user_id:id, balance: balance, messages: null };
     }
     
     case AUTH_UPDATE_BALLANCE_SUCCESS:{
       
-      return { ...state, balance: action.data.balance};
+      return { ...state, balance: action.data.balance, price: action.data.price};
 
     }
     case AUTH_LOGOUT:
     {
-      return { ...state, loading: false, loggedin: false, token: null};
+      return { ...state, loading: false, loggedin: false, token: null,start_screen_flag:false};
     }
     case SETTING_THEME:
     {

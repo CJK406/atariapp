@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SafeAreaView, StyleSheet, Text, Image, TouchableOpacity, View, ScrollView, Alert ,Switch} from 'react-native';
+import { SafeAreaView, StyleSheet, Text, Image, TouchableOpacity, View, ScrollView, Linking ,Switch} from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { CustomStyles } from '../Constant';
@@ -70,7 +70,7 @@ class ProfileScreen extends React.Component {
 					</View>
 					<ScrollView showsVerticalScrollIndicator={false} style={{flex: 1, margin:30}} contentContainerStyle={{paddingBottom: 15}}>
 						<Text style={[themeToggle ? {color:'white'}:{color:'black'},{fontSize:15,marginBottom:14}]}>General</Text>
-						<TouchableOpacity  style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+						{/* <TouchableOpacity  style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
 							<View style={{flexDirection: 'row', alignItems: 'center', position: 'relative'}}>
 								<View style={{width:'10%'}}><Ionicons name={Menus[0].icon} size={26} color="white" /></View>
 								<View style={{width:'75%'}}>
@@ -81,7 +81,7 @@ class ProfileScreen extends React.Component {
 									<View style={{backgroundColor:'#545454',padding:5,borderRadius:5}}><Text style={{textAlign:'center',justifyContent:'center',color:'white',fontSize:10}}>USD</Text></View>
 								</View>
 							</View>
-						</TouchableOpacity>
+						</TouchableOpacity> */}
 						<TouchableOpacity style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
 							<View style={{flexDirection: 'row', alignItems: 'center', position: 'relative'}}>
 								<View style={{width:'10%'}}>
@@ -102,7 +102,7 @@ class ProfileScreen extends React.Component {
 								</View>
 							</View>
 						</TouchableOpacity>
-						<TouchableOpacity  style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+						{/* <TouchableOpacity  style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
 							<View style={{flexDirection: 'row', alignItems: 'center', position: 'relative'}}>
 								<View style={{width:'10%'}}>
 									<Ionicons name={Menus[2].icon} size={26} color="white" />
@@ -116,7 +116,7 @@ class ProfileScreen extends React.Component {
 									<Ionicons name="chevron-forward-outline" size={26} color="white" />
 								</View>
 							</View>
-						</TouchableOpacity>
+						</TouchableOpacity> */}
 						<Text style={[themeToggle ? {color:'white'}:{color:'black'},{fontSize:15,marginBottom:14}]}>Advanced</Text>
 						<TouchableOpacity  style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
 							<View style={{flexDirection: 'row', alignItems: 'center', position: 'relative'}}>
@@ -138,7 +138,7 @@ class ProfileScreen extends React.Component {
 								</View>
 							</View>
 						</TouchableOpacity>
-						<TouchableOpacity style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+						<TouchableOpacity onPress={() => Linking.openURL('mailto:token@atari.com') } style={{backgroundColor: 'rgb(66,66,66)', marginBottom: 25, padding:25,borderRadius:15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
 							<View style={{flexDirection: 'row', alignItems: 'center', position: 'relative'}}>
 								<Ionicons name={Menus[4].icon} size={26} color="white" />
 								<View>

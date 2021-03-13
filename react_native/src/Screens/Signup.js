@@ -14,7 +14,7 @@ import FontAwesome, {
   } from 'react-native-fontawesome';
 import Toast from 'react-native-simple-toast';
 import { authSetUserInfo,authSetToken } from '../Redux/Actions';
-import { login as loginApi} from '../Api';
+import { login as loginApi, signup as signupApi} from '../Api';
 import Modal from 'react-native-modal';
 import { $CombinedState } from 'redux';
 
@@ -30,7 +30,7 @@ class SignupScreen extends React.Component {
 	}
 
 	doLogin = async () => {
-		const { email, password } = this.state;
+		const { email, password,fullname } = this.state;
 		if (email.length === 0 || password.length === 0) {
 			Toast.show('Please fill in all fields.');
 			return;
@@ -42,27 +42,26 @@ class SignupScreen extends React.Component {
 		try {
 			this.setState({loading:true});
 			await this.props.authSetToken(Base64.btoa(email + ':' + password));
-			const response = await loginApi();
-			this.setState({loading:false});
-			if (response && response.data) {
-				if (response.errors && response.errors.length > 0) {
-					Toast.show(response.errors[0].message);
+			let signup_data={};
+			signup_data.email = email;
+			signup_data.password = password;
+			signup_data.name = fullname;
+			const signup_response = await signupApi(signup_data);
+			
+			if (signup_response && signup_response.error===null) {
+				const login_response = await loginApi();
+				this.setState({loading:false});
+				if (login_response && login_response.data && login_response.error===null) {
+						this.props.authSetUserInfo(login_response.data);
 				} else {
-					this.props.authSetUserInfo(response.data);
-				}
+					Toast.show('Email or Password is incorrect');
+				}	
 			} else {
-				let errors = response.errors || [];
-				let messages = [];
-				for (var i=0; i< errors.length; i++) {
-					messages.push(errors[i].message)
-				}
-				if (messages.length === 0) {
-					//messages.push('Unknown error')
-				}
-				Toast.show('Email or Password is incorrect');
+				Toast.show(signup_response.error);
+				this.setState({loading:false});
+
 			}
 		} catch (err) {
-			Toast.show('An error occured. Please try again later');
 		}
 	}
 

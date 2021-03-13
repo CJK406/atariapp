@@ -20,13 +20,12 @@ class SendPaymentScreen extends React.Component {
         darkmode:true,
         address:"",
         currency:0,
-        usd_val:0,
         send_amount:0,
         send_usd_amount:0,
         qr_code_modal:false,
         r_address:"",
         balance:{},
-        usd_balance:{}
+        price:null,
 
 	}
 	componentDidMount() {
@@ -38,8 +37,8 @@ class SendPaymentScreen extends React.Component {
         return {
             darkmode:props.darkmode,
             address: props.route.params.address,
-            usd_balance:props.usd_balance,
-            balance:props.balance
+            balance:props.balance,
+            price:props.price
         };
       }
 	navigate = (pagename) => {
@@ -87,16 +86,20 @@ class SendPaymentScreen extends React.Component {
 		}
 	}
     changeSendUsdValue(e){
-		const {usd_val} = this.state;
-		let send_amount1 = e!=="" ?  (parseFloat(e)/parseFloat(usd_val)).toFixed(5) : "0.00";
+        const {currency,price} =this.state;
+		const currency_data = [['btc'],['atri'],['eth'],['ltc'],['bch']];
+		let send_amount1 = e!=="" ?  (parseFloat(e)/parseFloat(price[currency_data[currency][0]])).toFixed(5) : "0.00";
 		this.setState({
 			send_amount:send_amount1,
 			send_usd_amount:e
 		})
+		
 	}
 	changeSendValue(e){
-		const {usd_val} = this.state;
-		let send_amount1 = e!=="" ?  (parseFloat(e)*parseFloat(usd_val)) : 0;
+        const {currency,price} =this.state;
+		const currency_data = [['btc'],['atri'],['eth'],['ltc'],['bch']];
+        
+		let send_amount1 = e!=="" ?  (parseFloat(e)*parseFloat(price[currency_data[currency][0]])) : 0;
 		this.setState({
 			send_usd_amount:send_amount1.toFixed(2),
 			send_amount:e
@@ -112,8 +115,12 @@ class SendPaymentScreen extends React.Component {
         return r_address;
     }
     setFullBallance(){
-		const {balance,currency,usd_balance} = this.state;
-		const currency_data1 = [['btc',balance.btc,'#f7931a',usd_balance.btc],['atri',balance.atri,'#c42626',usd_balance.atri],['eth',balance.eth,'aqua',usd_balance.eth],['ltc',balance.ltc,'#345c9c',usd_balance.ltc],['bch',balance.bch,'green',usd_balance.bch]];
+		const {balance,currency} = this.state;
+        const currency_data1 = [['btc',balance.btc,'#f7931a',balance.btc_usd],
+                                ['atri',balance.atri,'#c42626',balance.atri_usd],
+                                ['eth',balance.eth,'aqua',balance.eth_usd],
+                                ['ltc',balance.ltc,'#345c9c',balance.ltc_usd],
+                                ['bch',balance.bch,'green',balance.bch_usd]];
 		let full_balance = currency_data1[currency][1];
 		let send_amount1 = currency_data1[currency][3];
 
@@ -126,8 +133,12 @@ class SendPaymentScreen extends React.Component {
 		
 	}
   render() {
-        const {darkmode,currency,usd_val,usd_balance,balance} =this.state;
-		const currency_data = [['btc',balance.btc,'#f7931a',usd_balance.btc],['atri',balance.atri,'#c42626',usd_balance.atri],['eth',balance.eth,'aqua',usd_balance.eth],['ltc',balance.ltc,'#345c9c',usd_balance.ltc],['bch',balance.bch,'green',usd_balance.bch]];
+        const {darkmode,currency,balance} =this.state;
+        const currency_data = [['btc',balance.btc,'#f7931a',balance.btc_usd],
+                                ['atri',balance.atri,'#c42626',balance.atri_usd],
+                                ['eth',balance.eth,'aqua',balance.eth_usd],
+                                ['ltc',balance.ltc,'#345c9c',balance.ltc_usd],
+                                ['bch',balance.bch,'green',balance.bch_usd]];
 
     return (
       <SafeAreaView style={{...CustomStyles.container, backgroundColor: darkmode?'rgb(33,33,33)':'white',paddingTop:10}}>
@@ -222,7 +233,7 @@ function mapStateToProps(state) {
   return {
         darkmode:state.Auth.darkmode,
         balance:state.Auth.balance,
-        usd_balance:state.Auth.usd_balance
+        price:state.Auth.price,
   };
 }
 export default connect(mapStateToProps, {})(withTheme(SendPaymentScreen));
