@@ -39,7 +39,9 @@ class SignupScreen extends React.Component {
 			Toast.show('Invalid Email Format');
 			return;
 		}
+		
 		try {
+			
 			this.setState({loading:true});
 			await this.props.authSetToken(Base64.btoa(email + ':' + password));
 			let signup_data={};
@@ -47,9 +49,8 @@ class SignupScreen extends React.Component {
 			signup_data.password = password;
 			signup_data.name = fullname;
 			const signup_response = await signupApi(signup_data);
-			
-			if (signup_response && signup_response.error===null) {
-				const login_response = await loginApi();
+			if (signup_response.code===200) {
+				const login_response = await loginApi({email: email, password: password});
 				this.setState({loading:false});
 				if (login_response && login_response.data && login_response.error===null) {
 						this.props.authSetUserInfo(login_response.data);
@@ -57,7 +58,7 @@ class SignupScreen extends React.Component {
 					Toast.show('Email or Password is incorrect');
 				}	
 			} else {
-				Toast.show(signup_response.error);
+				Toast.show(signup_response.message);
 				this.setState({loading:false});
 
 			}

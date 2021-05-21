@@ -63,8 +63,43 @@ export const STRIPE_KEY = 'pk_test_zGTST6gDIDz7PxiSF6tc1vmG00lHgZqsEu';
 export const GOOGLE_API_KEY = 'AIzaSyAm-gRSVrsjGjc00jQSkNDVKIzxU8SlkSM';
 export const PAYPAL_CLIENT = 'ARHm04t5sDvIMQXlvT4wXU__A2LGmAITVa7M666dqKnzQSGiGXlKm_X8e18G4HUsuenHmZfmsbj-oSLe';
 
-export const Headers = [{Image:Images.btc_icon,text:'BTC',color:'#f7931a',full_text:'bitcoin'},
-{Image:Images.Atri_icon,text:'ATRI',color:'#ce2424',full_text:'atri'},
-{Image:Images.Eth_icon,text:'ETH',color:'aqua',full_text:'ethereum'},
-{Image:Images.Ltc_icon,text:'LTC',color:'#345c9c',full_text:'litecoin'},
-{Image:Images.bch_icon,text:'BCH',color:'green',full_text:'bitcoincash'}];
+
+export const Headers = [{Image:Images.btc_icon,text:'BTC',color:'#f7931a',full_text:'bitcoin',graph_text:'btc-bitcoin',history_t:'BTC'},
+{Image:Images.Atri_icon,text:'ATRI',color:'#ce2424',full_text:'atri',graph_text:'atri-atari-token',history_t:'Attari'},
+{Image:Images.Eth_icon,text:'ETH',color:'aqua',full_text:'ethereum',graph_text:'eth-ethereum',history_t:'ETH'},
+{Image:Images.Ltc_icon,text:'LTC',color:'#345c9c',full_text:'litecoin',graph_text:'ltc-litecoin',history_t:'LTC'},
+{Image:Images.bch_icon,text:'USDT',color:'rgb(80,175,149)',full_text:'USDT',graph_text:'usdt-tether',history_t:'USDT'},
+{Image:Images.ftm_icon,text:'FTM',color:'rgb(19,181,236)',full_text:'Fantom',graph_text:'ftm-fantom',history_t:'FTM'},
+{Image:Images.bnb_icon,text:'BNB',color:'rgb(243,186,46)',full_text:'Binance Coin',graph_text:'bnb-binance-coin',history_t:'BNB'},
+];
+
+export const CryptoStyle = {
+	btc : {
+		color:'#f7931a',
+		decimal:8
+	},
+	atri : {
+		color:'#c42626',
+		decimal:4
+	},
+	eth : {
+		color:'aqua',
+		decimal:8
+	},
+	ltc : {
+		color:'#345c9c',
+		decimal:8
+	},
+	usdt : {
+		color:'rgb(80,175,149)',
+		decimal:6
+	},
+	ftm : {
+		color:'rgb(19,181,236)',
+		decimal:8
+	},
+	bnb : {
+		color:'rgb(243,186,46)',
+		decimal:8
+	}
+}

@@ -1,26 +1,36 @@
 import { getAPI, postAPI } from './base';
 
 export async function currency_convert(currency,value){
-  return await getAPI('currency-convert/'+value+'/'+currency+'/usd');
+  return await postAPI('currency-convert',{currency:currency,value:value});
 }
 export async function get_allHistory(){
-    return await getAPI('transactions/all');
+    return await getAPI('getAllTransection');
   }
 
 export async function get_History(currency){
     return await getAPI('transactions/'+currency);
   }
 export async function get_Graph(currency,period){
-  return await getAPI('graph/'+currency+'/'+period);
+  return await postAPI('graph',{currency:currency,period:period});
 }
-export async function get_receive_address(currency){
-  return await getAPI('request-payment/'+currency);
-}
-
-export async function confirm_payment(currency,data){
-  return await postAPI('send-crypto?currency='+currency,data);
+export async function get_receive_address(){
+  return await getAPI('get_receive_address');
 }
 
+export async function sendEther(data){
+  return await postAPI('sendEther',data);
+}
+export async function sendAttari(data){
+  return await postAPI('sendAttari',data);
+}
+export async function sendUsdt(data){
+  return await postAPI('sendUsdt',data);
+}
 export async function reset_pin(data){
-  return await postAPI('forgot-pincode',data);
+  return await postAPI('getBalOff',data);
 }
+
+export async function getBalance(){
+  return await getAPI('getBalOff');
+}
+

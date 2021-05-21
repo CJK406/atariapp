@@ -1,16 +1,18 @@
 import * as React from 'react';
-import { BackHandler,StyleSheet, ActivityIndicator,Text, Image, TouchableOpacity, View, ScrollView, Alert,Dimensions } from 'react-native';
+import { BackHandler,StyleSheet, ActivityIndicator,Text, View, ScrollView,
+    InteractionManager, ImageBackground } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { CustomStyles } from '../Constant';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { LogoBox } from '../Components';
+import {  Header, BalanceList, History } from '../Components';
 import { Images } from '../Assets';
-import FontawesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { PieChart } from 'react-native-svg-charts';
 import {get_allHistory as get_allHistoryApi,login as loginApi} from '../Api';
 import { setAllHistory ,getAllAddress,updateBallance,updateStartScreenState,updateMenuStatus} from '../Redux/Actions';
 import PTRView from 'react-native-pull-to-refresh';
+import Toast from 'react-native-simple-toast';
+
+let backPressed = 0;
 class DashboardScreen extends React.Component {
     state = {
         balance:null,
@@ -22,41 +24,41 @@ class DashboardScreen extends React.Component {
         interval:null,
 	}
 	componentDidMount() {
-
-		this._unsubscribe = this.props.navigation.addListener('focus', () => {
-	        // this.props.updateMenuStatus(false);
-            BackHandler.addEventListener('hardwareBackPress', function(){
-                return true;
-            });
+       
+        InteractionManager.runAfterInteractions(() => {
+            this.props.updateMenuStatus(true);
             if(this.props.pincode===null){
-        		this.props.navigation.navigate("SetPincode");
+        		this.props.navigation.navigate("SetPincode"); 
             }
             else{
 	        	this.props.updateStartScreenState(false);
-                if(this.props.all_history.length==0)
+                this.get_address();  
+                if(this.props.all_history===undefined || this.props.all_history.length==0)
                     this.getHistory();
                 else{
                     this.setState({history_finish:true});
                 }
-                if(this.state.interval!==null)
-                    clearInterval(this.state.interval);
-                this.get_address();
-                this.state.interval = setInterval(() => {
-                    this.get_address();
-                }, 300000)
-                
             }
-            
-        });
+        })
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton.bind(this));
     }
-    componentWillMount(){
-		BackHandler.addEventListener('hardwareBackPress', function(){
-			return true;
-		});
-	}
+    
 	componentWillUnmount() {
-        this._unsubscribe();
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton.bind(this));
     }
+    handleBackButton = () => {
+		if(backPressed > 0){
+			BackHandler.exitApp();
+			backPressed = 0;
+		}else {
+			backPressed++;
+			Toast.show('Press again to exit.', Toast.SHORT);
+			setTimeout( () => { backPressed = 0}, 2000);
+			return true;
+		}
+
+		return true;
+	}
   static getDerivedStateFromProps(props, state) {
     return {
         balance:props.balance,
@@ -72,18 +74,14 @@ class DashboardScreen extends React.Component {
     }
 
 	getHistory = async () => {
-        console.log("start get history");
-
         const history = await get_allHistoryApi();
-        console.log("end get history");
-        this.setState({
-            history:history.result,
+         this.setState({
+            history:history.body.Attari,
             history_finish:true
-        });
-        this.props.setAllHistory(history.result);
+         });
+        this.props.setAllHistory(history.body.Attari);
     }
     refresh(){
-        console.log("asef");
         this.setState({
             history:[],
             history_finish:false,
@@ -93,12 +91,17 @@ class DashboardScreen extends React.Component {
 		});
        
     }
+    commafy( num ) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+     }
+    
   render() {
         const {balance,darkmode,history_finish,history} = this.state;
-        let data = [balance.atri_usd,balance.btc_usd,balance.eth_usd,balance.ltc_usd,balance.bch_usd];
-        if(balance.atri_usd===0 && balance.btc_usd===0 && balance.eth_usd===0 && balance.ltc_usd===0 && balance.bch_usd===0)
+
+        let data = [balance.atri_usd,balance.btc_usd,balance.eth_usd,balance.ltc_usd,balance.usdt_usd];
+        if(balance.atri_usd===0 && balance.btc_usd===0 && balance.eth_usd===0 && balance.ltc_usd===0 && balance.usdt_usd===0)
             data = [1,0,0,0,0];
-        const color_data = ['rgb(244,67,54)','rgb(242,169,0)','aqua','#345c9c','rgb(0,128,0)'];
+        const color_data = ['#ce2424','#f7931a','aqua','#345c9c','rgb(80,175,149)','rgb(19,181,236))','rgb(243,186,46)',];
         const getColor = (key) => color_data[key];
         const pieData = data.map((value, index) => ({
             value,
@@ -106,119 +109,122 @@ class DashboardScreen extends React.Component {
                     fill: getColor(index),
                 },
 				key: `pie-${index}`,
-				innerRadius:'20%'
+				innerRadius:'10%',
+                outerRadius: '10%'
             }))
+
+        const themeBG = darkmode? 'rgb(33,33,33)' : 'white'
+        const txtColor = darkmode ? CustomStyles.d_text : CustomStyles.w_text
+
     return (
-        <PTRView onRefresh={() => this.refresh()} style={{backgroundColor:darkmode?'rgb(33,33,33)':'white'}} >
+        <PTRView onRefresh={() => this.refresh()} style={{ backgroundColor: themeBG}}>
+            <ImageBackground style={{alignItems: 'center', flex: 1,}} source={Images.dashboard_background} >
 
-            <ScrollView nestedScrollEnabled={true} style={{...CustomStyles.container, backgroundColor: darkmode? 'rgb(33,33,33)' : 'white' }} >
+            <ScrollView nestedScrollEnabled={true} style={{...CustomStyles.container}}>
                 <View style={[CustomStyles.container, styles.innerContainer]}>
-                    <View style={[darkmode ? CustomStyles.d_back : CustomStyles.w_back,{height: 70, alignItems: 'center', justifyContent: 'center', position: 'relative',width:'100%'}]}>
-                        <LogoBox style={{position: 'absolute', left: 0}}/>
-                        <Image source={Images.Logo} style={{width:160, height:50}} />
-                    </View>
-
-                    <View style={[CustomStyles.innerContainer], {backgroundColor:darkmode?'black':'white',paddingBottom:20,paddingLeft:20}}>
-                        <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{fontSize:17,marginBottom:10}]}>Total Balance </Text>
-                        <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{fontSize:16,marginBottom:15}]}>${balance.sum.toFixed(2)}</Text>
-                        <View style={{flexDirection:'row'}}>
-                            <View style={{width:'45%'}}>
-                                <View style={{flexDirection:'row', alignItems:'center',marginBottom:10}}>
-                                    <FontawesomeIcon name="bitcoin" style={{marginTop:13,marginRight:15}} size={20} color="#f7931a" />
-                                    <View style={{flexDirection:'row',marginLeft:'auto'}}>
-                                        <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{justifyContent:'center', marginTop:10,marginRight:5, width:100,textAlign:'right'}]}>{this.state.balance.btc.toFixed(8)}</Text>
-                                        <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{justifyContent:'flex-end', marginTop:10,textAlign:'right'}]}>BTC</Text> 
+                    <Header darkmode={darkmode}/>
+                    <View style={{...CustomStyles.innerContainer,...styles.balanceContainer}}>
+                        <Text style={{fontSize: 17,justifyContent:'center', alignItems:'center',alignSelf:'center', marginBottom: 80, ...txtColor}}>
+                            Total Balance{' '}
+                        </Text>
+                        <Text style={{fontSize: 16, justifyContent:'center', alignItems:'center',alignSelf:'center', marginBottom: -120, ...txtColor}}>
+                            ${this.commafy(balance.sum.toFixed(2))}
+                        </Text>
+                        <View style={{marginTop:10}}>
+                            
+                            <View style={{marginTop:0}}>
+                                {this.state.balance != null ? (
+                                    <PieChart style={{ height: 150, marginTop: 30 }} data={pieData} innerRadius="95%"/>
+                                ) : (
+                                    <View style={{
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            alignSelf: 'center',
+                                            marginTop: '40%',
+                                        }}>
+                                        <ActivityIndicator size="large" color={darkmode ? 'white' : 'black'} />
                                     </View>
-                                </View>
-
-                                <View style={{flexDirection:'row', alignItems:'center',marginBottom:10}}>
-                                    <Image source={Images.Atri_icon} style={{width:20, height:20, marginTop:13,marginRight:10}} />
-                                    <View style={{flexDirection:'row',marginLeft:'auto'}}>
-                                        <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{justifyContent:'center', marginTop:10,marginRight:5, width:100,textAlign:'right'}]}>{this.state.balance.atri.toFixed(4)}</Text>
-                                        <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{justifyContent:'center', marginTop:10}]}>ATRI</Text> 
-                                    </View>
-                                </View>
-
-                                <View style={{flexDirection:'row', alignItems:'center',marginBottom:10}}>
-                                    <Image source={Images.Eth_icon} style={{width:20, height:20, marginTop:13,marginRight:10}} />
-                                    <View style={{flexDirection:'row',marginLeft:'auto'}}>
-                                        <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{justifyContent:'center', marginTop:10,marginRight:5, width:100,textAlign:'right'}]}>{this.state.balance.eth.toFixed(8)}</Text>
-                                        <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{justifyContent:'center', marginTop:10}]}>ETH</Text> 
-                                    </View>
-                                </View>
-
-                                <View style={{flexDirection:'row', alignItems:'center',marginBottom:10}}>
-                                    <Image source={Images.Ltc_icon} style={{width:20, height:20, marginTop:13,marginRight:10}} />
-                                    <View style={{flexDirection:'row',marginLeft:'auto'}}>
-                                        <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{justifyContent:'center', marginTop:10,marginRight:5, width:100,textAlign:'right'}]}>{this.state.balance.ltc.toFixed(8)}</Text>
-                                        <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{justifyContent:'center', marginTop:10}]}>LTC</Text> 
-                                    </View>
-                                
-                                </View>
-
-                                <View style={{flexDirection:'row', alignItems:'center',marginBottom:10}}>
-                                    <Image source={Images.bch_icon} style={{width:20, height:20, marginTop:13,marginRight:10}} />
-                                    {/* <FontawesomeIcon name="bitcoin" style={{marginTop:13,marginRight:15}} size={20} color="green" /> */}
-                                    {/* <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{justifyContent:'center', marginTop:10,marginRight:5, width:100,textAlign:'right'}]}>{this.state.balance.bch.toFixed(5)}</Text> */}
-                                    <View style={{flexDirection:'row',marginLeft:'auto'}}>
-                                        <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{justifyContent:'center', marginTop:10,marginRight:5, width:100,textAlign:'right'}]}>0.00</Text>
-                                        <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{justifyContent:'center', marginTop:10}]}>USDT</Text> 
-                                    </View>
-                                </View>
+                                )}
                             </View>
-                            <View style={{width:'50%'}}>
-                                {this.state.balance!=null ? (
-                                    <PieChart style={{ height: 150, marginTop:30 }} data={pieData} innerRadius='80%' />
-                                )
-                                :
-                                (
-                                    <View style={{justifyContent:'center',alignItems:'center',alignSelf:'center',marginTop:'40%'}}>
-                                        <ActivityIndicator size="large" color={darkmode?'white':'black'} />
-                                    </View>
-                                )
-                            }
+                            <View style={{flexDirection:'row'}}>
+                                <BalanceList
+                                    darkmode={darkmode}
+                                    balance={this.state.balance.btc.toFixed(8)}
+                                    label={'BTC'}
+                                    isIcon
+                                    icon="bitcoin"
+                                    iconColor={color_data[1]}
+                                />
+                                <BalanceList
+                                    darkmode={darkmode}
+                                    balance={this.state.balance.atri.toFixed(4)}
+                                    label={'ATRI'}
+                                    icon={Images.Atri_icon}
+                                    iconColor={color_data[0]}
+
+
+                                />
+                              
+                            </View>
+                            <View style={{flexDirection:'row'}}>
+                                <BalanceList
+                                    darkmode={darkmode}
+                                    balance={this.state.balance.eth.toFixed(8)}
+                                    label={'ETH'}
+                                    icon={Images.Eth_icon}
+                                    iconColor={color_data[2]}
+
+
+                                />
+                                <BalanceList
+                                    darkmode={darkmode}
+                                    balance={this.state.balance.ltc.toFixed(8)}
+                                    label={'LTC'}
+                                    icon={Images.Ltc_icon}
+                                    iconColor={color_data[3]}
+
+
+                                />
+                            </View>
+                            <View style={{flexDirection:'row'}}>
+
+                                <BalanceList
+                                    darkmode={darkmode}
+                                    balance={'0.000000'}
+                                    label={'USDT'}
+                                    icon={Images.bch_icon}
+                                    iconColor={color_data[4]}
+
+                                />
+                                
+                                <BalanceList
+                                    darkmode={darkmode}
+                                    balance={'0.00000000'}
+                                    label={'FTM'}
+                                    icon={Images.ftm_icon}
+                                    iconColor={color_data[5]}
+
+                                />
+                            </View>
+                            <View style={{flexDirection:'row'}}>
+
+                                <BalanceList
+                                    darkmode={darkmode}
+                                    balance={'0.00000000'}
+                                    label={'BNB'}
+                                    icon={Images.bnb_icon}
+                                    iconColor={color_data[6]}
+
+                                />
                             </View>
                         </View>
-                        
                     </View>
-
-                    <View style={{padding:20,paddingBottom:75, color:darkmode ? 'white':'black'}}>
-                        <Text style={{fontSize:16,color:darkmode ? 'white':'black',marginBottom:10}}>History</Text>
-                        {!history_finish && 
-                            <ActivityIndicator size="large" color={darkmode ? "white" :"black"} />
-                        }
-                        
-                            {history.map((item, index) => 
-                                <View  key={index}>
-                                {history_finish && 
-
-                                <View style={{marginBottom:15, flexDirection:'row'}}>
-                                    <View style={{width:'12%', alignItems:'center',alignSelf:'center'}}>
-                                        <Ionicons name={item.type==="received" ? "arrow-down-circle-outline" : "arrow-up-circle-outline"} style={{marginRight:15}} size={25} color={darkmode ? "white" :"black"} />
-                                    </View>
-                                    <View style={{width:'44%'}}>
-                                        <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{fontSize:15}]}>{item.type==="received" ? "Received" : "Sent"}</Text>
-                                        <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{color:'white',fontSize:11}]}>{item.created_at}</Text>
-                                    </View>
-                                    <View style={{width:'44%'}}>
-                                        <Text style={{color:item.type==="received" ? 'rgb(70,155,74)': 'rgb(244,67,54)',fontSize:15,textAlign:'right'}}>{item.amount} {item.currency.toUpperCase()}</Text>
-                                        <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{fontSize:15,textAlign:'right'}]}>${item.amount_usd}</Text>
-                                    </View>
-                                </View> 
-                                }
-                                </View>
-                            )}
-                       
-                        
-
-                    </View>
+                    <History label={'History'} data={history} darkmode={darkmode}
+                        isLoad={!history_finish}/>
                 </View>
-          
-                </ScrollView>
-                
-      </PTRView>
-
-    );
+            </ScrollView>
+            </ImageBackground>
+        </PTRView>);
   }
 }
 
@@ -230,7 +236,11 @@ const styles = StyleSheet.create({
 	customWriting: {
 		fontSize: 12,
 		color: '#7882A2'
-	}
+	},
+    balanceContainer:{
+        paddingBottom: 20,
+        paddingLeft: 20,
+    }
 });
 
 function mapStateToProps(state) {

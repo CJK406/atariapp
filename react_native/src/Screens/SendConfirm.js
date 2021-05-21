@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SafeAreaView, StyleSheet, Text,Image,TextInput,TouchableOpacity, View, ScrollView,ActivityIndicator } from 'react-native';
+import { SafeAreaView, StyleSheet, Text,Image,Keyboard,TextInput,TouchableOpacity, View, ScrollView,ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { CustomStyles,Headers } from '../Constant';
@@ -8,23 +8,25 @@ import { Images } from '../Assets';
 import Modal from 'react-native-modal';
 import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { confirm_payment} from '../Api';
+import { sendEther,sendAttari,sendUsdt} from '../Api';
 import { updateBallance} from '../Redux/Actions';
+import {InputPin} from '../Components'
 
 class SendConfirmScreen extends React.Component {
     state = {
         show_miner_fee_modal:false,
         miner_fee:1,
-        input_value:['','','','','',''],
         info:{},
         isLoading:false,
         darkmode:true,
-
+        codePin :"",
+        user_id:"",
     }
     static getDerivedStateFromProps(props, state) {
         return {
             info: props.route.params.info,
-            darkmode:props.darkmode
+            darkmode:props.darkmode,
+            user_id:props.user_id
         };
     }
 	goBack = () => {
@@ -35,48 +37,52 @@ class SendConfirmScreen extends React.Component {
 			show_miner_fee_modal:!this.state.show_miner_fee_modal
 		})
     }
-    changeEvent = (e,index) => {
-        const input_value = this.state.input_value;
-        input_value[index] = e[e.length-1];
-        this.setState({
-            input_value:input_value
-        });
-        if(index==0)
-            this.SecondTextInput.focus();
-        if(index==1)
-            this.ThirdTextInput.focus();
-        if(index==2)
-            this.FirthTextInput.focus();
-        if(index==3)
-            this.FifthTextInput.focus();
-        if(index==4)
-            this.SixthTextInput.focus();
-    }
 
 	SendConfirm = async () => {
-        const {input_value, miner_fee, info} = this.state;
-        if(input_value[0]!=="" && input_value[1]!=="" && input_value[2]!=="" && input_value[3]!==""&& input_value[4]!==""&& input_value[5]!==""){
+        const {codePin, miner_fee, info,user_id} = this.state;
+        if(codePin!==""){
             this.setState({isLoading:true});
-            let pincode = "";
-            for(let i=0; i<6; i++){
-                pincode+=input_value[i];
-            }
+            let pincode = codePin;
             pincode = parseInt(pincode);
-            let data = {currency:Headers[info.currentTab]['text'].toLowerCase(),
+            let currency = Headers[info.currentTab]['text'].toLowerCase();
+            let data = {currency:currency,
                         amount:info.send_amount,
-                        fee:miner_fee,
-                        address:info.address,
-                        pincode:pincode       
+                        // fee:miner_fee,
+                        reveiverAddress:info.address,
+                        securityCode:pincode,
+                        userId:user_id     
             }
-            const result = await confirm_payment(Headers[info.currentTab]['text'].toLowerCase(),data);
-            console.log("asefresult",result)
-            if(result.error!==null && result.error!=="null"){
-                alert(result.error);
+            let result;
+            if(currency == "eth"){
+                result = await sendEther(data);
+            }
+            else if(currency == "atri"){
+                result = await sendAttari(data);
+            }
+            else if(currency == "usdt"){
+                result = await sendUsdt(data);
+            }
+            if(result.code===400){
+                alert(result.message);
             }
             else{
+                alert(result.message);
                 this.props.updateBallance();
             }
             this.setState({isLoading:false});
+        }
+        else{
+            alert("aa");
+        }
+    }
+
+    elipsisText(value){
+        var splitIndex = Math.round( value.length * 0.8 );
+
+		this.fullText = value;
+        return {
+            leftText:value.slice( 0, splitIndex ),
+            rightText : value.slice( splitIndex )
         }
     }
   render() {
@@ -86,6 +92,7 @@ class SendConfirmScreen extends React.Component {
             {label: 'High Priority', value: 3 }
           ];
         const {info,darkmode} = this.state;
+        const {leftText, rightText} = this.elipsisText(info.address)
     return (
         <KeyboardAwareScrollView style={{backgroundColor:darkmode?'rgb(33,33,33)':'white'}}>
         <SafeAreaView style={{...CustomStyles.container, backgroundColor: darkmode?'rgb(33,33,33)':'white', height:'100%' }}>
@@ -103,7 +110,10 @@ class SendConfirmScreen extends React.Component {
                     <Text style={{width:'50%',fontSize:20,letterSpacing:1,color:darkmode?'white':'black'}}>Sending to</Text>
                     <View style={{flexDirection:'row',borderRadius:10,padding:2,paddingLeft:10,backgroundColor:'#3a3a3a',width:'50%'}}>
                         <Image source={Headers[info.currentTab]['Image']} style={{width:14,height:14,justifyContent:'center',alignSelf:'center',alignItems:'center'}} />
-                        <Text style={{color:'white',paddingLeft:10,paddingRight:20}} numberOfLines={1}>{info.address}</Text>
+                        <View style={{flex:1, flexDirection:"row",paddingLeft:10,paddingRight:20}}>
+                            <Text style={{color:'white', width:60}} numberOfLines={1}>{leftText}</Text>
+                            <Text style={{color:'white', width:'100%'}} numberOfLines={1}>{rightText}</Text>
+                        </View>
                     </View>
                 </View>
 
@@ -119,58 +129,19 @@ class SendConfirmScreen extends React.Component {
 
                 <View style={{marginTop:20,borderBottomWidth:2,borderBottomColor:darkmode?'#333333':'gray',paddingBottom:20}}>
                     <Text style={{marginBottom:20,fontSize:20,letterSpacing:1,color:darkmode?'white':'black'}}>Enter your pincode*</Text>
-                    <View style={{flexDirection:'row'}}>
-                            
-                        <TextInput
-                            onChangeText={(e) => this.changeEvent(e,0)}
-                            ref={(input) => { this.FirstTextInput = input; }}
-                            blurOnSubmit={false}
-                            keyboardType={'numeric'}
-                            value={this.state.input_value[0]}
-                            style={{fontSize:20,textAlign:'center',backgroundColor:'white',borderWidth:1,borderColor:'black',width:50,height:50,marginLeft:10}}
+                    <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
+                        <InputPin value={this.state.codePin}
+                            codeLength={6}
+                            cellStyle={{
+                                backgroundColor: 'white',
+                            }}
+                            onTextChange={code => this.setState({codePin:code})}
+                            textStyle={{fontSize: 24,color: 'black'}}
+                            // onFulfill={() => {
+                            //     Keyboard.dismiss();
+                            // }} 
                         />
-                        <TextInput
-                            onChangeText={(e) => this.changeEvent(e,1)}
-                            ref={(input) => { this.SecondTextInput = input; }}
-                            blurOnSubmit={false}
-                            keyboardType={'numeric'}
-                            value={this.state.input_value[1]}
-                            style={{fontSize:20,textAlign:'center',backgroundColor:'white',borderWidth:1,borderColor:'black',width:50,height:50,marginLeft:10}}
-                        />
-
-                        <TextInput
-                            onChangeText={(e) => this.changeEvent(e,2)}
-                            ref={(input) => { this.ThirdTextInput = input; }}
-                            blurOnSubmit={false}
-                            keyboardType={'numeric'}
-                            value={this.state.input_value[2]}
-                            style={{fontSize:20,textAlign:'center',backgroundColor:'white',borderWidth:1,borderColor:'black',width:50,height:50,marginLeft:10}}
-                        />
-                        <TextInput
-                            onChangeText={(e) => this.changeEvent(e,3)}
-                            ref={(input) => { this.FirthTextInput = input; }}
-                            blurOnSubmit={false}
-                            keyboardType={'numeric'}
-                            value={this.state.input_value[3]}
-                            style={{fontSize:20,textAlign:'center',backgroundColor:'white',borderWidth:1,borderColor:'black',width:50,height:50,marginLeft:10}}
-                        />
-                        <TextInput
-                            onChangeText={(e) => this.changeEvent(e,4)}
-                            ref={(input) => { this.FifthTextInput = input; }}
-                            blurOnSubmit={false}
-                            keyboardType={'numeric'}
-                            value={this.state.input_value[4]}
-                            style={{fontSize:20,textAlign:'center',backgroundColor:'white',borderWidth:1,borderColor:'black',width:50,height:50,marginLeft:10}}
-                        />
-                        <TextInput
-                            onChangeText={(e) => this.changeEvent(e,5)}
-                            ref={(input) => { this.SixthTextInput = input; }}
-                            blurOnSubmit={false}
-                            keyboardType={'numeric'}
-                            value={this.state.input_value[5]}
-                            style={{fontSize:20,textAlign:'center',backgroundColor:'white',borderWidth:1,borderColor:'black',width:50,height:50,marginLeft:10}}
-                        />
-                    </View>
+                     </View>
                 </View>
 
                 <View style={{flexDirection:'row',marginTop:20,marginBottom:30,borderBottomWidth:2,borderBottomColor:darkmode?'#333333':'gray',paddingBottom:20}}>
@@ -237,7 +208,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   return {
-		darkmode: state.Auth.darkmode
+		darkmode: state.Auth.darkmode,
+        user_id:state.Auth.user_id
   };
 }
 

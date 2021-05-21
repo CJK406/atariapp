@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SafeAreaView, StyleSheet, Text,TextInput, Image, TouchableOpacity, View, Dimensions,ScrollView, Alert } from 'react-native';
+import { InteractionManager, SafeAreaView, StyleSheet, Text,TextInput, Image, TouchableOpacity, View, Dimensions,ScrollView, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { CustomStyles,Headers } from '../Constant';
@@ -29,9 +29,12 @@ class SendPaymentScreen extends React.Component {
 
 	}
 	componentDidMount() {
-        this.currencyCheck();
+        InteractionManager.runAfterInteractions(() => {
+            this.currencyCheck();
+        })
 	}
 	componentWillUnmount() {
+        
     }
     static getDerivedStateFromProps(props, state) {
         return {

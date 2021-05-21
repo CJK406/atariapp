@@ -1,0 +1,52 @@
+import {StyleSheet} from 'react-native'
+
+export default StyleSheet.create({
+    container:{
+        position:'relative'
+    },
+    label:{
+        fontSize:14, 
+        letterSpacing:2,  
+        marginBottom:20
+    },
+    selectBox:{
+        width:'100%',
+        paddingLeft:20,
+        paddingTop:6,
+        paddingBottom:6,
+        paddingRight:20,
+        borderWidth:1,
+        borderColor:'black',
+        backgroundColor:'white', 
+        flexDirection:'row'
+    },
+    activeIcon:{
+        width:20, 
+        height:20, 
+        marginTop:13,
+        marginRight:20
+    },
+    activeLabel:{
+        width:'65%', 
+        alignSelf:'center'
+    },
+    activeTitle:{
+        fontSize:15,
+        fontWeight:'600'
+    },
+    carretIcon:{
+        marginTop:13,
+        marginRight:15,
+        textAlign:'right'
+    },
+    dropdownLabelContainer:{
+        width:'80%', 
+        alignSelf:'center'
+    },
+    dropdownContainer:{
+        position:'absolute', 
+        width:'100%',
+        top:90, 
+        zIndex:999999
+    }
+})

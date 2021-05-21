@@ -26,24 +26,20 @@ class StartScreen extends React.Component {
 		};
 	  }
 	goNext = () => {
-		console.log("gonext----0-0000-0-0--00-0-0--00-")
+		this.props.onFinish();
 		if(this.state.loggedin){
 			this.props.updateMenuStatus(true);
-
-			this.props.navigation.navigate('Dashboard1');
 		}
-		else
-			this.props.navigation.navigate('Login');
+		this.props.onFinish();
 	}
 
 	componentDidMount() {
-		console.log("START INIT")
 		this.props.updateMenuStatus(false);
 
 	}
   render() {
 	if(this.state.start_screen_flag===true){
-		this.props.navigation.navigate('Dashboard1');
+		this.props.onFinish();
 		this.props.updateMenuStatus(true);
 
 	}
@@ -72,4 +68,4 @@ function mapStateToProps(state) {
 		start_screen_flag:state.Auth.start_screen_flag,
 	};
   }
-export default connect(mapStateToProps, {updateMenuStatus})(withTheme(StartScreen));
+export default connect(mapStateToProps, {updateMenuStatus})(withTheme(StartScreen)); 

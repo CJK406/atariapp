@@ -1,17 +1,22 @@
 import * as React from 'react';
-import { SafeAreaView, StyleSheet,Dimensions } from 'react-native';
+import { BackHandler, SafeAreaView, StyleSheet,Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { CustomStyles } from '../Constant';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
 class QRScanScreen extends React.Component {
+  constructor(props) {
+		super(props)
+		
+	}
   status = {
 		send_address:"",
   }
 	goBack = () => {
 		this.props.navigation.goBack();
   }
+
 
   onSuccess = async e => {
     let address = e.data;
