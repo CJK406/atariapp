@@ -7,9 +7,9 @@ import styles from './style'
 const SettingMenu = (props) => {
     
     const onPress = props.onPress ? {onPress:props.onPress} : {}
-
+    const color = props.themeToggle ? 'rgb(66,66,66)' : '#ce2424';
     return(
-        <TouchableOpacity style={styles.container} {...onPress} activeOpacity={.8}>
+        <TouchableOpacity style={{backgroundColor:color, ...styles.container}} {...onPress} activeOpacity={.8}>
             <View style={styles.childBox}>
                 <View style={{width:'10%'}}>
                     <Ionicons name={props.icon} size={26} color="white" />
@@ -23,7 +23,7 @@ const SettingMenu = (props) => {
                 <View style={{width:'15%'}}>
                 {props.withAction && 
                     <Switch
-                        trackColor={{ false: "#767577", true: "red" }}
+                        trackColor={{ false: "white", true: "red" }}
                         thumbColor="white"
                         ios_backgroundColor="#3e3e3e"
                         onValueChange={props.onAction}

@@ -75,6 +75,7 @@ class ProfileScreen extends React.Component {
 							withAction
 							actionValue={notificationToggle}
 							onAction={(key) => this.changeNotificationSetting(key)}
+							themeToggle={this.state.themeToggle}
 						/>
 						
 						<Text style={{fontSize:15,marginBottom:14,color:txtColor}}>Advanced</Text>
@@ -83,15 +84,23 @@ class ProfileScreen extends React.Component {
 							withAction
 							actionValue={this.state.themeToggle}
 							onAction={(key) => this.changeTheme(key)}
+							themeToggle={this.state.themeToggle}
+
 						/>
 						<SettingMenu icon={Menus[4].icon} title={Menus[4].name}
 							onPress={() => Linking.openURL('mailto:token@atari.com')}
+							themeToggle={this.state.themeToggle}
+
 						/>
 						<SettingMenu icon={Menus[5].icon} title={Menus[5].name}
 							onPress={() => this.goToDetail('ResetPin')}
+							themeToggle={this.state.themeToggle}
+
 						/>
 						<SettingMenu icon={Menus[6].icon} title={Menus[6].name}
 							onPress={this.logout}
+							themeToggle={this.state.themeToggle}
+
 						/>
 					</ScrollView>
 				</View>

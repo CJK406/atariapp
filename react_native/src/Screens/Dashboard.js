@@ -118,7 +118,7 @@ class DashboardScreen extends React.Component {
 
     return (
         <PTRView onRefresh={() => this.refresh()} style={{ backgroundColor: themeBG}}>
-            <ImageBackground style={{alignItems: 'center', flex: 1,}} source={Images.dashboard_background} >
+            <ImageBackground style={{alignItems: 'center', flex: 1,}} source={darkmode ? Images.dashboard_background : null} >
 
             <ScrollView nestedScrollEnabled={true} style={{...CustomStyles.container}}>
                 <View style={[CustomStyles.container, styles.innerContainer]}>
