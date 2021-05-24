@@ -4,18 +4,22 @@ import * as shape from 'd3-shape'
 import { AreaChart } from 'react-native-svg-charts'
 
 import { get_History as get_HistoryApi, get_Graph} from '../../Api'
+import Toast from 'react-native-simple-toast';
 
 const Charts = (props) => {
 
     const [currTabPeriod, setCurrTabPeriod] = useState('1h')
     const [chart_data,setChartData] = useState({x:[],y:[],min:0,max:0})
+	const [finishLoad, setFinishLoad] = useState(false);
 	const {tabData} = props;
     const resetChart = () => {
         setChartData({x:[],y:[],min:0,max:0})
         getGraphData()
+		setFinishLoad(false);
     }
 
     useEffect(() => {
+		
        InteractionManager.runAfterInteractions(() => {
 			resetChart()
 		})
@@ -37,23 +41,40 @@ const Charts = (props) => {
        
         const _data = {x:[],y:[],min:0,max:0}
 		const graph_data = await get_Graph(tabData.graph_text,currTabPeriod) 
-		const  graph_result= graph_data.body.data;
 
-		let min = graph_result[0]['price'];
-		let max = 0;
-		for(var i=0; i<graph_result.length; i++){
-			_data.x.push(graph_result[i]['timestamp']);
-			_data.y.push(graph_result[i]['price']); 
-			if(graph_result[i]['price']<min)
-				min = 	graph_result[i]['price'];
-			if(graph_result[i]['price'] > max)
-				max = graph_result[i]['price'];
+		try {
+			const  graph_result= graph_data.body.data;
+		
+			if(graph_result.length <= 0){
+				//Toast.show('No chart data.', Toast.SHORT);
+				props.onFinishLoad(_data)
+				setChartData(_data);
+				setFinishLoad(true);
+				return;
+			}
+
+			let min = graph_result[0]['price'];
+			let max = 0;
+			for(var i=0; i<graph_result.length; i++){
+				_data.x.push(graph_result[i]['timestamp']);
+				_data.y.push(graph_result[i]['price']); 
+				if(graph_result[i]['price']<min)
+					min = 	graph_result[i]['price'];
+				if(graph_result[i]['price'] > max)
+					max = graph_result[i]['price'];
+			}
+			_data.min=min;
+			_data.max=max;
+			
+			props.onFinishLoad(_data)
+			setChartData(_data)
+			setFinishLoad(true);
+		} catch (error) {
+			props.onFinishLoad(_data)
+			setChartData(_data);
+			setFinishLoad(true);
 		}
-		_data.min=min;
-		_data.max=max;
-        
-        props.onFinishLoad(_data)
-		setChartData(_data)
+		
 	}
 
     const perTabLabel = {'1h' : '1 hour', '1d' : '24 hour', '7d':'7days'}
@@ -78,6 +99,13 @@ const Charts = (props) => {
 						>
 						</AreaChart>
 					):
+					finishLoad ? 
+					(
+						<View style={{marginTop:50}}>
+							<Text style={{textAlign:"center", color:"white", fontWeight:"600"}}>No chart data</Text>
+						</View>
+					)
+					:
 					(
 						<View style={{marginTop:50}}>
 							<ActivityIndicator size="large" color={props.darkmode?"white":'black'} />

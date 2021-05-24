@@ -11,7 +11,8 @@ import {
   TouchableOpacity,
   Easing,
   ActivityIndicator,
-  BackHandler
+  BackHandler,
+  Image
 } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
@@ -86,9 +87,13 @@ class LoginScreen extends React.Component {
     });
 
     return (
+      // <View style={{alignItems: 'center', flex: 1,minHeight:windowHeight}}>
       <SafeAreaView style={{alignItems: 'center', flex: 1}}>
-          <ImageBackground style={{alignItems: 'center', flex: 1}} source={Images.login_background}>
-
+          
+          {/* <ImageBackground style={{alignItems: 'center', flex: 1}} resizeMode="cover" source={Images.login_background}> */}
+          <View style={{flex:1, alignItems: 'center', minHeight:windowHeight}}> 
+            <Image  resizeMode="cover" source={Images.login_background}  
+                style={{flex:1,position:"absolute", top:0, bottom:0,  resizeMode:"cover", width:"100%"}}/>
             {/* START LOGIN FORM */}
 
             <Animated.View style={[styles.carret,{height: headerHeight,opacity: transp,}]}>
@@ -97,7 +102,7 @@ class LoginScreen extends React.Component {
                   this.setState({showSignup:true});
                   Animated.timing(this.state.scrollY, {
                     toValue: 0,
-                    duration: 300,
+                    duration: 300, 
                     easing: Easing.linear,
                     useNativeDriver: false,
                   }).start();
@@ -214,7 +219,8 @@ class LoginScreen extends React.Component {
               </View>
             </Animated.View>
             {/* END SIGNUP FORM */}
-          </ImageBackground>
+            </View>
+          {/* </ImageBackground> */}
         </SafeAreaView>
     );
   }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BackHandler,StyleSheet, ActivityIndicator,Text, View, ScrollView,
-    InteractionManager, ImageBackground } from 'react-native';
+    InteractionManager, ImageBackground, Image, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { CustomStyles } from '../Constant';
@@ -13,6 +13,7 @@ import PTRView from 'react-native-pull-to-refresh';
 import Toast from 'react-native-simple-toast';
 
 let backPressed = 0;
+const windowHeight = Dimensions.get('window').height;
 class DashboardScreen extends React.Component {
     state = {
         balance:null,
@@ -118,9 +119,20 @@ class DashboardScreen extends React.Component {
 
     return (
         <PTRView onRefresh={() => this.refresh()} style={{ backgroundColor: themeBG}}>
-            <ImageBackground style={{alignItems: 'center', flex: 1,}} source={darkmode ? Images.dashboard_background : null} >
-
-            <ScrollView nestedScrollEnabled={true} style={{...CustomStyles.container}}>
+            {/* <ImageBackground style={{alignItems: 'center', flex: 1,}} source={darkmode ? Images.dashboard_background : null} > */}
+            {darkmode && 
+                <Image 
+                    resizeMode="cover"
+                    style={{
+                        resizeMode:"cover", 
+                        position:"absolute", 
+                        top:0, 
+                        bottom:0, 
+                        width:"100%"
+                    }} 
+                source={Images.dashboard_background}/>
+            }
+            <ScrollView nestedScrollEnabled={true} style={{...CustomStyles.container, minHeight:windowHeight-80}}>
                 <View style={[CustomStyles.container, styles.innerContainer]}>
                     <Header darkmode={darkmode}/>
                     <View style={{...CustomStyles.innerContainer,...styles.balanceContainer}}>
@@ -146,67 +158,37 @@ class DashboardScreen extends React.Component {
                                     </View>
                                 )}
                             </View>
-                            <View style={{flexDirection:'row'}}>
-                                <BalanceList
-                                    darkmode={darkmode}
-                                    balance={this.state.balance.btc.toFixed(8)}
-                                    label={'BTC'}
-                                    isIcon
-                                    icon="bitcoin"
-                                    iconColor={color_data[1]}
-                                />
-                                <BalanceList
-                                    darkmode={darkmode}
-                                    balance={this.state.balance.atri.toFixed(4)}
-                                    label={'ATRI'}
-                                    icon={Images.Atri_icon}
-                                    iconColor={color_data[0]}
-
-
-                                />
-                              
-                            </View>
-                            <View style={{flexDirection:'row'}}>
-                                <BalanceList
-                                    darkmode={darkmode}
-                                    balance={this.state.balance.eth.toFixed(8)}
-                                    label={'ETH'}
-                                    icon={Images.Eth_icon}
-                                    iconColor={color_data[2]}
-
-
-                                />
-                                <BalanceList
-                                    darkmode={darkmode}
-                                    balance={this.state.balance.ltc.toFixed(8)}
-                                    label={'LTC'}
-                                    icon={Images.Ltc_icon}
-                                    iconColor={color_data[3]}
-
-
-                                />
-                            </View>
-                            <View style={{flexDirection:'row'}}>
-
-                                <BalanceList
-                                    darkmode={darkmode}
-                                    balance={'0.000000'}
-                                    label={'USDT'}
-                                    icon={Images.bch_icon}
-                                    iconColor={color_data[4]}
-
-                                />
+                            
+                            <View style={{flex:1, flexDirection:'row',
+                                    justifyContent:"center",
+                                    
+                                }}>
                                 
-                                <BalanceList
-                                    darkmode={darkmode}
-                                    balance={'0.00000000'}
-                                    label={'FTM'}
-                                    icon={Images.ftm_icon}
-                                    iconColor={color_data[5]}
+                                <View style={{flexDirection:'column', marginRight:16}}>
+                                    <BalanceList
+                                        darkmode={darkmode}
+                                        balance={this.state.balance.btc.toFixed(8)}
+                                        label={'BTC'}
+                                        isIcon
+                                        icon="bitcoin"
+                                        iconColor={color_data[1]}
+                                    />
+                                    <BalanceList
+                                        darkmode={darkmode}
+                                        balance={this.state.balance.eth.toFixed(8)}
+                                        label={'ETH'}
+                                        icon={Images.Eth_icon}
+                                        iconColor={color_data[2]}
+                                    />
 
-                                />
-                            </View>
-                            <View style={{flexDirection:'row'}}>
+                                    <BalanceList
+                                        darkmode={darkmode}
+                                        balance={'0.000000'}
+                                        label={'USDT'}
+                                        icon={Images.bch_icon}
+                                        iconColor={color_data[4]}
+
+                                    />
 
                                 <BalanceList
                                     darkmode={darkmode}
@@ -216,6 +198,33 @@ class DashboardScreen extends React.Component {
                                     iconColor={color_data[6]}
 
                                 />
+                                    
+                                </View>
+                                <View style={{flexDirection:'column', marginLeft:16}}>
+                                    <BalanceList
+                                        darkmode={darkmode}
+                                        balance={this.state.balance.atri.toFixed(4)}
+                                        label={'ATRI'}
+                                        icon={Images.Atri_icon}
+                                        iconColor={color_data[0]}
+                                    />
+                                    <BalanceList
+                                        darkmode={darkmode}
+                                        balance={this.state.balance.ltc.toFixed(8)}
+                                        label={'LTC'}
+                                        icon={Images.Ltc_icon}
+                                        iconColor={color_data[3]}
+                                    />
+
+                                    <BalanceList
+                                        darkmode={darkmode}
+                                        balance={'0.00000000'}
+                                        label={'FTM'}
+                                        icon={Images.ftm_icon}
+                                        iconColor={color_data[5]}
+
+                                    />
+                                </View>
                             </View>
                         </View>
                     </View>
@@ -223,7 +232,7 @@ class DashboardScreen extends React.Component {
                         isLoad={!history_finish}/>
                 </View>
             </ScrollView>
-            </ImageBackground>
+            {/* </ImageBackground> */}
         </PTRView>);
   }
 }
