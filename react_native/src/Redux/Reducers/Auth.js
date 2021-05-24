@@ -93,46 +93,47 @@ export default (state = INITIAL, action) => {
 
 
         case AUTH_SET_USER_INFO_SUCCESS: {
-            const {user,token,pricePerToken} = action.data.data;
+            //const {user,token,pricePerToken} = action.data.data;
             // const userActivated = action.data=='null';
             // initFirebase();
-            let atri_usd = user.balAtt*pricePerToken.atariPrice;
-            let btc_usd  = user.balBtc*pricePerToken.btcPrice;
-            let eth_usd  = user.balEth*pricePerToken.ethPrice;
-            let ltc_usd  = user.balLtc*pricePerToken.ltcPrice;
-            let usdt_usd = user.balUsdt*pricePerToken.usdtPrice;
-            let ftm_usd = 0;
-            let bnb_usd = 0;
+            // let atri_usd = user.balAtt*pricePerToken.atariPrice;
+            // let btc_usd  = user.balBtc*pricePerToken.btcPrice;
+            // let eth_usd  = user.balEth*pricePerToken.ethPrice;
+            // let ltc_usd  = user.balLtc*pricePerToken.ltcPrice;
+            // let usdt_usd = user.balUsdt*pricePerToken.usdtPrice;
+            // let ftm_usd = 0;
+            // let bnb_usd = 0;
 
-            let sum = atri_usd+btc_usd+eth_usd+ltc_usd+usdt_usd+ftm_usd+bnb_usd;
-            let balance = {atri:user.balAtt,
-                           btc:user.balBtc,
-                           eth:user.balEth,
-                           ltc:user.balLtc,
-                           usdt:user.balUsdt,
-                           ftm:0,
-                           bnb:0,
+            // let sum = atri_usd+btc_usd+eth_usd+ltc_usd+usdt_usd+ftm_usd+bnb_usd;
+            // let balance = {atri:user.balAtt,
+            //                btc:user.balBtc,
+            //                eth:user.balEth,
+            //                ltc:user.balLtc,
+            //                usdt:user.balUsdt,
+            //                ftm:0,
+            //                bnb:0,
 
-                           atri_usd:atri_usd,
-                           btc_usd:btc_usd,
-                           eth_usd:eth_usd,
-                           ltc_usd:ltc_usd,
-                           usdt_usd:usdt_usd,
-                           ftm_usd:0,
-                           bnb_usd:0,
-                           sum:sum
-            };
+            //                atri_usd:atri_usd,
+            //                btc_usd:btc_usd,
+            //                eth_usd:eth_usd,
+            //                ltc_usd:ltc_usd,
+            //                usdt_usd:usdt_usd,
+            //                ftm_usd:0,
+            //                bnb_usd:0,
+            //                sum:sum
+            // };
 
-            let price = {atri:pricePerToken.atariPrice,
-                btc:pricePerToken.btcPrice,
-                eth:pricePerToken.ethPrice,
-                ltc:pricePerToken.ltcPrice,
-                usdt:pricePerToken.usdtPrice,
-                ftm:0,
-                bnb:0,
+            // let price = {atri:pricePerToken.atariPrice,
+            //     btc:pricePerToken.btcPrice,
+            //     eth:pricePerToken.ethPrice,
+            //     ltc:pricePerToken.ltcPrice,
+            //     usdt:pricePerToken.usdtPrice,
+            //     ftm:0,
+            //     bnb:0,
 
-            }
-
+            // }
+            const {user, token, price, balance} = action.data.data;
+    
             return {
                 ...state,
                 loading: false,

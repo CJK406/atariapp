@@ -274,16 +274,18 @@ class LoginScreen extends React.Component {
       this.setState({login_loading:true});
       // await this.props.authSetToken(Base64.btoa(login_email + ':' + login_password));
       const response = await loginApi({email: login_email, password: login_password});
+      
       this.setState({login_loading:false});
       // if (response && response.data && response.error===null) {
       if (response && !Boolean(response.code)) {
-      
+       // console.log(response);
           this.props.authSetUserInfo(response);
-          this.props.updateStartScreenState(true);
+          //this.props.updateStartScreenState(true);
       } else {
         Toast.show('Email or Password is incorrect');
       }
     } catch (err) {
+      Toast.show('Cannot connect to server');
     }
 
   }
