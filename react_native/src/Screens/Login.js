@@ -93,7 +93,7 @@ class LoginScreen extends React.Component {
           {/* <ImageBackground style={{alignItems: 'center', flex: 1}} resizeMode="cover" source={Images.login_background}> */}
           <View style={{flex:1, alignItems: 'center', minHeight:windowHeight}}> 
             <Image  resizeMode="cover" source={Images.login_background}  
-                style={{flex:1,position:"absolute", top:0, bottom:0,  resizeMode:"cover", width:"100%"}}/>
+                style={{flex:1,position:"absolute", top:0, bottom:0, minHeight:windowHeight, resizeMode:"cover", width:"100%"}}/>
             {/* START LOGIN FORM */}
 
             <Animated.View style={[styles.carret,{height: headerHeight,opacity: transp,}]}>
@@ -277,6 +277,7 @@ class LoginScreen extends React.Component {
       this.setState({login_loading:false});
       // if (response && response.data && response.error===null) {
       if (response && !Boolean(response.code)) {
+      
           this.props.authSetUserInfo(response);
           this.props.updateStartScreenState(true);
       } else {

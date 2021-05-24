@@ -3,7 +3,7 @@ import axios from 'axios';
 let store;
 
 // const API_URL="https://www.ataritokens.com/myportal/api";
-const API_URL="https://attari-wallet.herokuapp.com/api/users";
+const API_URL="https://www.vub.gla.mybluehost.me/api/users";
 // const API_URL="http://10.0.2.2:4000";
 
 function getHeader() {
