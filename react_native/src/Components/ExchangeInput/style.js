@@ -18,6 +18,15 @@ export default StyleSheet.create({
         borderWidth:1,
         borderColor:'black'
     },
+    textField:{
+        width:'38%',
+        height:50,
+        backgroundColor:'white',
+        borderWidth:1,
+        borderColor:'black',
+        padding:4,
+        paddingTop:15
+    },
     iconContainer:{
         width:'12%', 
         backgroundColor:'white', 

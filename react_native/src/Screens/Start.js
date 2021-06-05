@@ -9,7 +9,7 @@ const { width, height } = Dimensions.get("window");
 import { updateMenuStatus} from '../Redux/Actions';
 
 
-class StartScreen extends React.Component {
+class StartScreen extends React.Component  {
 	state = {
 		activeTab: 1,
 		page:0,
@@ -32,7 +32,9 @@ class StartScreen extends React.Component {
 		}
 		this.props.onFinish();
 	}
-
+	shouldComponentUpdate(nextProps, nextState) {
+		return this.state.start_screen_flag != nextState.start_screen_flag;
+	}
 	componentDidMount() {
 		this.props.updateMenuStatus(false);
 
@@ -44,10 +46,11 @@ class StartScreen extends React.Component {
 
 	}
     return (
-      <SafeAreaView style={{...CustomStyles.container}}>
+      <SafeAreaView style={{...CustomStyles.container,backgroundColor: 'rgb(47,47,47)'}}>
 			<Video
 				source={Images.start_video}
-				style={{height: height,
+				style={{
+					height: height,
 					position: "absolute",
 					top: 0,
 					left: 0,

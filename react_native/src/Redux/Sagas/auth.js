@@ -56,18 +56,21 @@ export function* watchSetToken() {
 
 function* getAllAddress(payload) {
     const result = yield get_receive_address();
+    
     let result1 = {
         atri: result.body.address,
-        btc: result.body.address,
+        btc: result.body.btcPubAddress,
         eth: result.body.address,
-        ltc: result.body.address,
+        ltc: result.body.ltcPubAddress,
         usdt : result.body.address,
         bnb : result.body.address,
         ftm : result.body.address,
 
         flag: true
     }
-    yield put({type: AUTH_GET_ALL_ADDRESS_SUCCESS, data: result1})
+    if(result.code==200){
+        yield put({type: AUTH_GET_ALL_ADDRESS_SUCCESS, data: result1})
+    }
     // yield scheduleUpdateToken();
 }
 

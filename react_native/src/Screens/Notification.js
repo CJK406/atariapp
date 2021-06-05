@@ -17,14 +17,12 @@ class NotificationScreen extends React.PureComponent {
       <SafeAreaView style={{...CustomStyles.container, backgroundColor: primaryColor }}>
 				<View style={[CustomStyles.container, CustomStyles.innerContainer, styles.innerContainer]}>
 					<View style={{height: 44, alignItems: 'center', justifyContent: 'center', position: 'relative'}}>
-						<TouchableOpacity style={{position: 'absolute', left: 0}} onPress={() => this.goBack()}>
+						<TouchableOpacity style={{position: 'absolute', left: 0}} onPress={this.goBack}>
 							<Ionicons name="arrow-back-outline" size={20} color="white" />
 						</TouchableOpacity>
 						<Text style={{fontSize: 18, color: 'white'}}>Notifications</Text>
 					</View>
-					<ScrollView style={{flex: 1, margin: -15, marginTop: 0, padding: 15, paddingTop: 0}} contentContainerStyle={{paddingBottom: 15}}>
 					
-					</ScrollView>
 				</View>
       </SafeAreaView>
     );

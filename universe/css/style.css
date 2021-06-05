@@ -1,0 +1,130 @@
+@font-face {
+  font-family: 'bwmodel';
+  src: url('../font/BwModelicaSS01-Regular.otf');
+}
+
+body{
+	font-family: 'bwmodel';
+}
+.row{
+	margin:auto;
+}
+#logo_image{
+	width:200px;
+	margin-top:40px;
+	margin-left:40px;
+}
+/*first_view*/
+.first_view{
+	background-image: url('../img/atari_universe_2.png');
+	background-size: cover;
+	padding-bottom: 20px
+}
+.box_view .col-md-4{
+	position: relative;
+}
+.welcome_text{
+	color: white; font-size: 19px
+}
+.more_button{
+	border:none;
+	background-color: #d03338;
+	border-radius: 30px;
+	color:white;
+	padding:5px;
+	padding-left: 20px; 
+	padding-right: 20px;
+	font-size: 12px;
+	margin-top:20px;
+	margin-bottom:30px;
+}
+.more_button_small{
+	border:none;
+	background-color: #d03338;
+	border-radius: 30px;
+	color:white;
+	padding:5px;
+	padding-left: 20px; 
+	padding-right: 20px;
+	font-size: 8px;
+	margin-top:20px;
+	margin-bottom:30px;
+	position: absolute;
+	top:60%;
+	left:10%;
+}
+.welcome_desc_div span{
+	border-bottom: 1px solid white; padding-bottom: 20px;
+	color: white; font-size: 15px;
+}
+.col-md-4 img{
+	margin-top:20px;
+	/*border:1px solid rgba(255,0,0,0.4);*/
+	border-radius: 10px;
+	width: 100%;
+}
+.col-md-4 img:hover{
+	cursor: pointer;
+}
+.welcome_div{
+	text-align: right
+}
+.universe_text{
+	color:rgba(255,255,255,0.6); margin-top:140px; font-size: 26px
+}
+.desc_section{
+	margin-top:5%;
+}
+.footer{
+	display: flex;
+	margin-top:20px;
+	margin-bottom:30px;
+}
+.footer span{
+	color: white;
+	font-size: 10px;
+	align-self: center;
+}
+.footer img{
+	margin-left: auto
+}
+@media only screen and (max-width: 995px) {
+	.welcome_desc_div span{
+		border:none;
+	}
+	.welcome_desc_div{
+		border-bottom: 1px solid white; padding-bottom: 20px;
+	}
+	.box_view .col-md-4{
+		flex: 0 0 51.333333%;
+    	max-width: 50%;
+	}
+}
+@media only screen and (max-width: 770px) {
+	.box_view .col-md-4{
+		flex: 0 0 100%;
+    	max-width: 100%;
+	}
+	.desc_section{
+		margin-top:10%;
+	}
+	.universe_text{
+		margin-top:27px;
+	}
+	.first_view .row .col-md-6,.third_view{
+		text-align: center
+	}
+	.first_view{
+		padding-bottom:150px;
+	}
+	.second_view, .third_view{
+		background-size: cover;
+	}
+	.download_view{
+		justify-content: center;
+	}
+	.welcome_div{
+		text-align: center
+	}
+	
+}

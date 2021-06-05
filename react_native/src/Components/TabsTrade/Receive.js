@@ -11,20 +11,14 @@ const Receive = (props) => {
     const txtColor = darkmode?'white':'black'
 
     return(
-        <View style={{ backgroundColor:themeBG,borderRadius:10,top:'30%',width:'100%',margin:0,borderTopRightRadius:50,borderTopLeftRadius:50}}>
+        <View style={{ backgroundColor:themeBG,borderRadius:10,top:'30%',width:'98%',marginLeft:'1%',borderTopRightRadius:50,borderTopLeftRadius:50}}>
             <Text style={{fontSize:30, color:txtColor,textAlign:'center',marginTop:20,marginBottom:20}}>Address</Text>
-            <View style={{flexDirection:'row',textAlign:'center',justifyContent:'center'}}>
-                <TextInput editable = {false} style={{backgroundColor:'transparent',width:'90%',height:50,borderBottomWidth:1,borderBottomColor:txtColor,color:txtColor}}>{address}</TextInput>
-                <TouchableOpacity  onPress={()=> {Clipboard.setString(address)}}>
-                    <Ionicons name='documents-outline'  size={20} color={txtColor} style={{justifyContent:'center',alignSelf:'center',alignItems:'center'}} />
-
-                </TouchableOpacity>
-            </View>
+            
             <View style={{textAlign:'center',
-            justifyContent:'center',alignItems:'center',alignSelf:'center',marginTop:20,paddingBottom:0,marginBottom:150,borderColor:color,borderWidth:10,borderRadius:10}}>
+            justifyContent:'center',alignItems:'center',alignSelf:'center',marginTop:5,paddingBottom:0,marginBottom:0,borderColor:color,borderWidth:10,borderRadius:10}}>
                 {address !=="" && (
                     <QRCode
-                    value={crypto_name+":"+address}
+                    value={address}
                     logo={icon}
                     logoSize={40}
                     size={170}
@@ -36,6 +30,13 @@ const Receive = (props) => {
                 />
                 )}
                 
+            </View>
+            <View style={{textAlign:'center',justifyContent:'center',marginBottom:150}}>
+                <Text style={{backgroundColor:'transparent',height:50,color:color, fontSize:15,fontWeight:'700',textAlign:'center', marginTop:20}}>{address}</Text>
+                {/* <TextInput editable = {false} style={{backgroundColor:'transparent',width:'90%',height:50,color:txtColor}}>{address}</TextInput> */}
+                <TouchableOpacity  onPress={()=> {Clipboard.setString(address)}}>
+                    <Ionicons name='documents-outline'  size={30} color={txtColor} style={{justifyContent:'center',alignSelf:'center',alignItems:'center'}} />
+                </TouchableOpacity>
             </View>
         </View>
     )

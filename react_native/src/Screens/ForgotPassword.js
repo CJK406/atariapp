@@ -11,7 +11,9 @@ class ForgotPasswordScreen extends React.PureComponent {
 	state = {
 		email: ''
 	}
-
+	shouldComponentUpdate(nextProps, nextState) {
+        return this.state.email != nextState.email 
+    }
   render() {
 		const { thirdcolor } = this.props.theme.palette;
 		const { email } = this.state;

@@ -10,7 +10,8 @@ import {
   Easing,
   ActivityIndicator,
   BackHandler,
-  Image
+  Image,
+  FlatList
 } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
@@ -53,6 +54,9 @@ class LoginScreen extends React.PureComponent {
     goToForgot = () => {
       this.props.navigation.navigate("ForgotPassword");
     }
+    shouldComponentUpdate(nextProps, nextState) {
+      return this.state.login_loading != nextState.login_loading || this.state.signup_loading != nextState.signup_loading;
+    }
     componentDidMount() {
 
       this._unsubscribe = this.props.navigation.addListener('focus', () => {
@@ -63,9 +67,32 @@ class LoginScreen extends React.PureComponent {
       })
     }
 
+<<<<<<< HEAD
 
+=======
+    login_animation = () =>{
+      this.setState({showSignup:true});
+      Animated.timing(this.state.scrollY, {
+        toValue: 0,
+        duration: 300, 
+        easing: Easing.linear,
+        useNativeDriver: false,
+      }).start();
+    }
+    signup_animation = () =>{
+      this.setState({showSignup:true});
+        Animated.timing(this.state.scrollY, {
+          toValue: HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT,
+          duration: 300,
+          easing: Easing.linear,
+          useNativeDriver: false,
+        }).start();
+    };
+ 
+>>>>>>> c3cbcdecec22d9bd2741ab29ece26a8277b6ca3b
 
   render() {
+    console.log("aaaa");
     const headerHeight = this.state.scrollY.interpolate({
       inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
       outputRange: [HEADER_MAX_HEIGHT, 40],
@@ -86,7 +113,6 @@ class LoginScreen extends React.PureComponent {
       outputRange: [windowHeight * 0.7, windowHeight * 0.16],
       extrapolate: 'clamp',
     });
-
     return (
       // <View style={{alignItems: 'center', flex: 1,minHeight:windowHeight}}>
       <SafeAreaView style={{alignItems: 'center', flex: 1}}>
@@ -96,10 +122,14 @@ class LoginScreen extends React.PureComponent {
             <Image  resizeMode="cover" source={Images.login_background}  
                 style={{flex:1,position:"absolute", top:0, bottom:0, minHeight:windowHeight, resizeMode:"cover", width:"100%"}}/>
             {/* START LOGIN FORM */}
-
+           
             <Animated.View style={[styles.carret,{height: headerHeight,opacity: transp,}]}>
               <TouchableOpacity style={{ alignItems: 'center',justifyContent: 'center',}}
+<<<<<<< HEAD
                 onPress={this._showLogin}>
+=======
+                onPress={this.login_animation}>
+>>>>>>> c3cbcdecec22d9bd2741ab29ece26a8277b6ca3b
                 <View style={{width:500}}>
                       <Animated.Text
                         style={{color: 'white', fontSize: 30,fontWeight:"bold", padding: padLogin, width:'100%',textAlign:'center'}}>
@@ -151,7 +181,11 @@ class LoginScreen extends React.PureComponent {
               <View style={styles.bottom}>
                 <TouchableOpacity activeOpacity={.8}
                   style={{ marginTop: 20,alignItems: 'center',justifyContent: 'center',}}
+<<<<<<< HEAD
                   onPress={this._showSignup}>
+=======
+                  onPress={this.signup_animation}>
+>>>>>>> c3cbcdecec22d9bd2741ab29ece26a8277b6ca3b
 
                   <View style={{textAlign:'center',width:500}}>
                     <Text style={{color: 'white', fontSize: 14,textAlign:'center'}}>NEW MEMBER?</Text>
@@ -236,7 +270,7 @@ class LoginScreen extends React.PureComponent {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
   }
 
-  hideSignup(){
+  hideSignup = () =>{
     this.setState({showSignup:false})
     Animated.timing(this.state.scrollY, {
       toValue: 0,
@@ -246,7 +280,7 @@ class LoginScreen extends React.PureComponent {
     }).start();
   }
 
-  handleBackButton(){
+  handleBackButton=()=>{
 
     if(this.state.showSignup){
       this.hideSignup();
@@ -293,6 +327,7 @@ class LoginScreen extends React.PureComponent {
 
   }
   doSignup = async () => {
+    console.log("aa");
     const { signup_email, signup_password,signup_name } = this.state;
     if (signup_email.length === 0 || signup_password.length === 0) {
       Toast.show('Please fill in all fields.');

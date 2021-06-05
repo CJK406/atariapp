@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { SafeAreaView, StyleSheet, ActivityIndicator,Text, Image, TouchableOpacity, View, Dimensions } from 'react-native';
+import { SafeAreaView, StyleSheet, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { Images } from '../Assets';
 import Video from "react-native-video";
-import Icon from 'react-native-vector-icons/Ionicons';
-import styled from "styled-components/native";
 import Base64 from '../Utils/Base64';
 import FontAwesome, {
 	SolidIcons,
@@ -16,8 +14,6 @@ import FontAwesome, {
 import Toast from 'react-native-simple-toast';
 import { authSetUserInfo,authSetToken } from '../Redux/Actions';
 import { login as loginApi} from '../Api';
-import Modal from 'react-native-modal';
-import { $CombinedState } from 'redux';
 
 const { width, height } = Dimensions.get("window");
 class LoginScreen extends React.Component {

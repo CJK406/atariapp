@@ -5,7 +5,15 @@ export async function login(data){
 
   if (response && !Boolean(response.code)) {
       const {user,token,pricePerToken} = response;
+      if(pricePerToken.statusCode===429)
+      {
+        pricePerToken.atariPrice =0;
+        pricePerToken.btcPrice =0;
+        pricePerToken.ethPrice =0;
+        pricePerToken.ltcPrice =0;
+        pricePerToken.usdtPrice =0;
 
+      }
       let atri_usd = user.balAtt*pricePerToken.atariPrice;
       let btc_usd  = user.balBtc*pricePerToken.btcPrice;
       let eth_usd  = user.balEth*pricePerToken.ethPrice;
@@ -32,6 +40,7 @@ export async function login(data){
                       bnb_usd:0,
                       sum:sum
       };
+      console.log("balance----------",balance);
     
       const price = {atri:pricePerToken.atariPrice,
           btc:pricePerToken.btcPrice,

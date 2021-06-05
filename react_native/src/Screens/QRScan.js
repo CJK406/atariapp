@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BackHandler, SafeAreaView, StyleSheet,Dimensions } from 'react-native';
+import {  SafeAreaView, StyleSheet,Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { CustomStyles } from '../Constant';

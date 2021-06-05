@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SafeAreaView, StyleSheet, Text, Image, ActivityIndicator,TouchableOpacity,Keyboard, View, TextInput } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, Image, ActivityIndicator,TouchableOpacity, View} from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { Images } from '../Assets';
@@ -11,7 +11,6 @@ import {InputPin} from '../Components'
 
 class SetPincodeScreen extends React.PureComponent {
 	state = {
-        email: '',
         pincode:null,
         loading:false,
         codePin:"",

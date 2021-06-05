@@ -4,11 +4,10 @@ import * as shape from 'd3-shape'
 import { AreaChart } from 'react-native-svg-charts'
 
 import { get_History as get_HistoryApi, get_Graph} from '../../Api'
-import Toast from 'react-native-simple-toast';
 
 const Charts = (props) => {
 
-    const [currTabPeriod, setCurrTabPeriod] = useState('1h')
+    const [currTabPeriod, setCurrTabPeriod] = useState('1')
     const [chart_data,setChartData] = useState({x:[],y:[],min:0,max:0})
 	const [finishLoad, setFinishLoad] = useState(false);
 	const {tabData} = props;
@@ -41,11 +40,8 @@ const Charts = (props) => {
        
         const _data = {x:[],y:[],min:0,max:0}
 		const graph_data = await get_Graph(tabData.graph_text,currTabPeriod) 
-
 		try {
-			const  graph_result= graph_data.body.data;
-		
-			if(graph_result.length <= 0){
+			if(graph_data.length <= 0){
 				//Toast.show('No chart data.', Toast.SHORT);
 				props.onFinishLoad(_data)
 				setChartData(_data);
@@ -53,15 +49,15 @@ const Charts = (props) => {
 				return;
 			}
 
-			let min = graph_result[0]['price'];
+			let min = graph_data[0][1];
 			let max = 0;
-			for(var i=0; i<graph_result.length; i++){
-				_data.x.push(graph_result[i]['timestamp']);
-				_data.y.push(graph_result[i]['price']); 
-				if(graph_result[i]['price']<min)
-					min = 	graph_result[i]['price'];
-				if(graph_result[i]['price'] > max)
-					max = graph_result[i]['price'];
+			for(var i=0; i<graph_data.length; i++){
+				_data.x.push(graph_data[i][0]);
+				_data.y.push(graph_data[i][1]); 
+				if(graph_data[i][1]<min)
+					min = 	graph_data[i][1];
+				if(graph_data[i][1] > max)
+					max = graph_data[i][1];
 			}
 			_data.min=min;
 			_data.max=max;
@@ -77,7 +73,7 @@ const Charts = (props) => {
 		
 	}
 
-    const perTabLabel = {'1h' : '1 hour', '1d' : '24 hour', '7d':'7days'}
+    const perTabLabel = {'1' : '1 day', '7' : '7 day', '30':'1 month'}
 
     const periodeTab = (period) => {
         return(<TouchableOpacity key={period} onPress={() => setCurrTabPeriod(period)} style={[currTabPeriod===period ? {backgroundColor:'#d24646'} : {backgroundColor:'#c42626'}, { borderRadius:5,width:'21%',height:29,marginLeft:10, borderWidth:0.8,borderColor:'white',alignItems:'center',alignSelf:'center',justifyContent:'center'}]}>

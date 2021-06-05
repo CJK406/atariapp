@@ -50,8 +50,8 @@ const TopContent = (props) => {
         const {chart_data} = props
         if(chart_data.y.length>0){
             const openPrice = chart_data.y[0]
-            const closePrice = chart_data.y[chart_data.y.length-1]
-            changes = ((currPrice-openPrice)/closePrice*100).toFixed(2)
+            const closePrice = chart_data.y[chart_data.y.length-1];
+            changes = ((closePrice-openPrice)/openPrice*100).toFixed(2)
         }
 
         setChanges(changes)

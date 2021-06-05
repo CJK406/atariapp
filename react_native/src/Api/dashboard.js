@@ -1,4 +1,4 @@
-import { getAPI, postAPI } from './base';
+import { getAPI, postAPI,getGraphAPI } from './base';
 
 export async function currency_convert(currency,value){
   return await postAPI('currency-convert',{currency:currency,value:value});
@@ -11,7 +11,7 @@ export async function get_History(currency){
     return await getAPI('transactions/'+currency);
   }
 export async function get_Graph(currency,period){
-  return await postAPI('graph',{currency:currency,period:period});
+  return await getGraphAPI('https://api.coingecko.com/api/v3/coins/'+currency+'/ohlc?vs_currency=usd&days='+period);
 }
 export async function get_receive_address(){
   return await getAPI('get_receive_address');
@@ -33,4 +33,9 @@ export async function reset_pin(data){
 export async function getBalance(){
   return await getAPI('getBalOff');
 }
+
+export async function exchange(currency, amount){
+  return await postAPI('exchangeToAttari',{token:currency,amount:amount});
+}
+
 

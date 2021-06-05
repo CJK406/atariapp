@@ -5,10 +5,9 @@ import DropdownItem from './items'
 import styles from './style'
 
 const ExchangeDropdown = (props) => {
-    const [isOpen, setIsOpen] = useState(false)
     const [activeKey, setActiveKey] = useState(0)
-    const {items, darkmode, label} = props
-
+    const {items, darkmode, label,isOpen} = props
+    console.log("isOpen",isOpen);
     useEffect(() => {
         if(props.defaultKey >= 0){
             setActiveKey(props.defaultKey)
@@ -23,9 +22,8 @@ const ExchangeDropdown = (props) => {
     }
 
     const onSelect = (selectedIdx) => {
-        setIsOpen(false)
+        props.drop_open(false);
         setActiveKey(selectedIdx)
-
         if(typeof onSelect === 'function')
             props.onSelect(selectedIdx);
     }
@@ -33,7 +31,7 @@ const ExchangeDropdown = (props) => {
     return(
         <View style={styles.container}>
             <Text style={{color:txColor, ...styles.label}}>{label}:</Text>
-            <TouchableOpacity onPress={() => isOpen ? setIsOpen(false) : setIsOpen(true)} activeOpacity={.8}>
+            <TouchableOpacity onPress={() => isOpen ? props.drop_open(false) : props.drop_open(true)} activeOpacity={1}>
                 <View style={styles.selectBox}>
                     <View style={{width:'20%'}}>
                         <Image source={items[activeKey]['image']} style={styles.activeIcon} />

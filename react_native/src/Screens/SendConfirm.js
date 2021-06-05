@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { SafeAreaView, StyleSheet, Text,Image,Keyboard,TextInput,TouchableOpacity, View, ScrollView,ActivityIndicator } from 'react-native';
+import { SafeAreaView, StyleSheet, Text,Image,TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { CustomStyles,Headers } from '../Constant';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Images } from '../Assets';
 import Modal from 'react-native-modal';
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import RadioForm from 'react-native-simple-radio-button';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { sendEther,sendAttari,sendUsdt} from '../Api';
 import { updateBallance} from '../Redux/Actions';
@@ -21,6 +21,11 @@ class SendConfirmScreen extends React.PureComponent {
         darkmode:true,
         codePin :"",
         user_id:"",
+    }
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.state.isLoading != nextState.isLoading 
+                || this.state.darkmode != nextState.darkmode 
+                || this.state.codePin != nextState.codePin 
     }
     static getDerivedStateFromProps(props, state) {
         return {
