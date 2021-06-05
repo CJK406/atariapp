@@ -8,7 +8,7 @@ import { Images } from '../Assets';
 import Modal from 'react-native-modal';
 
 
-class ExchangeScreen extends React.Component {
+class ExchangeScreen extends React.PureComponent {
     constructor(props) {
 		super(props)
 	
@@ -30,6 +30,10 @@ class ExchangeScreen extends React.Component {
 	navigate = (pagename) => {
 		this.props.navigation.navigate(pagename);
 	}
+
+    modalToggle = () => {
+        this.setState({ show_modal: !this.state.show_modal })
+    }
 
     render() {
 
@@ -68,7 +72,7 @@ class ExchangeScreen extends React.Component {
 
                     <TouchableOpacity  
                         style={{backgroundColor:'rgb(227,30,45)',marginTop:20, padding:15,borderRadius:10,textAlign:'center',justifyContent:'center'}}
-                        onPress={() =>{this.setState({show_modal:true})}}
+                        onPress={this.modalToggle}
                    >
                         <Text style={{fontSize: 18,color:'white',textAlign:'center',justifyContent:'center',fontWeight:'bold'}}>Buy Now</Text>
                     </TouchableOpacity>
@@ -80,7 +84,7 @@ class ExchangeScreen extends React.Component {
 						<Image source={Images.exchange_gif} style={{justifyContent:'center', width:'100%',height:200,marginTop:40}} />
 						<Text style={{fontSize:30, textAlign:'center',marginTop:40,marginBottom:20}}>Available Soon</Text>
 						<Text style={{textAlign:'center',padding:20,fontSize:20}}>Exchange feature will be available soon.</Text>
-						<TouchableOpacity onPress={() => this.setState({show_modal:false})} 
+						<TouchableOpacity onPress={this.modalToggle} 
 							style={{backgroundColor:'rgb(227,30,45)', width:'60%',marginBottom:20,textAlign:'center',justifyContent:'center',marginLeft:'18%',padding:20,borderRadius:10,textAlign:'center',justifyContent:'center'}}
 						>
 							<Text style={{fontSize: 18,color:'white',textAlign:'center',justifyContent:'center',fontWeight:'bold'}}>OK</Text>

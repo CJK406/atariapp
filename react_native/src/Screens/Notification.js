@@ -5,7 +5,7 @@ import { withTheme } from 'react-native-material-ui';
 import { CustomStyles } from '../Constant';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-class NotificationScreen extends React.Component {
+class NotificationScreen extends React.PureComponent {
 	goBack = () => {
 		this.props.navigation.goBack();
 	}

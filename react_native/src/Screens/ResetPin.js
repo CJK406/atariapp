@@ -8,7 +8,7 @@ import { Images } from '../Assets';
 import { reset_pin} from '../Api';
 import Toast from 'react-native-simple-toast';
 
-class ResetPinScreen extends React.Component {
+class ResetPinScreen extends React.PureComponent {
     state ={
         darkmode:true,
         loading:false,
@@ -39,7 +39,7 @@ class ResetPinScreen extends React.Component {
       <SafeAreaView style={{...CustomStyles.container, backgroundColor: darkmode?'rgb(33,33,33)':'white' }}>
             <View style={[CustomStyles.container]}>
                 <View style={{backgroundColor:darkmode?'black':'white',height: 74, alignItems: 'center', justifyContent: 'center', position: 'relative'}}>
-                    <TouchableOpacity style={{position: 'absolute', left: 10}} onPress={() => this.goBack()}>
+                    <TouchableOpacity style={{position: 'absolute', left: 10}} onPress={this.goBack}>
                         <Ionicons name="arrow-back-outline" size={20} color={darkmode?"white":'black'} />
                     </TouchableOpacity>
                     <Text style={{fontSize: 18, color: darkmode?'white':'black'}}>Reset Pincode</Text>
@@ -49,7 +49,7 @@ class ResetPinScreen extends React.Component {
                         <Image source={Images.reset_pin_animation} style={{width:'100%',height:250}}></Image>
                         <Text style={{color:darkmode?'white':'black',fontSize:20, width:'90%', textAlign:'center',justifyContent:'center',alignItems:'center',alignSelf:'center',marginTop:40,marginBottom:40}}>An email will be sent to your registered email address</Text>
                     </View>
-                    <TouchableOpacity onPress={() => this.reset_pin()} 
+                    <TouchableOpacity onPress={this.reset_pin} 
                         style={{backgroundColor:'rgb(227,30,45)', width:'60%',marginBottom:200,textAlign:'center',justifyContent:'center',marginLeft:'18%',padding:20,borderRadius:10,textAlign:'center',justifyContent:'center'}}
                     >
                         {this.state.loading ? (

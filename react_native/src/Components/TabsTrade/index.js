@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {View, Text, InteractionManager} from 'react-native'
+import {View,  InteractionManager} from 'react-native'
 import { connect } from 'react-redux'
 import { withTheme } from 'react-native-material-ui'
 import { get_allHistory as get_allHistoryApi} from '../../Api'
@@ -7,7 +7,6 @@ import History from '../History'
 
 import TopContent from './TopContent'
 import Charts from './Charts'
-import styles from './style'
 
 const TabsTrade = (props) => {
     const {darkmode,tabData} = props
@@ -28,10 +27,10 @@ const TabsTrade = (props) => {
     },[props.tabData])
     
     useEffect(() => {
-       InteractionManager.runAfterInteractions(() => {
+      const interactionPromise =  InteractionManager.runAfterInteractions(() => {
             resetLayoutData()
         })
-        
+        return () => interactionPromise.cancel();
     },[])
 
     const loadHistory = async () => {
@@ -52,7 +51,7 @@ const TabsTrade = (props) => {
     return(
         <View>
             <TopContent darkmode={darkmode} chart_data={chart_data} tabData={props.tabData}/>
-            <Charts darkmode={darkmode} onFinishLoad={(data) => setChartData(data)} 
+            <Charts darkmode={darkmode} onFinishLoad={setChartData} 
                 tabData={props.tabData} trigger={props.trigger}/>
             <History label={'Activity'} data={historyData} darkmode={darkmode}
                     isLoad={!historyFinish}/>

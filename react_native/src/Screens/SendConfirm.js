@@ -12,7 +12,7 @@ import { sendEther,sendAttari,sendUsdt} from '../Api';
 import { updateBallance} from '../Redux/Actions';
 import {InputPin} from '../Components'
 
-class SendConfirmScreen extends React.Component {
+class SendConfirmScreen extends React.PureComponent {
     state = {
         show_miner_fee_modal:false,
         miner_fee:1,
@@ -98,7 +98,7 @@ class SendConfirmScreen extends React.Component {
         <SafeAreaView style={{...CustomStyles.container, backgroundColor: darkmode?'rgb(33,33,33)':'white', height:'100%' }}>
         <View style={[CustomStyles.container,  styles.innerContainer]}>
             <View style={{height: 70, alignItems: 'center', justifyContent: 'center', position: 'relative', backgroundColor:darkmode?'black':'white', width:'100%'}}>
-                <TouchableOpacity style={{position: 'absolute', left: 10}} onPress={() => this.goBack()}>
+                <TouchableOpacity style={{position: 'absolute', left: 10}} onPress={this.goBack}>
                     <Ionicons name="arrow-back-outline" size={20} color={darkmode?"white":'black'} />
                 </TouchableOpacity>
                 <Image source={Images.Logo} style={{width:160, height:50}} />
@@ -151,7 +151,7 @@ class SendConfirmScreen extends React.Component {
                         <Text style={{fontSize:17,color:darkmode?'white':'black'}}>{info.send_usd_amount} USD</Text>
                     </View>
                 </View>
-                <TouchableOpacity onPress={() => this.SendConfirm()} 
+                <TouchableOpacity onPress={this.SendConfirm} 
                     style={{backgroundColor:'rgb(227,30,45)', width:'60%',marginBottom:20,marignTop:20,textAlign:'center',justifyContent:'center',marginLeft:'18%',padding:20,borderRadius:10,textAlign:'center',justifyContent:'center'}}
                 >
                     {this.state.isLoading ? (

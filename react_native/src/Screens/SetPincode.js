@@ -9,7 +9,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { authSetPincode } from '../Redux/Actions';
 import {InputPin} from '../Components'
 
-class SetPincodeScreen extends React.Component {
+class SetPincodeScreen extends React.PureComponent {
 	state = {
         email: '',
         pincode:null,
@@ -79,7 +79,7 @@ class SetPincodeScreen extends React.Component {
                             // }}
                         />
                     </View>
-                    <TouchableOpacity onPress={() => this.SetPin()} 
+                    <TouchableOpacity onPress={this.SetPin} 
                         style={{backgroundColor:'rgb(227,30,45)', width:'60%',marginBottom:20,textAlign:'center',justifyContent:'center',padding:20,borderRadius:10,alignSelf:'center',alignItems:'center'}}
                     >
                         {this.state.loading ? (

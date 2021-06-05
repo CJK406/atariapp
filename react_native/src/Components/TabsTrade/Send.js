@@ -92,7 +92,7 @@ const Send = (props) => {
             <View style={{flexDirection:'row',textAlign:'center',alignSelf:'center',alignItems:'center'}}>
                 <View style={{width:'45%',textAlign:'center',alignItems:'center',alignSelf:'center'}}>
                     <TextInput 
-                        onChangeText={(key) => onChangeValue(key)}
+                        onChangeText={onChangeValue}
                         value={amount.toString()}
                         placeholder="0.00"  
                         placeholderTextColor="white" 
@@ -105,7 +105,7 @@ const Send = (props) => {
                 </View>
                 <View style={{width:'45%',textAlign:'center',alignItems:'center',alignSelf:'center'}}>
                     <TextInput 
-                        onChangeText={(key) => onChangeUsdValue(key)}
+                        onChangeText={onChangeUsdValue}
                         value={amountUsd.toString()}
                         placeholder="0.00" 
                         placeholderTextColor="white" 

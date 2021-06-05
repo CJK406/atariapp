@@ -11,7 +11,7 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
 import Modal from 'react-native-modal';
 
-class SendPaymentScreen extends React.Component {
+class SendPaymentScreen extends React.PureComponent {
     state = {
         drop1_flag:false,
         drop2_flag:false,
@@ -158,7 +158,7 @@ class SendPaymentScreen extends React.Component {
                     <View style={{flexDirection:'row',textAlign:'center',alignSelf:'center',alignItems:'center'}}>
                         <View style={{width:'45%',textAlign:'center',alignItems:'center',alignSelf:'center'}}>
                             <TextInput 
-                                onChangeText={(key) => this.changeSendValue(key)}
+                                onChangeText={this.changeSendValue}
                                 value={this.state.send_amount}
                                 placeholder="0.00"  
                                 placeholderTextColor="white" 
@@ -171,7 +171,7 @@ class SendPaymentScreen extends React.Component {
                         </View>
                         <View style={{width:'45%',textAlign:'center',alignItems:'center',alignSelf:'center'}}>
                             <TextInput 
-                            onChangeText={(key) => this.changeSendUsdValue(key)}
+                            onChangeText={this.changeSendUsdValue}
                             value={this.state.send_usd_amount}
                             placeholder="0.00" 
                             placeholderTextColor="white" 
@@ -184,7 +184,7 @@ class SendPaymentScreen extends React.Component {
 						<Text style={{color:darkmode?'white':'black',fontSize:20,marginTop:30}}>*Available: {currency_data[currency][1]} {Headers[currency]['text']}</Text>
 						<TouchableOpacity 
 							style={{marginTop:35,borderWidth:1,borderColor:'white',justifyContent:'center',alignItems:'center',alignSelf:'center',marginLeft:20,padding:5,borderRadius:10,backgroundColor:'rgb(227,30,45)',width:50,height:25,textAlign:'right'}} 
-							onPress={() =>this.setFullBallance()} >
+							onPress={this.setFullBallance} >
 							<Text style={{color:'white'}}>Full</Text>	
 						</TouchableOpacity>
 					</View>
@@ -196,7 +196,7 @@ class SendPaymentScreen extends React.Component {
                             <Ionicons name='qr-code-outline'  size={20} color={darkmode?"white":'black'} style={{justifyContent:'center',alignSelf:'center',alignItems:'center'}} />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity onPress={() => this.SendConfirm()} 
+                    <TouchableOpacity onPress={this.SendConfirm} 
                         style={{backgroundColor:'rgb(227,30,45)', width:'60%',marginBottom:200,textAlign:'center',justifyContent:'center',marginLeft:'18%',padding:20,borderRadius:10,textAlign:'center',justifyContent:'center'}}
                     >
                         <Text style={{fontSize: 18,color:'white',textAlign:'center',justifyContent:'center',fontWeight:'bold'}}>Continue</Text>

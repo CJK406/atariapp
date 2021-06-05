@@ -14,7 +14,7 @@ import Toast from 'react-native-simple-toast';
 
 let backPressed = 0;
 const windowHeight = Dimensions.get('window').height;
-class DashboardScreen extends React.Component {
+class DashboardScreen extends React.PureComponent {
     state = {
         balance:null,
         history_finish:false,
@@ -118,7 +118,7 @@ class DashboardScreen extends React.Component {
         const txtColor = darkmode ? CustomStyles.d_text : CustomStyles.w_text
 
     return (
-        <PTRView onRefresh={() => this.refresh()} style={{ backgroundColor: themeBG}}>
+        <PTRView onRefresh={this.refresh} style={{ backgroundColor: themeBG}}> 
             {/* <ImageBackground style={{alignItems: 'center', flex: 1,}} source={darkmode ? Images.dashboard_background : null} > */}
             {darkmode && 
                 <Image 

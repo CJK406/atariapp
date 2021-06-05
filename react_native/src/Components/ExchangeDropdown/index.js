@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {View, Text, Image,TouchableOpacity} from 'react-native'
+import {View, Text, Image,TouchableOpacity, FlatList} from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DropdownItem from './items'
 import styles from './style'
@@ -49,7 +49,7 @@ const ExchangeDropdown = (props) => {
             </TouchableOpacity>
             {isOpen &&
             <View style={styles.dropdownContainer}>
-                {items.map((item, index) => <DropdownItem onPress={() => onSelect(index)} item={item}/>)}
+                {items.map((item, index) => <DropdownItem key={item.toString+index} onPress={onSelect} item={item} index={index}/>)}
             </View>
             }
         </View>

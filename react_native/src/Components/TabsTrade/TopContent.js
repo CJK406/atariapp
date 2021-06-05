@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {View, Text} from 'react-native'
+import {View, Text, InteractionManager} from 'react-native'
 import { connect } from 'react-redux'
 import { withTheme } from 'react-native-material-ui'
 import Modal from 'react-native-modal'
@@ -69,7 +69,11 @@ const TopContent = (props) => {
 
     useEffect(() => {
         unsetData()
-        return setData()
+       const interactionPromise = InteractionManager.runAfterInteractions(() => {
+            setData()
+        })
+        
+       return () => interactionPromise.cancel();
     },[])
 
     const showModalComponent = (mode) => {
