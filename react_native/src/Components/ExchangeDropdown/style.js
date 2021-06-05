@@ -12,8 +12,8 @@ export default StyleSheet.create({
     selectBox:{
         width:'100%',
         paddingLeft:20,
-        paddingTop:6,
-        paddingBottom:6,
+        paddingTop:10,
+        paddingBottom:10,
         paddingRight:20,
         borderWidth:1,
         borderColor:'black',

@@ -16,7 +16,7 @@ const TabsTrade = (props) => {
     
     const [historyData,setHistory] = useState([])
     const [historyFinish, setHistoryFinish] = useState(false)
-    const [chart_data, setChartData] = useState({x:[],y:[],min:0,max:0})
+    const [chart_data, setChartData] = useState({x:[],y:[],min:0,max:0,percent:0})
 
     const resetLayoutData = () => {
         setHistory([])

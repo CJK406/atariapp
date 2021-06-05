@@ -25,6 +25,7 @@ const TopContent = (props) => {
     const curr_key = currency.toLowerCase()
 
     const cryptoColor = CryptoStyle[curr_key]['color']
+    const {chart_data} = props
 
     const unsetData = () => {
         setCryptoBalance(0)
@@ -47,7 +48,6 @@ const TopContent = (props) => {
     const calculateChanges = () => {
         
         let changes = '0.00'
-        const {chart_data} = props
         if(chart_data.y.length>0){
             const openPrice = chart_data.y[0]
             const closePrice = chart_data.y[chart_data.y.length-1];
@@ -111,6 +111,7 @@ const TopContent = (props) => {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
      }
     return(
+        
         <View >
             <Text style={{color:txtColor, ...styles.balanceLabel}}>Current Balance</Text>
             <View style={{flexDirection:'row'}}>
@@ -128,9 +129,11 @@ const TopContent = (props) => {
                 
             </View>
             <View style={styles.cryptoPriceContainer}>
-                <Text style={{color:cryptoColor,fontSize:19}}>{currency} ${commafy(currPrice)}</Text>
+                {/* <Text style={{color:cryptoColor,fontSize:19}}>{currency} ${commafy(currPrice)}</Text> */}
+                <Text style={{color:cryptoColor,fontSize:19}}>{currency} ${chart_data.y[chart_data.y.length-1]}</Text>
+
                 <View style={{backgroundColor:cryptoColor,...styles.badgeRadius}}>
-                    <Text style={{fontWeight:'700'}}>{changes}%</Text>
+                    <Text style={{fontWeight:'700'}}>{chart_data.percent.toFixed(2)}%</Text>
                 </View>
             </View>
             
