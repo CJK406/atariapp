@@ -8,6 +8,7 @@ import History from '../History'
 import TopContent from './TopContent'
 import Charts from './Charts'
 import styles from './style'
+import { authLogout } from '../../Redux/Actions';
 
 const TabsTrade = (props) => {
     const {darkmode,tabData} = props
@@ -53,7 +54,9 @@ const TabsTrade = (props) => {
         <View>
             <TopContent darkmode={darkmode} chart_data={chart_data} tabData={props.tabData}/>
             <Charts darkmode={darkmode} onFinishLoad={(data) => setChartData(data)} 
-                tabData={props.tabData} trigger={props.trigger}/>
+                tabData={props.tabData} trigger={props.trigger}
+                authLogout = {()=> {this.props.authLogout()}}
+                />
             <History label={'Activity'} data={historyData} darkmode={darkmode}
                     isLoad={!historyFinish}/>
         </View>
@@ -69,4 +72,4 @@ function mapStateToProps(state) {
     };
   }
   
-export default connect(mapStateToProps, {  })(withTheme(TabsTrade));
+export default connect(mapStateToProps, {authLogout  })(withTheme(TabsTrade));

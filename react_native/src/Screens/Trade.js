@@ -1,23 +1,10 @@
 import * as React from 'react';
-import {InteractionManager, BackHandler, SafeAreaView, StyleSheet, Text, Image,ActivityIndicator,TouchableHighlight, Dimensions,View, ScrollView, TouchableOpacity } from 'react-native';
+import { SafeAreaView, FlatList,View } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { CustomStyles,Headers } from '../Constant';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import Logo from '../Assets/logo.png';
-import QRCode from 'react-native-qrcode-svg';
-import { AreaChart } from 'react-native-svg-charts'
-import * as shape from 'd3-shape'
-import Modal from 'react-native-modal';
-import QRCodeScanner from 'react-native-qrcode-scanner';
-import { RNCamera } from 'react-native-camera';
-import { TextInput } from 'react-native-gesture-handler';
-import { get_History as get_HistoryApi, get_Graph} from '../Api';
-import Clipboard from '@react-native-community/clipboard';
 import PTRView from 'react-native-pull-to-refresh';
-import { Images } from '../Assets';
-
-import { Header, TradeHeaderTab, History, SideTrade, TabsTrade} from '../Components'
+import { Header, TradeHeaderTab,   TabsTrade} from '../Components'
 
 class TradeScreen extends React.Component {
 	constructor(props) {
@@ -40,7 +27,14 @@ class TradeScreen extends React.Component {
 			price:props.price,
 		};
 	}
+	shouldComponentUpdate(nextProps, nextState) {
+		return this.state.history != nextState.history ||
+			   this.state.triggerRefresh != nextState.triggerRefresh ||
+			   this.state.currentTab != nextState.currentTab ||
+			   this.state.darkmode != nextState.darkmode ||
 
+			   this.state.triggerRefresh != nextState.triggerRefresh;
+	}
 	
 	refresh(){
 		this.setState({
@@ -58,19 +52,25 @@ class TradeScreen extends React.Component {
 		
 		
 		const themeBG = darkmode?'rgb(33,33,33)':'white'
-		const txtColor = darkmode?'white':'black'
+		const txtColor = darkmode?'white':'black';
+		const renderItem = ({ item }) => (
+			<View>
+				<Header darkmode={darkmode} />
+				<TradeHeaderTab darkmode={darkmode} 
+					balance={balance} 
+					activeTab={currentTab}
+					onPressTab={(index, tab) => this.setState({currentTab:index,tabData:tab})}/>
+			
+				<TabsTrade tabData={this.state.tabData} trigger={this.state.triggerRefresh}/>
+			</View>
+			);
     return (
       <SafeAreaView style={{...CustomStyles.container, backgroundColor: themeBG }}>
           <PTRView onRefresh={()=>this.refresh()} >
-			  <ScrollView showsVerticalScrollIndicator={false}>
-				  <Header darkmode={darkmode} />
-					<TradeHeaderTab darkmode={darkmode} 
-						balance={balance} 
-						activeTab={currentTab}
-						onPressTab={(index, tab) => this.setState({currentTab:index,tabData:tab})}/>
-				
-				    <TabsTrade tabData={this.state.tabData} trigger={this.state.triggerRefresh}/>
-			</ScrollView>
+			<FlatList
+                data={[1]}
+                renderItem={renderItem}
+            />
 		</PTRView>
 	  </SafeAreaView>
     );

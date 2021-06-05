@@ -35,6 +35,19 @@ export async function getAPI(url) {
     throw error;
   }
 }
+export async function getGraphAPI(url) {
+  try {
+    let result = await axios.get(`${url}`, getHeader());
+    result = result && result.data
+    return result;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    }
+    throw error;
+  }
+}
+
 
 export async function postAPI(url, data) {
   try {

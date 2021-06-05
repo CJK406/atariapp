@@ -3,7 +3,6 @@ import { SafeAreaView, StyleSheet, ActivityIndicator,Text, Image, TouchableOpaci
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { Images } from '../Assets';
-import { CustomStyles } from '../Constant';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Base64 from '../Utils/Base64';
 import FontAwesome, {

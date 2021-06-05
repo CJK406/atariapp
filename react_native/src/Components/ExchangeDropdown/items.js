@@ -5,8 +5,8 @@ import styles from './style'
 const DropdownItem = ({onPress, item}) => {
     return (
         <View>
-            <TouchableOpacity onPress={onPress} activeOpacity={.8}>
-                <View style={{...styles.selectBox, borderBottomWidth:0}}>
+            <TouchableOpacity onPress={onPress} activeOpacity={1}>
+                <View style={{...styles.selectBox, borderTopWidth:0}}>
                     <View style={{width:'20%'}}>
                         <Image source={item['image']} style={{...styles.activeIcon,marginRight:10}} />
                     </View>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { InteractionManager, SafeAreaView, StyleSheet, Text,TextInput, Image, TouchableOpacity, View, Dimensions,ScrollView, Alert } from 'react-native';
+import { InteractionManager, SafeAreaView, StyleSheet, Text,TextInput, Image, TouchableOpacity, View, Dimensions, } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { CustomStyles,Headers } from '../Constant';
@@ -28,6 +28,9 @@ class SendPaymentScreen extends React.Component {
         price:null,
 
 	}
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.state.price != nextState.price 
+    }
 	componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
             this.currencyCheck();
@@ -88,7 +91,7 @@ class SendPaymentScreen extends React.Component {
 			this.props.navigation.navigate('SendConfirm',{ info: info });
 		}
 	}
-    changeSendUsdValue(e){
+    changeSendUsdValue =(e) =>{
         const {currency,price} =this.state;
 		const currency_data = [['btc'],['atri'],['eth'],['ltc'],['bch']];
 		let send_amount1 = e!=="" ?  (parseFloat(e)/parseFloat(price[currency_data[currency][0]])).toFixed(5) : "0.00";
@@ -98,7 +101,7 @@ class SendPaymentScreen extends React.Component {
 		})
 		
 	}
-	changeSendValue(e){
+	changeSendValue = (e) =>{
         const {currency,price} =this.state;
 		const currency_data = [['btc'],['atri'],['eth'],['ltc'],['bch']];
         
@@ -108,7 +111,7 @@ class SendPaymentScreen extends React.Component {
 			send_amount:e
 		})
 	}
-    getAddress(address){
+    getAddress=(address)=>{
         let split = address.split(":");
         let r_address="";
         if(split.length>1)
@@ -117,7 +120,7 @@ class SendPaymentScreen extends React.Component {
             r_address= split[0];
         return r_address;
     }
-    setFullBallance(){
+    setFullBallance = () =>{
 		const {balance,currency} = this.state;
         const currency_data1 = [['btc',balance.btc,'#f7931a',balance.btc_usd],
                                 ['atri',balance.atri,'#c42626',balance.atri_usd],
@@ -184,7 +187,7 @@ class SendPaymentScreen extends React.Component {
 						<Text style={{color:darkmode?'white':'black',fontSize:20,marginTop:30}}>*Available: {currency_data[currency][1]} {Headers[currency]['text']}</Text>
 						<TouchableOpacity 
 							style={{marginTop:35,borderWidth:1,borderColor:'white',justifyContent:'center',alignItems:'center',alignSelf:'center',marginLeft:20,padding:5,borderRadius:10,backgroundColor:'rgb(227,30,45)',width:50,height:25,textAlign:'right'}} 
-							onPress={() =>this.setFullBallance()} >
+							onPress={this.setFullBallance} >
 							<Text style={{color:'white'}}>Full</Text>	
 						</TouchableOpacity>
 					</View>
@@ -196,7 +199,7 @@ class SendPaymentScreen extends React.Component {
                             <Ionicons name='qr-code-outline'  size={20} color={darkmode?"white":'black'} style={{justifyContent:'center',alignSelf:'center',alignItems:'center'}} />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity onPress={() => this.SendConfirm()} 
+                    <TouchableOpacity onPress={this.SendConfirm} 
                         style={{backgroundColor:'rgb(227,30,45)', width:'60%',marginBottom:200,textAlign:'center',justifyContent:'center',marginLeft:'18%',padding:20,borderRadius:10,textAlign:'center',justifyContent:'center'}}
                     >
                         <Text style={{fontSize: 18,color:'white',textAlign:'center',justifyContent:'center',fontWeight:'bold'}}>Continue</Text>

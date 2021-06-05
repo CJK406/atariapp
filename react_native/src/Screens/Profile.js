@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { SafeAreaView, StyleSheet, Text, Image, TouchableOpacity, View, ScrollView, Linking ,Switch} from 'react-native';
+import { SafeAreaView, StyleSheet, Text, Image, TouchableOpacity, View, FlatList, Linking ,Switch} from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { CustomStyles } from '../Constant';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Header, SettingMenu } from '../Components';
-import Logo from '../Assets/logo.png';
 import { settingTheme,authLogout,settingNotification } from '../Redux/Actions';
 
 const Menus = [
@@ -62,13 +60,10 @@ class ProfileScreen extends React.Component {
 		let me = this.props.me || {};
 
 		const themeBG =  themeToggle? 'rgb(33,33,33)':'white'
-		const txtColor = themeToggle?'white':'black'
-    return (
-      <SafeAreaView style={{backgroundColor:themeBG,...CustomStyles.container}}>
-				<View style={[CustomStyles.container, styles.innerContainer]}>
-					<Header darkmode={themeToggle} />
-					<ScrollView showsVerticalScrollIndicator={false} style={{flex: 1, paddingHorizontal:30, paddingTop:30}} contentContainerStyle={{paddingBottom: 15}}>
-						<Text style={{fontSize:15,marginBottom:14, color:txtColor}}>General</Text>
+		const txtColor = themeToggle?'white':'black';
+		const renderItem = ({ item }) => (
+			<View style={{padding:20}}>
+				<Text style={{fontSize:15,marginBottom:14, color:txtColor}}>General</Text>
 						
 						<SettingMenu icon={Menus[1].icon} title={Menus[1].name}
 							subTitle={Menus[1].description}
@@ -102,7 +97,16 @@ class ProfileScreen extends React.Component {
 							themeToggle={this.state.themeToggle}
 
 						/>
-					</ScrollView>
+			</View>
+		);
+    return (
+      <SafeAreaView style={{backgroundColor:themeBG,...CustomStyles.container}}>
+				<View style={[CustomStyles.container, styles.innerContainer]}>
+					<Header darkmode={themeToggle} />
+					<FlatList
+						data={[1]}
+						renderItem={renderItem}
+					/>
 				</View>
       </SafeAreaView>
     );

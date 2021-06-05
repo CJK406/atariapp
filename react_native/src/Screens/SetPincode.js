@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SafeAreaView, StyleSheet, Text, Image, ActivityIndicator,TouchableOpacity,Keyboard, View, TextInput } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, Image, ActivityIndicator,TouchableOpacity, View} from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { Images } from '../Assets';
@@ -11,7 +11,6 @@ import {InputPin} from '../Components'
 
 class SetPincodeScreen extends React.Component {
 	state = {
-        email: '',
         pincode:null,
         loading:false,
         codePin:"",
@@ -79,7 +78,7 @@ class SetPincodeScreen extends React.Component {
                             // }}
                         />
                     </View>
-                    <TouchableOpacity onPress={() => this.SetPin()} 
+                    <TouchableOpacity onPress={this.SetPin} 
                         style={{backgroundColor:'rgb(227,30,45)', width:'60%',marginBottom:20,textAlign:'center',justifyContent:'center',padding:20,borderRadius:10,alignSelf:'center',alignItems:'center'}}
                     >
                         {this.state.loading ? (

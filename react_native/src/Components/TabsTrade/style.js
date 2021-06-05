@@ -23,7 +23,7 @@ export default StyleSheet.create({
     topTab: {
 		height: '100%',
 		justifyContent: 'center',
-		width: '14.28%'
+		width: '16.66%'
 	},
     activeTab: {
 		borderBottomWidth: 2,

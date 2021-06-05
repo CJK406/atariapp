@@ -11,7 +11,9 @@ class ForgotPasswordScreen extends React.Component {
 	state = {
 		email: ''
 	}
-
+	shouldComponentUpdate(nextProps, nextState) {
+        return this.state.email != nextState.email 
+    }
   render() {
 		const { primaryColor, secondaryColor, thirdcolor, forthColor } = this.props.theme.palette;
 		const { email } = this.state;
@@ -31,11 +33,11 @@ class ForgotPasswordScreen extends React.Component {
 					placeholder="Email"
 					placeholderTextColor="white"
 					/>
-				<TouchableOpacity onPress={() => this.goNext()} style={{backgroundColor:'rgb(227,30,45)',width:'100%', padding:20,borderRadius:10,textAlign:'center',justifyContent:'center',shadowColor: '#000',
+				<TouchableOpacity onPress={this.goNext} style={{backgroundColor:'rgb(227,30,45)',width:'100%', padding:20,borderRadius:10,textAlign:'center',justifyContent:'center',shadowColor: '#000',
 					shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.8, shadowRadius: 2}}>
 					<Text style={{fontSize: 18,color:'white',textAlign:'center',justifyContent:'center',fontWeight:'bold'}}>SEND EMAIL</Text>
 				</TouchableOpacity>
-				<TouchableOpacity onPress={() => this.goBack()} style={{marginTop: 20, borderRadius:10, ...CustomStyles.buttonStyle, ...CustomStyles.smallBtn, ...CustomStyles.longBtn, backgroundColor: thirdcolor}}>
+				<TouchableOpacity onPress={this.goBack} style={{marginTop: 20, borderRadius:10, ...CustomStyles.buttonStyle, ...CustomStyles.smallBtn, ...CustomStyles.longBtn, backgroundColor: thirdcolor}}>
 					<Text style={{fontSize: 18, color: 'white'}}>BACK TO LOGIN</Text>
 				</TouchableOpacity>
 			</View>
