@@ -12,7 +12,7 @@ import { sendEther,sendAttari,sendUsdt} from '../Api';
 import { updateBallance} from '../Redux/Actions';
 import {InputPin} from '../Components'
 
-class SendConfirmScreen extends React.Component {
+class SendConfirmScreen extends React.PureComponent {
     state = {
         show_miner_fee_modal:false,
         miner_fee:1,

@@ -10,7 +10,7 @@ import {exchange as exchangeApi} from '../Api';
 import { updateBallance} from '../Redux/Actions';
 
 
-class ExchangeScreen extends React.Component {
+class ExchangeScreen extends React.PureComponent {
     constructor(props) {
 		super(props)
 	
@@ -70,8 +70,16 @@ class ExchangeScreen extends React.Component {
         })
     }
 
+<<<<<<< HEAD
+    modalToggle = () => {
+        this.setState({ show_modal: !this.state.show_modal })
+    }
+
+    render() {
+=======
     receiveInputChange = (e) => {
         const {drop1_key,balance,price} = this.state;
+>>>>>>> c3cbcdecec22d9bd2741ab29ece26a8277b6ca3b
 
         const exchage_from_data = [{image:Images.btc_icon,value:balance.btc.toFixed(8),u_v:(balance.btc_usd).toFixed(2), f_text:'BTC', text:'Bitcoin',price:price.btc,decimal:8},
             {image:Images.Atri_icon,value:balance.atri.toFixed(4),u_v:(balance.atri_usd).toFixed(2),f_text:'ATRI', text:'Atari token',price:price.atri,decimal:4},
@@ -155,6 +163,16 @@ class ExchangeScreen extends React.Component {
                     inputValue = {receiveInputValue}
                     />
 
+<<<<<<< HEAD
+                    <TouchableOpacity  
+                        style={{backgroundColor:'rgb(227,30,45)',marginTop:20, padding:15,borderRadius:10,textAlign:'center',justifyContent:'center'}}
+                        onPress={this.modalToggle}
+                   >
+                        <Text style={{fontSize: 18,color:'white',textAlign:'center',justifyContent:'center',fontWeight:'bold'}}>Buy Now</Text>
+                    </TouchableOpacity>
+                </View>
+                <Modal
+=======
                 <TouchableOpacity  
                     style={{backgroundColor:'rgb(227,30,45)',marginTop:20, padding:15,borderRadius:10,textAlign:'center',justifyContent:'center'}}
                     onPress={this.exchange}
@@ -176,13 +194,14 @@ class ExchangeScreen extends React.Component {
                 renderItem={renderItem}
             />
             <Modal
+>>>>>>> c3cbcdecec22d9bd2741ab29ece26a8277b6ca3b
 					isVisible={this.state.show_modal}
 					>
 					<View style={{ backgroundColor:'white',borderRadius:10}}>
 						<Image source={Images.exchange_gif} style={{justifyContent:'center', width:'100%',height:200,marginTop:40}} />
 						<Text style={{fontSize:30, textAlign:'center',marginTop:40,marginBottom:20}}>Available Soon</Text>
 						<Text style={{textAlign:'center',padding:20,fontSize:20}}>Exchange feature will be available soon.</Text>
-						<TouchableOpacity onPress={() => this.setState({show_modal:false})} 
+						<TouchableOpacity onPress={this.modalToggle} 
 							style={{backgroundColor:'rgb(227,30,45)', width:'60%',marginBottom:20,textAlign:'center',justifyContent:'center',marginLeft:'18%',padding:20,borderRadius:10,textAlign:'center',justifyContent:'center'}}
 						>
 							<Text style={{fontSize: 18,color:'white',textAlign:'center',justifyContent:'center',fontWeight:'bold'}}>OK</Text>

@@ -1,12 +1,22 @@
 import * as React from 'react';
+<<<<<<< HEAD
+import {SafeAreaView, ScrollView } from 'react-native';
+=======
 import { SafeAreaView, FlatList,View } from 'react-native';
+>>>>>>> c3cbcdecec22d9bd2741ab29ece26a8277b6ca3b
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { CustomStyles,Headers } from '../Constant';
 import PTRView from 'react-native-pull-to-refresh';
-import { Header, TradeHeaderTab,   TabsTrade} from '../Components'
+<<<<<<< HEAD
 
-class TradeScreen extends React.Component {
+=======
+import { Header, TradeHeaderTab,   TabsTrade} from '../Components'
+>>>>>>> c3cbcdecec22d9bd2741ab29ece26a8277b6ca3b
+
+import { Header, TradeHeaderTab,  TabsTrade} from '../Components'
+
+class TradeScreen extends React.PureComponent {
 	constructor(props) {
 		super(props)
 	}
@@ -66,11 +76,24 @@ class TradeScreen extends React.Component {
 			);
     return (
       <SafeAreaView style={{...CustomStyles.container, backgroundColor: themeBG }}>
+<<<<<<< HEAD
+          <PTRView onRefresh={this.refresh} >
+			  <ScrollView showsVerticalScrollIndicator={false}>
+				  <Header darkmode={darkmode} />
+					<TradeHeaderTab darkmode={darkmode} 
+						balance={balance} 
+						activeTab={currentTab}
+						onPressTab={(index, tab) => this.setState({currentTab:index,tabData:tab})}/>
+				
+				    <TabsTrade tabData={this.state.tabData} trigger={this.state.triggerRefresh}/>
+			</ScrollView>
+=======
           <PTRView onRefresh={()=>this.refresh()} >
 			<FlatList
                 data={[1]}
                 renderItem={renderItem}
             />
+>>>>>>> c3cbcdecec22d9bd2741ab29ece26a8277b6ca3b
 		</PTRView>
 	  </SafeAreaView>
     );

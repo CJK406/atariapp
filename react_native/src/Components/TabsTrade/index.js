@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {View, Text, InteractionManager} from 'react-native'
+import {View,  InteractionManager} from 'react-native'
 import { connect } from 'react-redux'
 import { withTheme } from 'react-native-material-ui'
 import { get_allHistory as get_allHistoryApi} from '../../Api'
@@ -7,8 +7,11 @@ import History from '../History'
 
 import TopContent from './TopContent'
 import Charts from './Charts'
+<<<<<<< HEAD
+=======
 import styles from './style'
 import { authLogout } from '../../Redux/Actions';
+>>>>>>> c3cbcdecec22d9bd2741ab29ece26a8277b6ca3b
 
 const TabsTrade = (props) => {
     const {darkmode,tabData} = props
@@ -29,10 +32,10 @@ const TabsTrade = (props) => {
     },[props.tabData])
     
     useEffect(() => {
-       InteractionManager.runAfterInteractions(() => {
+      const interactionPromise =  InteractionManager.runAfterInteractions(() => {
             resetLayoutData()
         })
-        
+        return () => interactionPromise.cancel();
     },[])
 
     const loadHistory = async () => {
@@ -53,10 +56,15 @@ const TabsTrade = (props) => {
     return(
         <View>
             <TopContent darkmode={darkmode} chart_data={chart_data} tabData={props.tabData}/>
+<<<<<<< HEAD
+            <Charts darkmode={darkmode} onFinishLoad={setChartData} 
+                tabData={props.tabData} trigger={props.trigger}/>
+=======
             <Charts darkmode={darkmode} onFinishLoad={(data) => setChartData(data)} 
                 tabData={props.tabData} trigger={props.trigger}
                 authLogout = {()=> {this.props.authLogout()}}
                 />
+>>>>>>> c3cbcdecec22d9bd2741ab29ece26a8277b6ca3b
             <History label={'Activity'} data={historyData} darkmode={darkmode}
                     isLoad={!historyFinish}/>
         </View>

@@ -7,7 +7,7 @@ import { CustomStyles } from '../Constant';
 import Toast from 'react-native-simple-toast';
 import { requestResetPassword as requestResetPasswordApi } from '../Api';
 
-class ForgotPasswordScreen extends React.Component {
+class ForgotPasswordScreen extends React.PureComponent {
 	state = {
 		email: ''
 	}
@@ -15,7 +15,7 @@ class ForgotPasswordScreen extends React.Component {
         return this.state.email != nextState.email 
     }
   render() {
-		const { primaryColor, secondaryColor, thirdcolor, forthColor } = this.props.theme.palette;
+		const { thirdcolor } = this.props.theme.palette;
 		const { email } = this.state;
     return (
       <SafeAreaView style={{...CustomStyles.container, backgroundColor: 'rgb(33,33,33)' }}>

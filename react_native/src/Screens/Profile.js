@@ -1,5 +1,9 @@
 import * as React from 'react';
+<<<<<<< HEAD
+import { SafeAreaView, StyleSheet, Text,  View, ScrollView, Linking } from 'react-native';
+=======
 import { SafeAreaView, StyleSheet, Text, Image, TouchableOpacity, View, FlatList, Linking ,Switch} from 'react-native';
+>>>>>>> c3cbcdecec22d9bd2741ab29ece26a8277b6ca3b
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { CustomStyles } from '../Constant';
@@ -15,7 +19,7 @@ const Menus = [
 	{ name: 'Reset Pincode', page: 'ResetPin', icon: 'refresh-outline',description:'' },
 	{ name: 'Logout', page: '', icon: 'log-out-outline',description:'' },
 ];
-class ProfileScreen extends React.Component {
+class ProfileScreen extends React.PureComponent {
 	constructor(props) {
 		super(props)
 
@@ -32,8 +36,8 @@ class ProfileScreen extends React.Component {
 	  }
 	
 
-	goToDetail = (item) => {
-		this.props.navigation.navigate(item);
+	resetPin = () => {
+		this.props.navigation.navigate('logout');
 	}
 	logout = () => {
 		this.props.authLogout();
@@ -69,7 +73,7 @@ class ProfileScreen extends React.Component {
 							subTitle={Menus[1].description}
 							withAction
 							actionValue={notificationToggle}
-							onAction={(key) => this.changeNotificationSetting(key)}
+							onAction={this.changeNotificationSetting}
 							themeToggle={this.state.themeToggle}
 						/>
 						
@@ -78,7 +82,7 @@ class ProfileScreen extends React.Component {
 							subTitle={Menus[3].description}
 							withAction
 							actionValue={this.state.themeToggle}
-							onAction={(key) => this.changeTheme(key)}
+							onAction={this.changeTheme}
 							themeToggle={this.state.themeToggle}
 
 						/>
@@ -88,7 +92,7 @@ class ProfileScreen extends React.Component {
 
 						/>
 						<SettingMenu icon={Menus[5].icon} title={Menus[5].name}
-							onPress={() => this.goToDetail('ResetPin')}
+							onPress={this.resetPin}
 							themeToggle={this.state.themeToggle}
 
 						/>

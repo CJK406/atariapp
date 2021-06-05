@@ -22,23 +22,23 @@ import { login as loginApi, signup as signupApi} from '../Api';
 import { InputLogin } from '../Components'
 import LinearGradient from 'react-native-linear-gradient'
 
-import Base64 from '../Utils/Base64';
-
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const HEADER_MAX_HEIGHT = windowHeight * 0.6;
 const HEADER_MIN_HEIGHT = windowHeight * 0.06;
 
 let backPressed = 0;
-class LoginScreen extends React.Component {
+class LoginScreen extends React.PureComponent {
     constructor(props) {
       super(props)
       this.handleBackButton = this.handleBackButton.bind(this);
+      this.doLogin = this.doLogin.bind(this);
+      this.doSignup = this.doSignup.bind(this);
+      this._showLogin = this._showLogin.bind(this);
+      this._showSignup = this._showSignup.bind(this);
     }
     state={
       scrollY: new Animated.Value(0),
-      // login_email: 'm.k.cj406@gmail.com',
-      // login_password:'Test1234!',
       login_email: 'nasir4@yopmail.com',
       login_password:'123456789',
       signup_email:'',
@@ -50,8 +50,9 @@ class LoginScreen extends React.Component {
       showSignup:false
 
     }
-    goNext = (location) => {
-      this.props.navigation.navigate(location);
+
+    goToForgot = () => {
+      this.props.navigation.navigate("ForgotPassword");
     }
     shouldComponentUpdate(nextProps, nextState) {
       return this.state.login_loading != nextState.login_loading || this.state.signup_loading != nextState.signup_loading;
@@ -66,6 +67,9 @@ class LoginScreen extends React.Component {
       })
     }
 
+<<<<<<< HEAD
+
+=======
     login_animation = () =>{
       this.setState({showSignup:true});
       Animated.timing(this.state.scrollY, {
@@ -85,6 +89,7 @@ class LoginScreen extends React.Component {
         }).start();
     };
  
+>>>>>>> c3cbcdecec22d9bd2741ab29ece26a8277b6ca3b
 
   render() {
     console.log("aaaa");
@@ -120,7 +125,11 @@ class LoginScreen extends React.Component {
            
             <Animated.View style={[styles.carret,{height: headerHeight,opacity: transp,}]}>
               <TouchableOpacity style={{ alignItems: 'center',justifyContent: 'center',}}
+<<<<<<< HEAD
+                onPress={this._showLogin}>
+=======
                 onPress={this.login_animation}>
+>>>>>>> c3cbcdecec22d9bd2741ab29ece26a8277b6ca3b
                 <View style={{width:500}}>
                       <Animated.Text
                         style={{color: 'white', fontSize: 30,fontWeight:"bold", padding: padLogin, width:'100%',textAlign:'center'}}>
@@ -154,7 +163,7 @@ class LoginScreen extends React.Component {
 
               {/* END LOGIN INPUT */}
 
-              <TouchableOpacity onPress={() => this.goNext('ForgotPassword')} style={{paddingTop: 10}}>
+              <TouchableOpacity onPress={this.goToForgot} style={{paddingTop: 10}}>
                   <Text style={{color: 'white', fontSize: 16, fontWeight:"600"}}> FORGOT PASSWORD? </Text>
               </TouchableOpacity>
             </Animated.View>
@@ -172,7 +181,11 @@ class LoginScreen extends React.Component {
               <View style={styles.bottom}>
                 <TouchableOpacity activeOpacity={.8}
                   style={{ marginTop: 20,alignItems: 'center',justifyContent: 'center',}}
+<<<<<<< HEAD
+                  onPress={this._showSignup}>
+=======
                   onPress={this.signup_animation}>
+>>>>>>> c3cbcdecec22d9bd2741ab29ece26a8277b6ca3b
 
                   <View style={{textAlign:'center',width:500}}>
                     <Text style={{color: 'white', fontSize: 14,textAlign:'center'}}>NEW MEMBER?</Text>
@@ -231,6 +244,26 @@ class LoginScreen extends React.Component {
     );
   }
 
+  _showLogin = () => {
+    this.setState({showSignup:true});
+    Animated.timing(this.state.scrollY, {
+      toValue: 0,
+      duration: 300, 
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start();
+  }
+
+  _showSignup = () => {
+    this.setState({showSignup:true});
+    Animated.timing(this.state.scrollY, {
+      toValue: HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT,
+      duration: 300,
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start();
+  }
+
   componentWillUnmount() {
     this._unsubscribe();
     this._unsubscribe2();
@@ -278,11 +311,9 @@ class LoginScreen extends React.Component {
     }
     try {
       this.setState({login_loading:true});
-      // await this.props.authSetToken(Base64.btoa(login_email + ':' + login_password));
       const response = await loginApi({email: login_email, password: login_password});
       
       this.setState({login_loading:false});
-      // if (response && response.data && response.error===null) {
       if (response && !Boolean(response.code)) {
        // console.log(response);
           this.props.authSetUserInfo(response);
