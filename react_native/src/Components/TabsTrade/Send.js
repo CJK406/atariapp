@@ -49,6 +49,7 @@ const Send = (props) => {
 
     const focusSendInput = async() => {
 		const text = await Clipboard.getString();
+        console.log("text",text);
 		setDestination(text)
 	};
 
@@ -92,7 +93,7 @@ const Send = (props) => {
             <View style={{flexDirection:'row',textAlign:'center',alignSelf:'center',alignItems:'center'}}>
                 <View style={{width:'45%',textAlign:'center',alignItems:'center',alignSelf:'center'}}>
                     <TextInput 
-                        onChangeText={onChangeValue}
+                        onChangeText={(key) => onChangeValue(key)}
                         value={amount.toString()}
                         placeholder="0.00"  
                         placeholderTextColor="white" 
@@ -105,7 +106,7 @@ const Send = (props) => {
                 </View>
                 <View style={{width:'45%',textAlign:'center',alignItems:'center',alignSelf:'center'}}>
                     <TextInput 
-                        onChangeText={onChangeUsdValue}
+                        onChangeText={(key) => onChangeUsdValue(key)}
                         value={amountUsd.toString()}
                         placeholder="0.00" 
                         placeholderTextColor="white" 
