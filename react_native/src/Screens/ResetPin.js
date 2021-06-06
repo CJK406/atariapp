@@ -8,7 +8,7 @@ import { Images } from '../Assets';
 import { reset_pin} from '../Api';
 import Toast from 'react-native-simple-toast';
 
-class ResetPinScreen extends React.PureComponent {
+class ResetPinScreen extends React.Component {
     state ={
         darkmode:true,
         loading:false,

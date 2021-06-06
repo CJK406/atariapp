@@ -10,8 +10,6 @@ import configureStore from './Redux/Store';
 import { setStore as setAPIStore } from './Api/base';
 import MainApp from './Main';
 
-//import { logComponentPerf } from './Perf' //performance monitor
-
 import 'react-native-gesture-handler';
 
 const initialState = {};

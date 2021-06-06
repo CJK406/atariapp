@@ -12,7 +12,7 @@ import { sendEther,sendAttari,sendUsdt} from '../Api';
 import { updateBallance} from '../Redux/Actions';
 import {InputPin} from '../Components'
 
-class SendConfirmScreen extends React.PureComponent {
+class SendConfirmScreen extends React.Component {
     state = {
         show_miner_fee_modal:false,
         miner_fee:1,
@@ -21,6 +21,7 @@ class SendConfirmScreen extends React.PureComponent {
         darkmode:true,
         codePin :"",
         user_id:"",
+        pincode:null
     }
     shouldComponentUpdate(nextProps, nextState) {
         return this.state.isLoading != nextState.isLoading 
@@ -31,7 +32,8 @@ class SendConfirmScreen extends React.PureComponent {
         return {
             info: props.route.params.info,
             darkmode:props.darkmode,
-            user_id:props.user_id
+            user_id:props.user_id,
+            pincode:props.pincode,
         };
     }
 	goBack = () => {
@@ -44,40 +46,41 @@ class SendConfirmScreen extends React.PureComponent {
     }
 
 	SendConfirm = async () => {
-        const {codePin, miner_fee, info,user_id} = this.state;
+        const {codePin, pincode,miner_fee, info,user_id} = this.state;
         if(codePin!==""){
             this.setState({isLoading:true});
-            let pincode = codePin;
-            pincode = parseInt(pincode);
-            let currency = Headers[info.currentTab]['text'].toLowerCase();
-            let data = {currency:currency,
-                        amount:info.send_amount,
-                        // fee:miner_fee,
-                        reveiverAddress:info.address,
-                        securityCode:pincode,
-                        userId:user_id     
-            }
-            let result;
-            if(currency == "eth"){
-                result = await sendEther(data);
-            }
-            else if(currency == "atri"){
-                result = await sendAttari(data);
-            }
-            else if(currency == "usdt"){
-                result = await sendUsdt(data);
-            }
-            if(result.code===400){
-                alert(result.message);
+            let input_pincode = parseInt(codePin);
+            let  user_pincode= parseInt(pincode);
+            console.log(input_pincode, user_pincode);
+            if(input_pincode !== user_pincode){
+                this.setState({isLoading:false});
+
             }
             else{
-                alert(result.message);
-                this.props.updateBallance();
-            }
-            this.setState({isLoading:false});
+                let currency = Headers[info.currentTab]['text'];
+                if(currency ==="ATRI")
+                    currency="ATARI";
+                
+                let data = {token:currency,
+                            amount:info.send_amount,
+                            to:info.address,
+                            code:input_pincode
+                }
+                let result = await sendAttari(data);
+                if(result.code===400){
+                    alert(result.message);
+                }
+                else{
+                    alert(result.message);
+                    this.props.updateBallance();
+                }
+                this.setState({isLoading:false});
+            }            
         }
         else{
-            alert("aa");
+            alert("Pincode is not correct");
+            this.setState({isLoading:false});
+
         }
     }
 
@@ -214,7 +217,9 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
   return {
 		darkmode: state.Auth.darkmode,
-        user_id:state.Auth.user_id
+        user_id:state.Auth.user_id,
+        pincode:state.Auth.pincode,
+
   };
 }
 

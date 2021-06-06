@@ -21,14 +21,8 @@ export async function get_receive_address(){
   return await getAPI('get_receive_address');
 }
 
-export async function sendEther(data){
-  return await postAPI('sendEther',data);
-}
 export async function sendAttari(data){
-  return await postAPI('sendAttari',data);
-}
-export async function sendUsdt(data){
-  return await postAPI('sendUsdt',data);
+  return await postAPI('transferToken',data);
 }
 export async function reset_pin(data){
   return await postAPI('getBalOff',data);

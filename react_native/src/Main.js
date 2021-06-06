@@ -19,7 +19,7 @@ const PusherConfig = {
 let unsubscriber = null;
 let messageUnsubscriber = null;
 
-class MainApp extends React.PureComponent {
+class MainApp extends React.Component {
 	constructor(props) {
 		super(props);
 	}
@@ -45,7 +45,7 @@ class MainApp extends React.PureComponent {
 		};
 	}
 
-	componentDidMount(){
+	componentDidMount(): void {
 		// initFirebase()
 	}
 

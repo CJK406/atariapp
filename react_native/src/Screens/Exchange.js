@@ -10,7 +10,7 @@ import {exchange as exchangeApi} from '../Api';
 import { updateBallance} from '../Redux/Actions';
 
 
-class ExchangeScreen extends React.PureComponent {
+class ExchangeScreen extends React.Component {
     constructor(props) {
 		super(props)
 	
@@ -26,6 +26,7 @@ class ExchangeScreen extends React.PureComponent {
         price:{},
         buyInputValue:0,
         receiveInputValue:0,
+        usdInputValue:0,
         loading:false
 	}
     
@@ -52,53 +53,45 @@ class ExchangeScreen extends React.PureComponent {
     drop2_open = (flag) =>{
       
     }
-    buyInputChange = (e) => {
+    buyInputChange = (e,exchage_from_data) => {
         const {drop1_key,drop2_key,balance,price} = this.state;
-        
-        const exchage_from_data = [{image:Images.btc_icon,value:balance.btc.toFixed(8),u_v:(balance.btc_usd).toFixed(2), f_text:'BTC', text:'Bitcoin',price:price.btc,decimal:8},
-            {image:Images.Atri_icon,value:balance.atri.toFixed(4),u_v:(balance.atri_usd).toFixed(2),f_text:'ATRI', text:'Atari token',price:price.atri,decimal:4},
-            {image:Images.Eth_icon,value:balance.eth.toFixed(8),u_v:(balance.eth_usd).toFixed(2), f_text:'ETH', text:'Ethereum',price:price.eth,decimal:8},
-            {image:Images.Ltc_icon,value:balance.ltc.toFixed(8),u_v:(balance.ltc_usd).toFixed(2), f_text:'LTC', text:'Litecoin',price:price.ltc,decimal:6},
-            // {image:Images.bch_icon,value:balance.bch.toFixed(4),u_v:(balance.bch_usd).toFixed(2), f_text:'BCH', text:'Bitcoincash'}
-            {image:Images.bch_icon,value:balance.usdt.toFixed(6),u_v:'0.00', f_text:'USDT', text:'USDT',price:price.usdt,decimal:8},
-            {image:Images.bnb_icon,value:'0.00000000',u_v:'0.00', f_text:'BNB', text:'BNB',price:price.bnb,decimal:8},
-        ]
         let receiveInputValue1 = (e*exchage_from_data[drop1_key]['price']/exchage_from_data[drop2_key]['price']).toFixed(exchage_from_data[drop2_key]['decimal'])
+        let usd_price = (e*exchage_from_data[drop1_key]['price']).toFixed(2);
         this.setState({
             buyInputValue:e,
-            receiveInputValue:receiveInputValue1
+            receiveInputValue:receiveInputValue1,
+            usdInputValue:usd_price,
         })
     }
 
-<<<<<<< HEAD
-    modalToggle = () => {
-        this.setState({ show_modal: !this.state.show_modal })
-    }
-
-    render() {
-=======
-    receiveInputChange = (e) => {
+    receiveInputChange = (e,exchage_from_data) => {
         const {drop1_key,balance,price} = this.state;
->>>>>>> c3cbcdecec22d9bd2741ab29ece26a8277b6ca3b
-
-        const exchage_from_data = [{image:Images.btc_icon,value:balance.btc.toFixed(8),u_v:(balance.btc_usd).toFixed(2), f_text:'BTC', text:'Bitcoin',price:price.btc,decimal:8},
-            {image:Images.Atri_icon,value:balance.atri.toFixed(4),u_v:(balance.atri_usd).toFixed(2),f_text:'ATRI', text:'Atari token',price:price.atri,decimal:4},
-            {image:Images.Eth_icon,value:balance.eth.toFixed(8),u_v:(balance.eth_usd).toFixed(2), f_text:'ETH', text:'Ethereum',price:price.eth,decimal:8},
-            {image:Images.Ltc_icon,value:balance.ltc.toFixed(8),u_v:(balance.ltc_usd).toFixed(2), f_text:'LTC', text:'Litecoin',price:price.ltc,decimal:6},
-            // {image:Images.bch_icon,value:balance.bch.toFixed(4),u_v:(balance.bch_usd).toFixed(2), f_text:'BCH', text:'Bitcoincash'}
-            {image:Images.bch_icon,value:balance.usdt.toFixed(6),u_v:'0.00', f_text:'USDT', text:'USDT',price:price.usdt,decimal:8},
-            {image:Images.bnb_icon,value:'0.00000000',u_v:'0.00', f_text:'BNB', text:'BNB',price:price.bnb,decimal:8},
-        ]
         let buyInputValue1 = (e*price.atri/exchage_from_data[drop1_key]['price']).toFixed(exchage_from_data[drop1_key]['decimal'])
+        let usd_price = (e*price.atri).toFixed(2);
         this.setState({
             buyInputValue:buyInputValue1,
-            receiveInputValue:e
+            receiveInputValue:e,
+            usdInputValue:usd_price,
+
         })
     }
 
+ 
+    usdInputChange = (e,exchage_from_data) => {
+        const {drop1_key,balance,price,drop2_key} = this.state;
+        let buyInputValue1 = (e/exchage_from_data[drop1_key]['price']).toFixed(exchage_from_data[drop1_key]['decimal'])
+        let receiveInputValue1     = (e/price.atri).toFixed(4)
+        console.log(buyInputValue1,receiveInputValue1)
+        this.setState({
+            buyInputValue:buyInputValue1,
+            receiveInputValue:receiveInputValue1,
+            usdInputValue:e
+        })
+    }
+    
+    
     exchange = async() => {
         const {drop1_key,buyInputValue} = this.state;
-        console.log("buyInputValue",buyInputValue)
         if(buyInputValue!=="" && buyInputValue!==0){
             this.setState({loading:true});
             const token = ["btc","atari","ether","ltc","usdt","bnb"];
@@ -116,14 +109,14 @@ class ExchangeScreen extends React.PureComponent {
     }
     render() {
 
-        const {drop1_key,drop2_key,darkmode,balance,price,buyInputValue,receiveInputValue} = this.state;
-        const exchage_from_data = [{image:Images.btc_icon,value:balance.btc.toFixed(8),u_v:(balance.btc_usd).toFixed(2), f_text:'BTC', text:'Bitcoin',price:price.btc},
-            {image:Images.Atri_icon,value:balance.atri.toFixed(4),u_v:(balance.atri_usd).toFixed(2),f_text:'ATRI', text:'Atari token',price:price.atri},
-            {image:Images.Eth_icon,value:balance.eth.toFixed(8),u_v:(balance.eth_usd).toFixed(2), f_text:'ETH', text:'Ethereum',price:price.eth},
-            {image:Images.Ltc_icon,value:balance.ltc.toFixed(8),u_v:(balance.ltc_usd).toFixed(2), f_text:'LTC', text:'Litecoin',price:price.ltc},
+        const {drop1_key,drop2_key,darkmode,balance,price,buyInputValue,receiveInputValue,usdInputValue} = this.state;
+        const exchage_from_data = [{image:Images.btc_icon,value:balance.btc.toFixed(8),u_v:(balance.btc_usd).toFixed(2), f_text:'BTC', text:'Bitcoin',price:price.btc,decimal:8},
+            {image:Images.Atri_icon,value:balance.atri.toFixed(4),u_v:(balance.atri_usd).toFixed(2),f_text:'ATRI', text:'Atari token',price:price.atri,decimal:4},
+            {image:Images.Eth_icon,value:balance.eth.toFixed(8),u_v:(balance.eth_usd).toFixed(2), f_text:'ETH', text:'Ethereum',price:price.eth,decimal:8},
+            {image:Images.Ltc_icon,value:balance.ltc.toFixed(8),u_v:(balance.ltc_usd).toFixed(2), f_text:'LTC', text:'Litecoin',price:price.ltc,decimal:6},
             // {image:Images.bch_icon,value:balance.bch.toFixed(4),u_v:(balance.bch_usd).toFixed(2), f_text:'BCH', text:'Bitcoincash'}
-            {image:Images.bch_icon,value:balance.usdt.toFixed(6),u_v:'0.00', f_text:'USDT', text:'USDT',price:price.usdt},
-            {image:Images.bnb_icon,value:'0.00000000',u_v:'0.00', f_text:'BNB', text:'BNB',price:price.bnb},
+            {image:Images.bch_icon,value:balance.usdt.toFixed(6),u_v:'0.00', f_text:'USDT', text:'USDT',price:price.usdt,decimal:8},
+            {image:Images.bnb_icon,value:'0.00000000',u_v:'0.00', f_text:'BNB', text:'BNB',price:price.bnb,decimal:8},
         ]
         
     const themeBg = darkmode?'rgb(33,33,33)':'white';
@@ -149,30 +142,26 @@ class ExchangeScreen extends React.PureComponent {
                 />
                 
                 <ExchangeInput label={'Buy now'} 
-                    onChangeInput={(e) => {this.buyInputChange(e)}} 
+                    onChangeInput={(e) => {this.buyInputChange(e,exchage_from_data)}} 
+                    onChangeUsdInput={(e) => {this.usdInputChange(e,exchage_from_data)}} 
+
                     usd_price={exchage_from_data[drop1_key]['price']} 
                     centerIcon={exchage_from_data[drop1_key]['image']} 
                     darkmode={darkmode} 
                     inputValue = {buyInputValue}
+                    usdInputValue={usdInputValue}
                     />
                 <ExchangeInput label={'Receive'} 
-                    onChangeInput={(e) => {this.receiveInputChange(e)}} 
+                    onChangeInput={(e) => {this.receiveInputChange(e,exchage_from_data)}} 
+                    onChangeUsdInput={(e) => {this.usdInputChange(e,exchage_from_data)}} 
                     usd_price={exchage_from_data[drop2_key]['price']} 
                     centerIcon={exchage_from_data[drop2_key]['image']} 
                     darkmode={darkmode} 
                     inputValue = {receiveInputValue}
+                    usdInputValue={usdInputValue}
+
                     />
 
-<<<<<<< HEAD
-                    <TouchableOpacity  
-                        style={{backgroundColor:'rgb(227,30,45)',marginTop:20, padding:15,borderRadius:10,textAlign:'center',justifyContent:'center'}}
-                        onPress={this.modalToggle}
-                   >
-                        <Text style={{fontSize: 18,color:'white',textAlign:'center',justifyContent:'center',fontWeight:'bold'}}>Buy Now</Text>
-                    </TouchableOpacity>
-                </View>
-                <Modal
-=======
                 <TouchableOpacity  
                     style={{backgroundColor:'rgb(227,30,45)',marginTop:20, padding:15,borderRadius:10,textAlign:'center',justifyContent:'center'}}
                     onPress={this.exchange}
@@ -194,14 +183,13 @@ class ExchangeScreen extends React.PureComponent {
                 renderItem={renderItem}
             />
             <Modal
->>>>>>> c3cbcdecec22d9bd2741ab29ece26a8277b6ca3b
 					isVisible={this.state.show_modal}
 					>
 					<View style={{ backgroundColor:'white',borderRadius:10}}>
 						<Image source={Images.exchange_gif} style={{justifyContent:'center', width:'100%',height:200,marginTop:40}} />
 						<Text style={{fontSize:30, textAlign:'center',marginTop:40,marginBottom:20}}>Available Soon</Text>
 						<Text style={{textAlign:'center',padding:20,fontSize:20}}>Exchange feature will be available soon.</Text>
-						<TouchableOpacity onPress={this.modalToggle} 
+						<TouchableOpacity onPress={() => this.setState({show_modal:false})} 
 							style={{backgroundColor:'rgb(227,30,45)', width:'60%',marginBottom:20,textAlign:'center',justifyContent:'center',marginLeft:'18%',padding:20,borderRadius:10,textAlign:'center',justifyContent:'center'}}
 						>
 							<Text style={{fontSize: 18,color:'white',textAlign:'center',justifyContent:'center',fontWeight:'bold'}}>OK</Text>

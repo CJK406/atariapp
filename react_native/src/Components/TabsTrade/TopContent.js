@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {View, Text, InteractionManager} from 'react-native'
+import {View, Text} from 'react-native'
 import { connect } from 'react-redux'
 import { withTheme } from 'react-native-material-ui'
 import Modal from 'react-native-modal'
@@ -23,7 +23,7 @@ const TopContent = (props) => {
     
     const currency = tabData.text
     const curr_key = currency.toLowerCase()
-
+    console.log("curr_key",curr_key)
     const cryptoColor = CryptoStyle[curr_key]['color']
     const {chart_data} = props
 
@@ -41,7 +41,7 @@ const TopContent = (props) => {
 
         const usdkey = curr_key+"_usd"
         setUsdBalance(balance[usdkey].toFixed(2))
-        setCurrPrice(price[curr_key].toFixed(2)) 
+        setCurrPrice(parseFloat(price[curr_key]).toFixed(2)) 
         
     }
 
@@ -69,11 +69,7 @@ const TopContent = (props) => {
 
     useEffect(() => {
         unsetData()
-       const interactionPromise = InteractionManager.runAfterInteractions(() => {
-            setData()
-        })
-        
-       return () => interactionPromise.cancel();
+        return setData()
     },[])
 
     const showModalComponent = (mode) => {

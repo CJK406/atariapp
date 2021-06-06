@@ -15,7 +15,7 @@ const {  height } = Dimensions.get("window");
 
 let backPressed = 0;
 const windowHeight = Dimensions.get('window').height;
-class DashboardScreen extends React.PureComponent {
+class DashboardScreen extends React.Component {
     state = {
         balance:null,
         history_finish:false,
@@ -212,7 +212,7 @@ class DashboardScreen extends React.PureComponent {
     
           );
     return (
-        <PTRView onRefresh={this.refresh} style={{ backgroundColor: themeBG}}> 
+        <PTRView onRefresh={() => this.refresh()} style={{ backgroundColor: themeBG}}>
             {/* <ImageBackground style={{alignItems: 'center', flex: 1,}} source={darkmode ? Images.dashboard_background : null} > */}
             {darkmode && 
                 <Image 

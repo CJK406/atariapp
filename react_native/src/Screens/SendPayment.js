@@ -11,7 +11,7 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
 import Modal from 'react-native-modal';
 
-class SendPaymentScreen extends React.PureComponent {
+class SendPaymentScreen extends React.Component {
     state = {
         drop1_flag:false,
         drop2_flag:false,
@@ -161,7 +161,7 @@ class SendPaymentScreen extends React.PureComponent {
                     <View style={{flexDirection:'row',textAlign:'center',alignSelf:'center',alignItems:'center'}}>
                         <View style={{width:'45%',textAlign:'center',alignItems:'center',alignSelf:'center'}}>
                             <TextInput 
-                                onChangeText={this.changeSendValue}
+                                onChangeText={(key) => this.changeSendValue(key)}
                                 value={this.state.send_amount}
                                 placeholder="0.00"  
                                 placeholderTextColor="white" 
@@ -174,7 +174,7 @@ class SendPaymentScreen extends React.PureComponent {
                         </View>
                         <View style={{width:'45%',textAlign:'center',alignItems:'center',alignSelf:'center'}}>
                             <TextInput 
-                            onChangeText={this.changeSendUsdValue}
+                            onChangeText={(key) => this.changeSendUsdValue(key)}
                             value={this.state.send_usd_amount}
                             placeholder="0.00" 
                             placeholderTextColor="white" 
