@@ -51,6 +51,7 @@ export async function getGraphAPI(url) {
 
 export async function postAPI(url, data) {
   try {
+    console.log({url:`${API_URL}/${url}`, data, header:getHeader() })
     let result = await axios.post(`${API_URL}/${url}`, data, getHeader());
     result = result && result.data;
     return result;

@@ -296,7 +296,6 @@ class LoginScreen extends React.Component {
 
   }
   doSignup = async () => {
-    console.log("aa");
     const { signup_email, signup_password,signup_name } = this.state;
     if (signup_email.length === 0 || signup_password.length === 0) {
       Toast.show('Please fill in all fields.');

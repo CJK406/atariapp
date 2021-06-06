@@ -38,3 +38,6 @@ export const TabsTrade = _TabsTrade
 
 import _TradeHeaderTab from './TabsTrade/HeaderTab'
 export const TradeHeaderTab = _TradeHeaderTab
+
+import _AwesomeAlert from './AwesomeAlert'
+export const AwesomeAlert = _AwesomeAlert

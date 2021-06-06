@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { CustomStyles } from '../Constant';
-import { Header, ExchangeInput, ExchangeDropdown } from '../Components';
+import { Header, ExchangeInput, ExchangeDropdown, AwesomeAlert } from '../Components';
 import { Images } from '../Assets';
 import Modal from 'react-native-modal';
 import {exchange as exchangeApi} from '../Api';
@@ -13,7 +13,7 @@ import { updateBallance} from '../Redux/Actions';
 class ExchangeScreen extends React.Component {
     constructor(props) {
 		super(props)
-	
+        this.awesomeAlert = null
 	}
     state = {
         drop1_key:0,
@@ -51,7 +51,12 @@ class ExchangeScreen extends React.Component {
     }
     
     drop2_open = (flag) =>{
-      
+        if(flag){
+            this.setState({drop2_open_flag:flag,drop1_open_flag:false});
+        }
+        else{
+            this.setState({drop2_open_flag:flag});
+        }
     }
     buyInputChange = (e,exchage_from_data) => {
         const {drop1_key,drop2_key,balance,price} = this.state;
@@ -98,14 +103,17 @@ class ExchangeScreen extends React.Component {
             const data = await exchangeApi(token[drop1_key],buyInputValue);
             this.setState({loading:false});
             if(data.code===200){
-                alert("Success exchanged");
+                //alert("Success exchanged");
+                this.awesomeAlert.showAlert('success', "Congratulations", "Your balance success excanged!");
                 this.props.updateBallance();
             }
             else
-                alert(data.message);
+                this.awesomeAlert.showAlert('error', "Failed!", data.message);
+                //alert(data.message);
         }
         else
-            alert("Amount is empty. Please check again.");
+            //alert("Amount is empty. Please check again.");
+            this.awesomeAlert.showAlert('warning', "Amount is empty", "Please fill amount");
     }
     render() {
 
@@ -182,6 +190,7 @@ class ExchangeScreen extends React.Component {
                 data={[1]}
                 renderItem={renderItem}
             />
+            <AwesomeAlert ref={(ref) => this.awesomeAlert = ref }/> 
             <Modal
 					isVisible={this.state.show_modal}
 					>

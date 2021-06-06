@@ -114,13 +114,13 @@ class SendConfirmScreen extends React.Component {
             <View style={{padding:20}}>
                 <Text style={{fontSize:25,color:darkmode?'white':'black'}}>Confirm Payment</Text>
                 <Text style={{fontSize:20,color:darkmode?'white':'black',marginTop:20}}>SUMMARY</Text>
-                <View style={{flexDirection:'row',marginTop:20,borderBottomWidth:2,borderBottomColor:darkmode?'#333333':'gray',paddingBottom:20}}>
+                <View style={{flexDirection:'row',marginTop:20,borderBottomWidth:2,borderBottomColor:darkmode?'#333333':'gray',paddingBottom:20, justifyContent:'space-between'}}>
                     <Text style={{width:'50%',fontSize:20,letterSpacing:1,color:darkmode?'white':'black'}}>Sending to</Text>
-                    <View style={{flexDirection:'row',borderRadius:10,padding:2,paddingLeft:10,backgroundColor:'#3a3a3a',width:'50%'}}>
-                        <Image source={Headers[info.currentTab]['Image']} style={{width:14,height:14,justifyContent:'center',alignSelf:'center',alignItems:'center'}} />
-                        <View style={{flex:1, flexDirection:"row",paddingLeft:10,paddingRight:20}}>
+                    <View style={{flexDirection:'row',borderRadius:10,padding:2,paddingLeft:10,backgroundColor:'#3a3a3a'}}>
+                        <Image source={Headers[info.currentTab]['Image']} style={{width:14,height:14,justifyContent:'center',alignSelf:'center',alignItems:'center',maxWidth:'50%'}} />
+                        <View style={{flexDirection:"row",paddingLeft:10,paddingRight:20}}>
                             <Text style={{color:'white', width:60}} numberOfLines={1}>{leftText}</Text>
-                            <Text style={{color:'white', width:'100%'}} numberOfLines={1}>{rightText}</Text>
+                            <Text style={{color:'white'}} numberOfLines={1}>{rightText}</Text>
                         </View>
                     </View>
                 </View>
@@ -141,10 +141,10 @@ class SendConfirmScreen extends React.Component {
                         <InputPin value={this.state.codePin}
                             codeLength={6}
                             cellStyle={{
-                                backgroundColor: 'white',
+                                backgroundColor: darkmode ? 'white':'#3a3a3a',
                             }}
                             onTextChange={code => this.setState({codePin:code})}
-                            textStyle={{fontSize: 24,color: 'black'}}
+                            textStyle={{fontSize: 24,color: darkmode ? 'black':'white'}}
                             // onFulfill={() => {
                             //     Keyboard.dismiss();
                             // }} 

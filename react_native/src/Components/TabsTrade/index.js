@@ -7,11 +7,8 @@ import History from '../History'
 
 import TopContent from './TopContent'
 import Charts from './Charts'
-import styles from './style'
 import { authLogout } from '../../Redux/Actions';
 
-const TabsTrade = (props) => {
-    const {darkmode,tabData} = props
     
     
     const [historyData,setHistory] = useState([])
@@ -73,4 +70,4 @@ function mapStateToProps(state) {
     };
   }
   
-export default connect(mapStateToProps, {authLogout  })(withTheme(TabsTrade));
+export default connect(mapStateToProps, { authLogout })(withTheme(TabsTrade));
