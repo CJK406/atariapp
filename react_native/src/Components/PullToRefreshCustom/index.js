@@ -37,6 +37,8 @@ export default class PTRView extends React.Component {
         {...this.props}
         refreshControl={
           <RefreshControl
+          tintColor="transparent"
+          colors={['transparent']}
             refreshing={this.state.isLoading}
             onRefresh={this._handleOnRefresh.bind(this)}
             progressViewOffset={this.props.offset}

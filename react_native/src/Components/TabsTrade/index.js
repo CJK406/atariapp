@@ -9,7 +9,7 @@ import TopContent from './TopContent'
 import Charts from './Charts'
 import { authLogout } from '../../Redux/Actions';
 
-    
+const TabsTrade = (props) => {
     
     const [historyData,setHistory] = useState([])
     const [historyFinish, setHistoryFinish] = useState(false)
