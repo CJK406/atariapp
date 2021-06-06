@@ -28,7 +28,7 @@ const HEADER_MAX_HEIGHT = windowHeight * 0.6;
 const HEADER_MIN_HEIGHT = windowHeight * 0.06;
 
 let backPressed = 0;
-class LoginScreen extends React.PureComponent {
+class LoginScreen extends React.Component {
     constructor(props) {
       super(props)
       this.handleBackButton = this.handleBackButton.bind(this);
@@ -67,9 +67,6 @@ class LoginScreen extends React.PureComponent {
       })
     }
 
-<<<<<<< HEAD
-
-=======
     login_animation = () =>{
       this.setState({showSignup:true});
       Animated.timing(this.state.scrollY, {
@@ -89,7 +86,6 @@ class LoginScreen extends React.PureComponent {
         }).start();
     };
  
->>>>>>> c3cbcdecec22d9bd2741ab29ece26a8277b6ca3b
 
   render() {
     console.log("aaaa");
@@ -125,11 +121,7 @@ class LoginScreen extends React.PureComponent {
            
             <Animated.View style={[styles.carret,{height: headerHeight,opacity: transp,}]}>
               <TouchableOpacity style={{ alignItems: 'center',justifyContent: 'center',}}
-<<<<<<< HEAD
-                onPress={this._showLogin}>
-=======
                 onPress={this.login_animation}>
->>>>>>> c3cbcdecec22d9bd2741ab29ece26a8277b6ca3b
                 <View style={{width:500}}>
                       <Animated.Text
                         style={{color: 'white', fontSize: 30,fontWeight:"bold", padding: padLogin, width:'100%',textAlign:'center'}}>
@@ -181,11 +173,7 @@ class LoginScreen extends React.PureComponent {
               <View style={styles.bottom}>
                 <TouchableOpacity activeOpacity={.8}
                   style={{ marginTop: 20,alignItems: 'center',justifyContent: 'center',}}
-<<<<<<< HEAD
-                  onPress={this._showSignup}>
-=======
                   onPress={this.signup_animation}>
->>>>>>> c3cbcdecec22d9bd2741ab29ece26a8277b6ca3b
 
                   <View style={{textAlign:'center',width:500}}>
                     <Text style={{color: 'white', fontSize: 14,textAlign:'center'}}>NEW MEMBER?</Text>
@@ -327,7 +315,6 @@ class LoginScreen extends React.PureComponent {
 
   }
   doSignup = async () => {
-    console.log("aa");
     const { signup_email, signup_password,signup_name } = this.state;
     if (signup_email.length === 0 || signup_password.length === 0) {
       Toast.show('Please fill in all fields.');

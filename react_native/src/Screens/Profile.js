@@ -1,9 +1,5 @@
 import * as React from 'react';
-<<<<<<< HEAD
-import { SafeAreaView, StyleSheet, Text,  View, ScrollView, Linking } from 'react-native';
-=======
 import { SafeAreaView, StyleSheet, Text, Image, TouchableOpacity, View, FlatList, Linking ,Switch} from 'react-native';
->>>>>>> c3cbcdecec22d9bd2741ab29ece26a8277b6ca3b
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { CustomStyles } from '../Constant';

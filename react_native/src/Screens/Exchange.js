@@ -3,17 +3,18 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { CustomStyles } from '../Constant';
-import { Header, ExchangeInput, ExchangeDropdown } from '../Components';
+import { Header, ExchangeInput, ExchangeDropdown, AwesomeAlert } from '../Components';
 import { Images } from '../Assets';
 import Modal from 'react-native-modal';
 import {exchange as exchangeApi} from '../Api';
 import { updateBallance} from '../Redux/Actions';
 
 
+
 class ExchangeScreen extends React.PureComponent {
     constructor(props) {
 		super(props)
-	
+        this.awesomeAlert = null
 	}
     state = {
         drop1_key:0,
@@ -50,7 +51,12 @@ class ExchangeScreen extends React.PureComponent {
     }
     
     drop2_open = (flag) =>{
-      
+        if(flag){
+            this.setState({drop2_open_flag:flag,drop1_open_flag:false});
+        }
+        else{
+            this.setState({drop2_open_flag:flag});
+        }
     }
     buyInputChange = (e) => {
         const {drop1_key,drop2_key,balance,price} = this.state;
@@ -70,16 +76,8 @@ class ExchangeScreen extends React.PureComponent {
         })
     }
 
-<<<<<<< HEAD
-    modalToggle = () => {
-        this.setState({ show_modal: !this.state.show_modal })
-    }
-
-    render() {
-=======
     receiveInputChange = (e) => {
         const {drop1_key,balance,price} = this.state;
->>>>>>> c3cbcdecec22d9bd2741ab29ece26a8277b6ca3b
 
         const exchage_from_data = [{image:Images.btc_icon,value:balance.btc.toFixed(8),u_v:(balance.btc_usd).toFixed(2), f_text:'BTC', text:'Bitcoin',price:price.btc,decimal:8},
             {image:Images.Atri_icon,value:balance.atri.toFixed(4),u_v:(balance.atri_usd).toFixed(2),f_text:'ATRI', text:'Atari token',price:price.atri,decimal:4},
@@ -105,14 +103,17 @@ class ExchangeScreen extends React.PureComponent {
             const data = await exchangeApi(token[drop1_key],buyInputValue);
             this.setState({loading:false});
             if(data.code===200){
-                alert("Success exchanged");
+                //alert("Success exchanged");
+                this.awesomeAlert.showAlert('success', "Congratulations", "Your balance success excanged!");
                 this.props.updateBallance();
             }
             else
-                alert(data.message);
+                this.awesomeAlert.showAlert('error', "Failed!", data.message);
+                //alert(data.message);
         }
         else
-            alert("Amount is empty. Please check again.");
+            //alert("Amount is empty. Please check again.");
+            this.awesomeAlert.showAlert('warning', "Amount is empty", "Please fill amount");
     }
     render() {
 
@@ -153,26 +154,16 @@ class ExchangeScreen extends React.PureComponent {
                     usd_price={exchage_from_data[drop1_key]['price']} 
                     centerIcon={exchage_from_data[drop1_key]['image']} 
                     darkmode={darkmode} 
-                    inputValue = {buyInputValue}
+                    inputValue = {buyInputValue.toString()}
                     />
                 <ExchangeInput label={'Receive'} 
                     onChangeInput={(e) => {this.receiveInputChange(e)}} 
                     usd_price={exchage_from_data[drop2_key]['price']} 
                     centerIcon={exchage_from_data[drop2_key]['image']} 
                     darkmode={darkmode} 
-                    inputValue = {receiveInputValue}
+                    inputValue = {receiveInputValue.toString()}
                     />
 
-<<<<<<< HEAD
-                    <TouchableOpacity  
-                        style={{backgroundColor:'rgb(227,30,45)',marginTop:20, padding:15,borderRadius:10,textAlign:'center',justifyContent:'center'}}
-                        onPress={this.modalToggle}
-                   >
-                        <Text style={{fontSize: 18,color:'white',textAlign:'center',justifyContent:'center',fontWeight:'bold'}}>Buy Now</Text>
-                    </TouchableOpacity>
-                </View>
-                <Modal
-=======
                 <TouchableOpacity  
                     style={{backgroundColor:'rgb(227,30,45)',marginTop:20, padding:15,borderRadius:10,textAlign:'center',justifyContent:'center'}}
                     onPress={this.exchange}
@@ -193,8 +184,8 @@ class ExchangeScreen extends React.PureComponent {
                 data={[1]}
                 renderItem={renderItem}
             />
+            <AwesomeAlert ref={(ref) => this.awesomeAlert = ref }/> 
             <Modal
->>>>>>> c3cbcdecec22d9bd2741ab29ece26a8277b6ca3b
 					isVisible={this.state.show_modal}
 					>
 					<View style={{ backgroundColor:'white',borderRadius:10}}>

@@ -37,11 +37,13 @@ const TopContent = (props) => {
     const setData = () => {
         const {balance, price} = props
         const {decimal} = CryptoStyle[curr_key]
+
+      
         setCryptoBalance(balance[curr_key].toFixed(decimal))
 
         const usdkey = curr_key+"_usd"
-        setUsdBalance(balance[usdkey].toFixed(2))
-        setCurrPrice(price[curr_key].toFixed(2)) 
+        setUsdBalance(parseFloat(balance[usdkey]).toFixed(2))
+        setCurrPrice( parseFloat(price[curr_key]).toFixed(2) ) 
         
     }
 
@@ -142,6 +144,7 @@ const TopContent = (props) => {
             </View>
             
             <Modal isVisible={showModal} style={{margin:0}}
+                backdropColor="transparent"
                 onBackdropPress={() => setShowModal(false)}>
                     {renderModal()}
             </Modal>
