@@ -51,12 +51,7 @@ class ExchangeScreen extends React.Component {
     }
     
     drop2_open = (flag) =>{
-        if(flag){
-            this.setState({drop2_open_flag:flag,drop1_open_flag:false});
-        }
-        else{
-            this.setState({drop2_open_flag:flag});
-        }
+     
     }
     buyInputChange = (e,exchage_from_data) => {
         const {drop1_key,drop2_key,balance,price} = this.state;
@@ -104,7 +99,7 @@ class ExchangeScreen extends React.Component {
             this.setState({loading:false});
             if(data.code===200){
                 //alert("Success exchanged");
-                this.awesomeAlert.showAlert('success', "Congratulations", "Your balance success excanged!");
+                this.awesomeAlert.showAlert('success', "Congratulations", "Your exchange was successful!");
                 this.props.updateBallance();
             }
             else

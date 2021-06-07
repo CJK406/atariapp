@@ -4,7 +4,7 @@ export async function currency_convert(currency,value){
   return await postAPI('currency-convert',{currency:currency,value:value});
 }
 export async function get_allHistory(){
-    return await getAPI('getAllTransection');
+    return await getAPI('getTransactionHistoryByUser');
   }
 
 export async function get_History(currency){

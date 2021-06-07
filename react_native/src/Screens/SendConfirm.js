@@ -10,9 +10,13 @@ import RadioForm from 'react-native-simple-radio-button';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { sendEther,sendAttari,sendUsdt} from '../Api';
 import { updateBallance} from '../Redux/Actions';
-import {InputPin} from '../Components'
+import {InputPin,AwesomeAlert} from '../Components'
 
 class SendConfirmScreen extends React.Component {
+    constructor(props) {
+		super(props)
+        this.awesomeAlert = null
+	}
     state = {
         show_miner_fee_modal:false,
         miner_fee:1,
@@ -21,7 +25,8 @@ class SendConfirmScreen extends React.Component {
         darkmode:true,
         codePin :"",
         user_id:"",
-        pincode:null
+        pincode:null,
+        
     }
     shouldComponentUpdate(nextProps, nextState) {
         return this.state.isLoading != nextState.isLoading 
@@ -51,10 +56,9 @@ class SendConfirmScreen extends React.Component {
             this.setState({isLoading:true});
             let input_pincode = parseInt(codePin);
             let  user_pincode= parseInt(pincode);
-            console.log(input_pincode, user_pincode);
             if(input_pincode !== user_pincode){
                 this.setState({isLoading:false});
-
+                this.awesomeAlert.showAlert('error', "Failed!","Pincode is not correct");
             }
             else{
                 let currency = Headers[info.currentTab]['text'];
@@ -62,23 +66,23 @@ class SendConfirmScreen extends React.Component {
                     currency="ATARI";
                 
                 let data = {token:currency,
-                            amount:info.send_amount,
+                            amount:parseFloat(info.send_amount),
                             to:info.address,
                             code:input_pincode
                 }
                 let result = await sendAttari(data);
                 if(result.code===400){
-                    alert(result.message);
+                    this.awesomeAlert.showAlert('error', "Failed!", result.message);
                 }
                 else{
-                    alert(result.message);
+                    this.awesomeAlert.showAlert('success', "Congratulations", "Transaction successfully sent");
                     this.props.updateBallance();
                 }
                 this.setState({isLoading:false});
             }            
         }
         else{
-            alert("Pincode is not correct");
+            this.awesomeAlert.showAlert('error', "Failed!","Pincode is not correct");
             this.setState({isLoading:false});
 
         }
@@ -104,6 +108,7 @@ class SendConfirmScreen extends React.Component {
     return (
         <KeyboardAwareScrollView style={{backgroundColor:darkmode?'rgb(33,33,33)':'white'}}>
         <SafeAreaView style={{...CustomStyles.container, backgroundColor: darkmode?'rgb(33,33,33)':'white', height:'100%' }}>
+        <AwesomeAlert ref={(ref) => this.awesomeAlert = ref }/> 
         <View style={[CustomStyles.container,  styles.innerContainer]}>
             <View style={{height: 70, alignItems: 'center', justifyContent: 'center', position: 'relative', backgroundColor:darkmode?'black':'white', width:'100%'}}>
                 <TouchableOpacity style={{position: 'absolute', left: 10}} onPress={this.goBack}>

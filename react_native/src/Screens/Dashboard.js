@@ -85,11 +85,12 @@ class DashboardScreen extends React.Component {
 
 	getHistory = async () => {
         const history = await get_allHistoryApi();
+        // history:history.body.Ether,
          this.setState({
-            history:history.body.Attari,
+            history:'history.body.Ether',
             history_finish:true
          });
-        this.props.setAllHistory(history.body.Attari);
+        this.props.setAllHistory(history.body.Ether);
     }
     refresh(){
         this.setState({
