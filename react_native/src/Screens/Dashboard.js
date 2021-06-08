@@ -9,11 +9,11 @@ import { Images } from '../Assets';
 import { PieChart } from 'react-native-svg-charts';
 import {get_allHistory as get_allHistoryApi,login as loginApi} from '../Api';
 import { setAllHistory ,getAllAddress,updateBallance,updateStartScreenState,updateMenuStatus} from '../Redux/Actions';
-import PTRView from 'react-native-pull-to-refresh';
+//import PTRView from 'react-native-pull-to-refresh';
 import Toast from 'react-native-simple-toast';
 const {  height } = Dimensions.get("window");
 
-//import PTRView from '../Components/PullToRefreshCustom';
+import PTRView from '../Components/PullToRefreshCustom';
 
 let backPressed = 0;
 const windowHeight = Dimensions.get('window').height;
