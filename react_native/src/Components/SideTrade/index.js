@@ -2,7 +2,6 @@ import React from 'react'
 import { View, TouchableHighlight, Text } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import styles from './style'
-
 const SideTrade = ({label, icon, onPress, position}) => {
     const radiusStyle = position === 'left' ? styles.rightRadius : styles.leftRadius
     return(
@@ -16,5 +15,4 @@ const SideTrade = ({label, icon, onPress, position}) => {
         </View>
     )
 }
-
 export default SideTrade

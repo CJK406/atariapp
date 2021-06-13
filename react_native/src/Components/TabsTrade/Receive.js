@@ -33,7 +33,6 @@ const Receive = (props) => {
             </View>
             <View style={{textAlign:'center',justifyContent:'center',marginBottom:150}}>
                 <Text style={{backgroundColor:'transparent',height:50,color:color, fontSize:15,fontWeight:'700',textAlign:'center', marginTop:20}}>{address}</Text>
-                {/* <TextInput editable = {false} style={{backgroundColor:'transparent',width:'90%',height:50,color:txtColor}}>{address}</TextInput> */}
                 <TouchableOpacity  onPress={()=> {Clipboard.setString(address)}}>
                     <Ionicons name='documents-outline'  size={30} color={txtColor} style={{justifyContent:'center',alignSelf:'center',alignItems:'center'}} />
                 </TouchableOpacity>

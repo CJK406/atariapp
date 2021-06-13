@@ -12,8 +12,8 @@ export default StyleSheet.create({
     selectBox:{
         width:'100%',
         paddingLeft:20,
-        paddingTop:10,
-        paddingBottom:10,
+        paddingTop:15,
+        paddingBottom:15,
         paddingRight:20,
         borderWidth:1,
         borderColor:'black',
@@ -46,7 +46,7 @@ export default StyleSheet.create({
     dropdownContainer:{
         position:'absolute', 
         width:'100%',
-        top:90, 
+        top:100, 
         zIndex:999999
     }
 })

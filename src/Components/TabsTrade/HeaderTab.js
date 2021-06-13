@@ -13,11 +13,9 @@ const HeaderTab = (props) => {
     const themeBG   = props.darkmode ? 'black':'white'
     const txtColor  = props.darkmode ? 'white':'black'
     return(
-        
         <View>
             <View style={{backgroundColor:themeBG,paddingBottom:10}}>
                 <Text style={{color:txtColor, ...styles.alignCenter}}>Total Balance</Text>
-                {/* <Text style={{color:txtColor, ...styles.alignCenter}}>${balance.sum.toFixed(2)}</Text> */}
                 <Text style={{color:txtColor, ...styles.alignCenter}}>${commafy(balance.sum.toFixed(2))}</Text>
 
             </View>
@@ -31,5 +29,4 @@ const HeaderTab = (props) => {
         </View>
     )
 }
-
 export default HeaderTab

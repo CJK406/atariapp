@@ -10,11 +10,10 @@ import { PieChart } from 'react-native-svg-charts';
 import {get_allHistory as get_allHistoryApi,login as loginApi} from '../Api';
 import { setAllHistory ,getAllAddress,updateBallance,updateStartScreenState,updateMenuStatus} from '../Redux/Actions';
 import PTRView from 'react-native-pull-to-refresh';
+// import PTRView from '../Components/PullToRefreshCustom';
 import Toast from 'react-native-simple-toast';
 const {  height } = Dimensions.get("window");
-
 let backPressed = 0;
-const windowHeight = Dimensions.get('window').height;
 class DashboardScreen extends React.Component {
     state = {
         balance:null,
@@ -67,7 +66,6 @@ class DashboardScreen extends React.Component {
 		return true;
 	}
   static getDerivedStateFromProps(props, state) {
-      console.log("balance,--",props.balance)
     return {
         balance:props.balance,
         darkmode:props.darkmode,
@@ -84,10 +82,10 @@ class DashboardScreen extends React.Component {
 	getHistory = async () => {
         const history = await get_allHistoryApi();
          this.setState({
-            history:history.body.Attari,
+            history:history.body.arr,
             history_finish:true
          });
-        this.props.setAllHistory(history.body.Attari);
+        this.props.setAllHistory(history.body.arr);
     }
     refresh(){
         this.setState({
@@ -158,12 +156,12 @@ class DashboardScreen extends React.Component {
                         <View style={{flexDirection:'column', marginRight:16}}>
                             <BalanceList
                                 darkmode={darkmode}
-                                balance={this.state.balance.btc.toFixed(8)}
-                                label={'BTC'}
-                                isIcon
-                                icon="bitcoin"
-                                iconColor={color_data[1]}
+                                balance={this.state.balance.atri.toFixed(0)}
+                                label={'ATRI'}
+                                icon={Images.Atri_icon}
+                                iconColor={color_data[0]}
                             />
+                           
                             <BalanceList
                                 darkmode={darkmode}
                                 balance={this.state.balance.eth.toFixed(8)}
@@ -183,10 +181,18 @@ class DashboardScreen extends React.Component {
                         <View style={{flexDirection:'column', marginLeft:16}}>
                             <BalanceList
                                 darkmode={darkmode}
-                                balance={this.state.balance.atri.toFixed(4)}
-                                label={'ATRI'}
-                                icon={Images.Atri_icon}
-                                iconColor={color_data[0]}
+                                balance={this.state.balance.btc.toFixed(8)}
+                                label={'BTC'}
+                                isIcon
+                                icon="bitcoin"
+                                iconColor={color_data[1]}
+                            />
+                             <BalanceList
+                                darkmode={darkmode}
+                                balance={'0.00000000'}
+                                label={'BNB'}
+                                icon={Images.bnb_icon}
+                                iconColor={color_data[6]}
                             />
                             <BalanceList
                                 darkmode={darkmode}
@@ -195,13 +201,7 @@ class DashboardScreen extends React.Component {
                                 icon={Images.Ltc_icon}
                                 iconColor={color_data[3]}
                             />
-                            <BalanceList
-                                darkmode={darkmode}
-                                balance={'0.00000000'}
-                                label={'BNB'}
-                                icon={Images.bnb_icon}
-                                iconColor={color_data[6]}
-                            />
+                           
                         </View>
                     </View>
                 </View>

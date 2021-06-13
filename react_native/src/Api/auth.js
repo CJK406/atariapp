@@ -1,10 +1,12 @@
 import { getAPI, postAPI, putAPI } from './base';
 
 export async function login(data){
+  console.log("bbbbbeeee");
   const response =  await postAPI('login', data);
-
-  if (response && !Boolean(response.code)) {
+  console.log(response)
+  if (response && response.token) {
       const {user,token,pricePerToken} = response;
+      console.log("aafefefe");
       if(pricePerToken.statusCode===429)
       {
         pricePerToken.atariPrice =0;
@@ -20,8 +22,7 @@ export async function login(data){
       let ltc_usd  = user.balLtc*pricePerToken.ltcPrice;
       let usdt_usd = user.balUsdt*pricePerToken.usdtPrice;
       let ftm_usd = 0;
-      let bnb_usd = 0;
-    
+      let bnb_usd = user.balBNB*pricePerToken.bnbPrice;
       const sum = atri_usd+btc_usd+eth_usd+ltc_usd+usdt_usd+ftm_usd+bnb_usd;
       const balance = {atri:user.balAtt,
                       btc:user.balBtc,
@@ -29,7 +30,7 @@ export async function login(data){
                       ltc:user.balLtc,
                       usdt:user.balUsdt,
                       ftm:0,
-                      bnb:0,
+                      bnb:user.balBNB,
     
                       atri_usd:atri_usd,
                       btc_usd:btc_usd,
@@ -37,18 +38,16 @@ export async function login(data){
                       ltc_usd:ltc_usd,
                       usdt_usd:usdt_usd,
                       ftm_usd:0,
-                      bnb_usd:0,
+                      bnb_usd:bnb_usd,
                       sum:sum
       };
-      console.log("balance----------",balance);
-    
       const price = {atri:pricePerToken.atariPrice,
           btc:pricePerToken.btcPrice,
           eth:pricePerToken.ethPrice,
           ltc:pricePerToken.ltcPrice,
           usdt:pricePerToken.usdtPrice,
           ftm:0,
-          bnb:0,
+          bnb:pricePerToken.bnbPrice,
     
       }
 

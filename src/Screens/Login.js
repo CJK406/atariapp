@@ -87,7 +87,6 @@ class LoginScreen extends React.Component {
  
 
   render() {
-    console.log("aaaa");
     const headerHeight = this.state.scrollY.interpolate({
       inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
       outputRange: [HEADER_MAX_HEIGHT, 40],
@@ -278,25 +277,18 @@ class LoginScreen extends React.Component {
     }
     try {
       this.setState({login_loading:true});
-      // await this.props.authSetToken(Base64.btoa(login_email + ':' + login_password));
       const response = await loginApi({email: login_email, password: login_password});
-      
       this.setState({login_loading:false});
-      // if (response && response.data && response.error===null) {
-      if (response && !Boolean(response.code)) {
-       // console.log(response);
+      if (response && response.balance) {
           this.props.authSetUserInfo(response);
-          //this.props.updateStartScreenState(true);
       } else {
         Toast.show('Email or Password is incorrect');
       }
     } catch (err) {
       Toast.show('Cannot connect to server');
     }
-
   }
   doSignup = async () => {
-    console.log("aa");
     const { signup_email, signup_password,signup_name } = this.state;
     if (signup_email.length === 0 || signup_password.length === 0) {
       Toast.show('Please fill in all fields.');
@@ -325,11 +317,9 @@ class LoginScreen extends React.Component {
       } else {
         Toast.show(signup_response.message);
         this.setState({signup_loading:false});
-
       }
     } catch (err) {
     }
-
   }
 }
 
@@ -379,8 +369,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-
 function mapStateToProps(state) {
 	return {
 	};

@@ -7,27 +7,23 @@ import styles from './style'
 const ExchangeDropdown = (props) => {
     const [activeKey, setActiveKey] = useState(0)
     const {items, darkmode, label,isOpen} = props
-    console.log("isOpen",isOpen);
     useEffect(() => {
         if(props.defaultKey >= 0){
             setActiveKey(props.defaultKey)
         }
     },[])
-
     const txColor = darkmode?'white':'black'
     const carretIcon = () => {
         const icon = isOpen ? 'caret-up-outline' : 'caret-down-outline'
         return <Ionicons name={icon} style={styles.carretIcon} 
                     size={20} color="black" />
     }
-
     const onSelect = (selectedIdx) => {
         props.drop_open(false);
         setActiveKey(selectedIdx)
         if(typeof onSelect === 'function')
             props.onSelect(selectedIdx);
     }
-
     return(
         <View style={styles.container}>
             <Text style={{color:txColor, ...styles.label}}>{label}:</Text>

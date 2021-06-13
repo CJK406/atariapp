@@ -4,9 +4,7 @@ import styles from './style'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const ExchangeInput = (props) => {
-
     const txColor = props.darkmode ? 'white':'black';
-    console.log(props.inputValue)
     return(
         <View style={styles.container}>
             <Text style={{...styles.label,color:txColor}}>{props.label}</Text>

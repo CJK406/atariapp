@@ -2,10 +2,7 @@ import React from 'react'
 import {TouchableOpacity, View, Switch, Text} from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from './style'
-
-
 const SettingMenu = (props) => {
-    
     const onPress = props.onPress ? {onPress:props.onPress} : {}
     const color = props.themeToggle ? 'rgb(66,66,66)' : '#ce2424';
     return(
@@ -30,11 +27,9 @@ const SettingMenu = (props) => {
                         value={props.actionValue}
                     />
                 }
-                
                 </View>
             </View>
         </TouchableOpacity>
     )
 }
-
 export default SettingMenu

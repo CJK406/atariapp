@@ -26,11 +26,10 @@ class HistoryItem extends React.Component{
                     </View>
                     <View style={{flex:1}}>
                         <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{fontSize:15}]}>{item.transactionType==="send" ? "Sent" : "Received"}</Text>
-                        <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{color:'white',fontSize:11}]}>{date}</Text>
+                        <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{fontSize:11}]}>{date}</Text>
                     </View>
                     <View style={{width:'35%'}}>
-                        <Text style={{color:item.transactionType==="send" ? 'rgb(244,67,54)': 'rgb(70,155,74)',fontSize:15,textAlign:'right'}}>{parseFloat(item.value)} {item.tokenSymbol.toUpperCase()}</Text>
-                        {/* <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{fontSize:15,textAlign:'right'}]}>${item.value}</Text> */}
+                        <Text style={{color:item.transactionType==="send" ? 'rgb(244,67,54)': 'rgb(70,155,74)',fontSize:15,textAlign:'right'}}>{parseFloat(item.value)} {item.asset.toUpperCase()}</Text>
                     </View>
                 </View> 
             </View>

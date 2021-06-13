@@ -15,7 +15,7 @@ class ForgotPasswordScreen extends React.Component {
         return this.state.email != nextState.email 
     }
   render() {
-		const { primaryColor, secondaryColor, thirdcolor, forthColor } = this.props.theme.palette;
+		const { thirdcolor} = this.props.theme.palette;
 		const { email } = this.state;
     return (
       <SafeAreaView style={{...CustomStyles.container, backgroundColor: 'rgb(33,33,33)' }}>
@@ -73,7 +73,6 @@ const styles = StyleSheet.create({
 	customWriting: {
 		fontSize: 18,
 		color: '#7882A2',
-		// marginBottom: 18,
 		textAlign:'center',
 		marginBottom:40
 	}

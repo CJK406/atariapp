@@ -13,8 +13,6 @@ const BalanceList = (props) => {
             }
             <View style={{flexDirection:'row'}}>
                 <Text style={[props.darkmode?CustomStyles.d_text:CustomStyles.w_text,{justifyContent:'center', marginTop:10,marginRight:5}]}>{props.balance}</Text>
-                {/* <Text style={[props.darkmode?CustomStyles.d_text:CustomStyles.w_text,{justifyContent:'center', marginTop:10,marginRight:5}]}>{props.balance}</Text> */}
-                
                 <Text style={{marginTop:10,color:props.iconColor}}>{props.label}</Text> 
             </View>
         </View>

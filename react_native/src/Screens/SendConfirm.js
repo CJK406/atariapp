@@ -44,12 +44,14 @@ class SendConfirmScreen extends React.Component {
 	goBack = () => {
 		this.props.navigation.goBack();
 	}
+    goDashboard = () => {
+        this.props.navigation.navigate('Dashboard1');
+    }
     toggleModal = () => {
 		this.setState({
 			show_miner_fee_modal:!this.state.show_miner_fee_modal
 		})
     }
-
 	SendConfirm = async () => {
         const {codePin, pincode,miner_fee, info,user_id} = this.state;
         if(codePin!==""){
@@ -64,19 +66,20 @@ class SendConfirmScreen extends React.Component {
                 let currency = Headers[info.currentTab]['text'];
                 if(currency ==="ATRI")
                     currency="ATARI";
-                
                 let data = {token:currency,
                             amount:parseFloat(info.send_amount),
                             to:info.address,
                             code:input_pincode
                 }
                 let result = await sendAttari(data);
-                if(result.code===400){
-                    this.awesomeAlert.showAlert('error', "Failed!", result.message);
-                }
+                if(result.code===400)
+                    this.awesomeAlert.showAlert('error', "Failed!", "Your transaction was not successful");
                 else{
                     this.awesomeAlert.showAlert('success', "Congratulations", "Transaction successfully sent");
                     this.props.updateBallance();
+                    setTimeout(() => {
+                        this.goBack();
+                    }, 5000);
                 }
                 this.setState({isLoading:false});
             }            
@@ -84,13 +87,10 @@ class SendConfirmScreen extends React.Component {
         else{
             this.awesomeAlert.showAlert('error', "Failed!","Pincode is not correct");
             this.setState({isLoading:false});
-
         }
     }
-
     elipsisText(value){
         var splitIndex = Math.round( value.length * 0.8 );
-
 		this.fullText = value;
         return {
             leftText:value.slice( 0, splitIndex ),
@@ -150,9 +150,6 @@ class SendConfirmScreen extends React.Component {
                             }}
                             onTextChange={code => this.setState({codePin:code})}
                             textStyle={{fontSize: 24,color: darkmode ? 'black':'white'}}
-                            // onFulfill={() => {
-                            //     Keyboard.dismiss();
-                            // }} 
                         />
                      </View>
                 </View>
@@ -200,11 +197,9 @@ class SendConfirmScreen extends React.Component {
         </View>
       </SafeAreaView>
         </KeyboardAwareScrollView>
-      
     );
   }
 }
-
 const styles = StyleSheet.create({
   innerContainer: {
 		justifyContent: 'flex-start',

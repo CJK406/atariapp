@@ -278,22 +278,19 @@ class LoginScreen extends React.Component {
     }
     try {
       this.setState({login_loading:true});
-      // await this.props.authSetToken(Base64.btoa(login_email + ':' + login_password));
       const response = await loginApi({email: login_email, password: login_password});
-      
+
+      console.log("login_response",response);
+
       this.setState({login_loading:false});
-      // if (response && response.data && response.error===null) {
-      if (response && !Boolean(response.code)) {
-       // console.log(response);
+      if (response && response.token) {
           this.props.authSetUserInfo(response);
-          //this.props.updateStartScreenState(true);
       } else {
         Toast.show('Email or Password is incorrect');
       }
     } catch (err) {
       Toast.show('Cannot connect to server');
     }
-
   }
   doSignup = async () => {
     const { signup_email, signup_password,signup_name } = this.state;
@@ -324,11 +321,9 @@ class LoginScreen extends React.Component {
       } else {
         Toast.show(signup_response.message);
         this.setState({signup_loading:false});
-
       }
     } catch (err) {
     }
-
   }
 }
 
@@ -378,8 +373,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
-
 function mapStateToProps(state) {
 	return {
 	};

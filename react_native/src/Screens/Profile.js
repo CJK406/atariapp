@@ -18,7 +18,6 @@ const Menus = [
 class ProfileScreen extends React.Component {
 	constructor(props) {
 		super(props)
-
 	}
 	state = {
 		themeToggle:true,
@@ -30,8 +29,6 @@ class ProfileScreen extends React.Component {
 			notificationToggle:props.notification_Flag,
 		};
 	  }
-	
-
 	goToDetail = (item) => {
 		this.props.navigation.navigate(item);
 	}

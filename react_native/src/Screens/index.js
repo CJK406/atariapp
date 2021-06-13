@@ -1,7 +1,6 @@
 export { default as StartScreen } from './Start';
 export { default as LoginScreen } from './Login';
 export { default as ForgotPasswordScreen } from './ForgotPassword';
-export { default as SignupScreen } from './Signup';
 
 export { default as TradeScreen } from './Trade';
 export { default as ProfileScreen } from './Profile';

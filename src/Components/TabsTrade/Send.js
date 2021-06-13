@@ -7,84 +7,63 @@ import styles from './style'
 import Modal from 'react-native-modal'
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
-
 import { useNavigation } from '@react-navigation/native';
-
-
 const Send = (props) => {
     const navigation = useNavigation();
-
     const [amount,setAmount] = useState("0.00")
     const [amountUsd, setAmountUsd] = useState('0.00')
     const [destination, setDestination] = useState('')
     const [showQR, setShowQR] = useState(false)
-
     const {darkmode, tabData, cryptoBalance, usdBalance, price} = props
-
     const currency = tabData.text
     const curr_key = currency.toLowerCase()
-
     const themeBG = darkmode?'rgb(33,33,33)':'white'
     const txtColor = darkmode?'white':'black'
-    
 
     const onChangeValue = (e) => {
-        
         const usd = e!=="" ?  (parseFloat(e)*parseFloat(price)) : 0;
         setAmount(e)
         setAmountUsd(usd.toFixed(2))
     }
-
     const onChangeUsdValue = (e) => {
-		const coin = e!=="" ?  (parseFloat(e)/parseFloat(price)).toFixed(5) : 0;
+		const coin = e!=="" ?  (parseFloat(e)/parseFloat(price)).toFixed(CryptoStyle[curr_key]['decimal']) : 0;
         setAmount(coin)
         setAmountUsd(e)
     }
-
     const setFullBalance = () => {
         const {decimal} = CryptoStyle[curr_key]
         setAmount(parseFloat(cryptoBalance).toFixed(decimal))
         setAmountUsd(parseFloat(usdBalance).toFixed(2))
     }
-
     const focusSendInput = async() => {
 		const text = await Clipboard.getString();
 		setDestination(text)
 	};
-
     const sendConfirm = () => {
 		if(destination!=="" && amount!=="0.00"){
             props.closeModal();
             const currTab = Headers.findIndex((item) => item.text === currency)
-            
 			let info= {send_usd_amount:amountUsd,send_amount:amount, address:destination, currentTab:currTab}
 			navigation.navigate('SendConfirm',{ info: info });
 		}
     }
-
-
     onScanned = async e => {
 		let split = e.data.split(":");
 		let address = split.length>1 ? split[1]:split[0];
 		setDestination(address)
         setShowQR(false)
 	}
-
     const backAction = () => {
         if(showQR){
             setShowQR(false)
             return true;
         }
     };
-
     useEffect(() => {
-    
         BackHandler.addEventListener("hardwareBackPress", backAction);
-
         return () =>
           BackHandler.removeEventListener("hardwareBackPress", backAction);
       }, []);
-
     return(
         <View style={{...styles.modalContainer,backgroundColor:themeBG}}>
             <Image source={tabData.Image} style={styles.icSend}></Image>

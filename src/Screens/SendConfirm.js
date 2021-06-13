@@ -10,9 +10,13 @@ import RadioForm from 'react-native-simple-radio-button';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { sendEther,sendAttari,sendUsdt} from '../Api';
 import { updateBallance} from '../Redux/Actions';
-import {InputPin} from '../Components'
+import {InputPin,AwesomeAlert} from '../Components'
 
 class SendConfirmScreen extends React.Component {
+    constructor(props) {
+		super(props)
+        this.awesomeAlert = null
+	}
     state = {
         show_miner_fee_modal:false,
         miner_fee:1,
@@ -21,7 +25,8 @@ class SendConfirmScreen extends React.Component {
         darkmode:true,
         codePin :"",
         user_id:"",
-        pincode:null
+        pincode:null,
+        
     }
     shouldComponentUpdate(nextProps, nextState) {
         return this.state.isLoading != nextState.isLoading 
@@ -39,54 +44,53 @@ class SendConfirmScreen extends React.Component {
 	goBack = () => {
 		this.props.navigation.goBack();
 	}
+    goDashboard = () => {
+        this.props.navigation.navigate('Dashboard1');
+    }
     toggleModal = () => {
 		this.setState({
 			show_miner_fee_modal:!this.state.show_miner_fee_modal
 		})
     }
-
 	SendConfirm = async () => {
         const {codePin, pincode,miner_fee, info,user_id} = this.state;
         if(codePin!==""){
             this.setState({isLoading:true});
             let input_pincode = parseInt(codePin);
             let  user_pincode= parseInt(pincode);
-            console.log(input_pincode, user_pincode);
             if(input_pincode !== user_pincode){
-                alert("Pincode is not correct");
                 this.setState({isLoading:false});
-
+                this.awesomeAlert.showAlert('error', "Failed!","Pincode is not correct");
             }
             else{
                 let currency = Headers[info.currentTab]['text'];
                 if(currency ==="ATRI")
                     currency="ATARI";
-                
                 let data = {token:currency,
-                            amount:info.send_amount,
+                            amount:parseFloat(info.send_amount),
                             to:info.address,
+                            code:input_pincode
                 }
                 let result = await sendAttari(data);
-                if(result.code===400){
-                    alert(result.message);
-                }
+                if(result.code===400)
+                    this.awesomeAlert.showAlert('error', "Failed!", "Your transaction was not successful");
                 else{
-                    alert(result.message);
+                    this.awesomeAlert.showAlert('success', "Congratulations", "Transaction successfully sent");
                     this.props.updateBallance();
+                    setTimeout(() => {
+                        this.goBack();
+                    }, 5000);
                 }
                 this.setState({isLoading:false});
             }            
         }
         else{
-            alert("Pincode is not correct");
+            this.awesomeAlert.showAlert('error', "Failed!","Pincode is not correct");
             this.setState({isLoading:false});
-
         }
     }
-
     elipsisText(value){
         var splitIndex = Math.round( value.length * 0.8 );
-
 		this.fullText = value;
         return {
             leftText:value.slice( 0, splitIndex ),
@@ -104,6 +108,7 @@ class SendConfirmScreen extends React.Component {
     return (
         <KeyboardAwareScrollView style={{backgroundColor:darkmode?'rgb(33,33,33)':'white'}}>
         <SafeAreaView style={{...CustomStyles.container, backgroundColor: darkmode?'rgb(33,33,33)':'white', height:'100%' }}>
+        <AwesomeAlert ref={(ref) => this.awesomeAlert = ref }/> 
         <View style={[CustomStyles.container,  styles.innerContainer]}>
             <View style={{height: 70, alignItems: 'center', justifyContent: 'center', position: 'relative', backgroundColor:darkmode?'black':'white', width:'100%'}}>
                 <TouchableOpacity style={{position: 'absolute', left: 10}} onPress={this.goBack}>
@@ -114,13 +119,13 @@ class SendConfirmScreen extends React.Component {
             <View style={{padding:20}}>
                 <Text style={{fontSize:25,color:darkmode?'white':'black'}}>Confirm Payment</Text>
                 <Text style={{fontSize:20,color:darkmode?'white':'black',marginTop:20}}>SUMMARY</Text>
-                <View style={{flexDirection:'row',marginTop:20,borderBottomWidth:2,borderBottomColor:darkmode?'#333333':'gray',paddingBottom:20}}>
+                <View style={{flexDirection:'row',marginTop:20,borderBottomWidth:2,borderBottomColor:darkmode?'#333333':'gray',paddingBottom:20, justifyContent:'space-between'}}>
                     <Text style={{width:'50%',fontSize:20,letterSpacing:1,color:darkmode?'white':'black'}}>Sending to</Text>
-                    <View style={{flexDirection:'row',borderRadius:10,padding:2,paddingLeft:10,backgroundColor:'#3a3a3a',width:'50%'}}>
-                        <Image source={Headers[info.currentTab]['Image']} style={{width:14,height:14,justifyContent:'center',alignSelf:'center',alignItems:'center'}} />
-                        <View style={{flex:1, flexDirection:"row",paddingLeft:10,paddingRight:20}}>
+                    <View style={{flexDirection:'row',borderRadius:10,padding:2,paddingLeft:10,backgroundColor:'#3a3a3a'}}>
+                        <Image source={Headers[info.currentTab]['Image']} style={{width:14,height:14,justifyContent:'center',alignSelf:'center',alignItems:'center',maxWidth:'50%'}} />
+                        <View style={{flexDirection:"row",paddingLeft:10,paddingRight:20}}>
                             <Text style={{color:'white', width:60}} numberOfLines={1}>{leftText}</Text>
-                            <Text style={{color:'white', width:'100%'}} numberOfLines={1}>{rightText}</Text>
+                            <Text style={{color:'white'}} numberOfLines={1}>{rightText}</Text>
                         </View>
                     </View>
                 </View>
@@ -141,13 +146,10 @@ class SendConfirmScreen extends React.Component {
                         <InputPin value={this.state.codePin}
                             codeLength={6}
                             cellStyle={{
-                                backgroundColor: 'white',
+                                backgroundColor: darkmode ? 'white':'#3a3a3a',
                             }}
                             onTextChange={code => this.setState({codePin:code})}
-                            textStyle={{fontSize: 24,color: 'black'}}
-                            // onFulfill={() => {
-                            //     Keyboard.dismiss();
-                            // }} 
+                            textStyle={{fontSize: 24,color: darkmode ? 'black':'white'}}
                         />
                      </View>
                 </View>
@@ -195,11 +197,9 @@ class SendConfirmScreen extends React.Component {
         </View>
       </SafeAreaView>
         </KeyboardAwareScrollView>
-      
     );
   }
 }
-
 const styles = StyleSheet.create({
   innerContainer: {
 		justifyContent: 'flex-start',

@@ -3,20 +3,20 @@ import { SafeAreaView, FlatList,View } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { CustomStyles,Headers } from '../Constant';
-import PTRView from 'react-native-pull-to-refresh';
 import { Header, TradeHeaderTab,   TabsTrade} from '../Components'
+// import PTRView from '../Components/PullToRefreshCustom';
+import PTRView from 'react-native-pull-to-refresh';
 
 class TradeScreen extends React.Component {
-	constructor(props) {
-		super(props)
-	}
+
 	state = {
 		currentTab: 0,
         tabData:Headers[0],
 		history:[],
 		history_finish:false,
 		darkmode:true,
-		triggerRefresh : false
+		triggerRefresh : false,
+		balance:null
 	}
 	
 	static getDerivedStateFromProps(props, state) {
@@ -32,7 +32,7 @@ class TradeScreen extends React.Component {
 			   this.state.triggerRefresh != nextState.triggerRefresh ||
 			   this.state.currentTab != nextState.currentTab ||
 			   this.state.darkmode != nextState.darkmode ||
-
+			   this.state.balance != nextState.balance ||
 			   this.state.triggerRefresh != nextState.triggerRefresh;
 	}
 	
@@ -42,15 +42,15 @@ class TradeScreen extends React.Component {
 		},() => {
 			setTimeout(() => {
 				this.setState({
-					triggerRefresh:false
+					triggerRefresh:false,
+					// currentTab:0,
+					// tabData:Headers[0]
 				})
 			},1000)
 		})
 	}
   render() {
 		const { currentTab,balance,darkmode } = this.state;
-		
-		
 		const themeBG = darkmode?'rgb(33,33,33)':'white'
 		const txtColor = darkmode?'white':'black';
 		const renderItem = ({ item }) => (
@@ -60,8 +60,8 @@ class TradeScreen extends React.Component {
 					balance={balance} 
 					activeTab={currentTab}
 					onPressTab={(index, tab) => this.setState({currentTab:index,tabData:tab})}/>
-			
-				<TabsTrade tabData={this.state.tabData} trigger={this.state.triggerRefresh}/>
+				<TabsTrade currentTab={currentTab} balance={balance} tabData={this.state.tabData} trigger={this.state.triggerRefresh}/>
+				
 			</View>
 			);
     return (

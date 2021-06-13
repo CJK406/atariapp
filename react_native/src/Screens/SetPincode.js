@@ -25,9 +25,6 @@ class SetPincodeScreen extends React.Component {
     }
     goNext(page){
         this.props.navigation.navigate(page);
-        // this.setState({
-        //     loading:false,
-        // })
     }
 
     SetPin = () => {

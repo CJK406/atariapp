@@ -28,7 +28,7 @@ class ResetPinScreen extends React.Component {
         })
         let data = {};
         const result = await reset_pin(data);
-	    Toast.show('You can retrieve your pincode from there');
+	    Toast.show('Your pin has been successfully set to you email');
         this.setState({
             loading:false,
         })

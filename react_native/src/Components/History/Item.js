@@ -17,22 +17,21 @@ class HistoryItem extends React.Component{
       }
     render(){
         const {darkmode, item} = this.props;
-        console.log("item",item);
         let date = this.convert(item.createdAt);
         return(
             <View>
-                {/* <View style={{marginBottom:15, flexDirection:'row'}}>
+                <View style={{marginBottom:15, flexDirection:'row'}}>
                     <View style={{alignItems:'center',alignSelf:'center', paddingRight:10}}>
                         <Ionicons name={item.transactionType==="send" ? "arrow-up-circle-outline" : "arrow-down-circle-outline"}  size={25} color={darkmode ? "white" :"black"} />
                     </View>
                     <View style={{flex:1}}>
-                        <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{fontSize:15}]}>{"Sent"}</Text>
-                        <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{color:'white',fontSize:11}]}>{date}</Text>
+                        <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{fontSize:15}]}>{item.transactionType==="send" ? "Sent" : "Received"}</Text>
+                        <Text style={[darkmode?CustomStyles.d_text:CustomStyles.w_text,{fontSize:11}]}>{date}</Text>
                     </View>
                     <View style={{width:'35%'}}>
                         <Text style={{color:item.transactionType==="send" ? 'rgb(244,67,54)': 'rgb(70,155,74)',fontSize:15,textAlign:'right'}}>{parseFloat(item.value)} {item.asset.toUpperCase()}</Text>
                     </View>
-                </View>  */}
+                </View> 
             </View>
         )
     }

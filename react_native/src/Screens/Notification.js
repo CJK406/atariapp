@@ -4,13 +4,10 @@ import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { CustomStyles } from '../Constant';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
 class NotificationScreen extends React.Component {
 	goBack = () => {
 		this.props.navigation.goBack();
 	}
-
-
   render() {
 		const { primaryColor, secondaryColor, sixthColor } = this.props.theme.palette;
     return (

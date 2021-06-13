@@ -19,5 +19,4 @@ const DropdownItem = ({onPress, item}) => {
         </View>
     )
 }
-
 export default DropdownItem

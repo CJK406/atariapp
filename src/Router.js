@@ -10,7 +10,7 @@ import { ArtoTabs } from './Components'
 
 import {
 	StartScreen,
-	LoginScreen, ForgotPasswordScreen, SignupScreen,	TradeScreen, DashboardScreen, 
+	LoginScreen, ForgotPasswordScreen, 	TradeScreen, DashboardScreen, 
 	ProfileScreen,NotificationScreen, ExchangeScreen,SendConfirmScreen,QRScanScreen,SendPaymentScreen,ResetPinScreen,SetPincodeScreen,TestScreen } from './Screens'
 
 const AuthStack = createStackNavigator()
@@ -19,7 +19,6 @@ const AuthStackScreens = () => (
 		<AuthStack.Screen name="Test" component={TestScreen} test_value="aaa" />
 		<AuthStack.Screen name="Login" component={LoginScreen} />
 		<AuthStack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
-		<AuthStack.Screen name="Signup" component={SignupScreen} />
 	</AuthStack.Navigator>
 )
 
