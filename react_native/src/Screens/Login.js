@@ -87,7 +87,6 @@ class LoginScreen extends React.Component {
  
 
   render() {
-    console.log("aaaa");
     const headerHeight = this.state.scrollY.interpolate({
       inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
       outputRange: [HEADER_MAX_HEIGHT, 40],
@@ -279,11 +278,8 @@ class LoginScreen extends React.Component {
     try {
       this.setState({login_loading:true});
       const response = await loginApi({email: login_email, password: login_password});
-
-      console.log("login_response",response);
-
       this.setState({login_loading:false});
-      if (response && response.token) {
+      if (response && response.balance) {
           this.props.authSetUserInfo(response);
       } else {
         Toast.show('Email or Password is incorrect');

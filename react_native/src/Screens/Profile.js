@@ -60,15 +60,15 @@ class ProfileScreen extends React.Component {
 		const txtColor = themeToggle?'white':'black';
 		const renderItem = ({ item }) => (
 			<View style={{padding:20}}>
-				<Text style={{fontSize:15,marginBottom:14, color:txtColor}}>General</Text>
+				{/* <Text style={{fontSize:15,marginBottom:14, color:txtColor}}>General</Text> */}
 						
-						<SettingMenu icon={Menus[1].icon} title={Menus[1].name}
+						{/* <SettingMenu icon={Menus[1].icon} title={Menus[1].name}
 							subTitle={Menus[1].description}
 							withAction
 							actionValue={notificationToggle}
 							onAction={(key) => this.changeNotificationSetting(key)}
 							themeToggle={this.state.themeToggle}
-						/>
+						/> */}
 						
 						<Text style={{fontSize:15,marginBottom:14,color:txtColor}}>Advanced</Text>
 						<SettingMenu icon={Menus[3].icon} title={Menus[3].name}
@@ -84,11 +84,11 @@ class ProfileScreen extends React.Component {
 							themeToggle={this.state.themeToggle}
 
 						/>
-						<SettingMenu icon={Menus[5].icon} title={Menus[5].name}
+						{/* <SettingMenu icon={Menus[5].icon} title={Menus[5].name}
 							onPress={() => this.goToDetail('ResetPin')}
 							themeToggle={this.state.themeToggle}
 
-						/>
+						/> */}
 						<SettingMenu icon={Menus[6].icon} title={Menus[6].name}
 							onPress={this.logout}
 							themeToggle={this.state.themeToggle}

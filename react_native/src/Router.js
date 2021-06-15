@@ -11,7 +11,7 @@ import { ArtoTabs } from './Components'
 import {
 	StartScreen,
 	LoginScreen, ForgotPasswordScreen, 	TradeScreen, DashboardScreen, 
-	ProfileScreen,NotificationScreen, ExchangeScreen,SendConfirmScreen,QRScanScreen,SendPaymentScreen,ResetPinScreen,SetPincodeScreen,TestScreen } from './Screens'
+	ProfileScreen,NotificationScreen, ExchangeScreen,SendConfirmScreen,QRScanScreen,NftScreen,SendPaymentScreen,ResetPinScreen,SetPincodeScreen,TestScreen } from './Screens'
 
 const AuthStack = createStackNavigator()
 const AuthStackScreens = () => (
@@ -39,8 +39,8 @@ const tabsArr = {
         icon : 'pulse-outline'
     },
     QRScan:{
-        component: QRScanScreen,
-        icon : 'qr-code-outline'
+        component: NftScreen,
+        icon : 'apps'
     },
     Exchange:{
         component: ExchangeScreen,

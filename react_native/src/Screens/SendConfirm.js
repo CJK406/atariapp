@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SafeAreaView, StyleSheet, Text,Image,TouchableOpacity, View, ActivityIndicator } from 'react-native';
+import { SafeAreaView, StyleSheet, Text,Image,TouchableOpacity, View, ActivityIndicator, BackHandler } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { CustomStyles,Headers } from '../Constant';
@@ -11,6 +11,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { sendEther,sendAttari,sendUsdt} from '../Api';
 import { updateBallance} from '../Redux/Actions';
 import {InputPin,AwesomeAlert} from '../Components'
+let backPressed = 0;
 
 class SendConfirmScreen extends React.Component {
     constructor(props) {
@@ -26,12 +27,15 @@ class SendConfirmScreen extends React.Component {
         codePin :"",
         user_id:"",
         pincode:null,
-        
+        back_flag:false
     }
+
     shouldComponentUpdate(nextProps, nextState) {
         return this.state.isLoading != nextState.isLoading 
                 || this.state.darkmode != nextState.darkmode 
                 || this.state.codePin != nextState.codePin 
+                || this.state.back_flag != nextState.back_flag 
+
     }
     static getDerivedStateFromProps(props, state) {
         return {
@@ -41,8 +45,26 @@ class SendConfirmScreen extends React.Component {
             pincode:props.pincode,
         };
     }
+	componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton.bind(this));
+    }
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton.bind(this));
+    }
+    handleBackButton = () => {
+        const {back_flag} = this.state;
+		if(!back_flag){
+			backPressed = 0;
+    		this.props.navigation.goBack();
+        }
+        return true;
+	}
 	goBack = () => {
-		this.props.navigation.goBack();
+        const {back_flag} = this.state;
+		if(!back_flag){
+    		this.props.navigation.goBack();
+
+		}
 	}
     goDashboard = () => {
         this.props.navigation.navigate('Dashboard1');
@@ -56,6 +78,7 @@ class SendConfirmScreen extends React.Component {
         const {codePin, pincode,miner_fee, info,user_id} = this.state;
         if(codePin!==""){
             this.setState({isLoading:true});
+            
             let input_pincode = parseInt(codePin);
             let  user_pincode= parseInt(pincode);
             if(input_pincode !== user_pincode){
@@ -63,6 +86,10 @@ class SendConfirmScreen extends React.Component {
                 this.awesomeAlert.showAlert('error', "Failed!","Pincode is not correct");
             }
             else{
+                this.setState({back_flag:true});
+                setTimeout(() => {
+                    this.setState({back_flag:false});
+                }, 30000);
                 let currency = Headers[info.currentTab]['text'];
                 if(currency ==="ATRI")
                     currency="ATARI";
@@ -72,11 +99,14 @@ class SendConfirmScreen extends React.Component {
                             code:input_pincode
                 }
                 let result = await sendAttari(data);
-                if(result.code===400)
+                if(result.code===400){
                     this.awesomeAlert.showAlert('error', "Failed!", "Your transaction was not successful");
+                    this.setState({back_flag:false});
+                }
                 else{
                     this.awesomeAlert.showAlert('success', "Congratulations", "Transaction successfully sent");
                     this.props.updateBallance();
+                    this.setState({back_flag:false});
                     setTimeout(() => {
                         this.goBack();
                     }, 5000);

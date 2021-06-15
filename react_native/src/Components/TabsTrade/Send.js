@@ -8,6 +8,7 @@ import Modal from 'react-native-modal'
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
 import { useNavigation } from '@react-navigation/native';
+
 const Send = (props) => {
     const navigation = useNavigation();
     const [amount,setAmount] = useState("0.00")
@@ -19,13 +20,14 @@ const Send = (props) => {
     const curr_key = currency.toLowerCase()
     const themeBG = darkmode?'rgb(33,33,33)':'white'
     const txtColor = darkmode?'white':'black'
+
     const onChangeValue = (e) => {
         const usd = e!=="" ?  (parseFloat(e)*parseFloat(price)) : 0;
         setAmount(e)
         setAmountUsd(usd.toFixed(2))
     }
     const onChangeUsdValue = (e) => {
-		const coin = e!=="" ?  (parseFloat(e)/parseFloat(price)).toFixed(5) : 0;
+		const coin = e!=="" ?  (parseFloat(e)/parseFloat(price)).toFixed(CryptoStyle[curr_key]['decimal']) : 0;
         setAmount(coin)
         setAmountUsd(e)
     }
@@ -36,16 +38,17 @@ const Send = (props) => {
     }
     const focusSendInput = async() => {
 		const text = await Clipboard.getString();
-        console.log("text",text);
 		setDestination(text)
 	};
     const sendConfirm = () => {
-		if(destination!=="" && amount!=="0.00"){
+        console.log(parseFloat(amount),parseFloat(cryptoBalance))
+		if(destination!=="" && amount!=="0.00" && parseFloat(amount)<parseFloat(cryptoBalance)){
             props.closeModal();
             const currTab = Headers.findIndex((item) => item.text === currency)
 			let info= {send_usd_amount:amountUsd,send_amount:amount, address:destination, currentTab:currTab}
 			navigation.navigate('SendConfirm',{ info: info });
 		}
+        
     }
     onScanned = async e => {
 		let split = e.data.split(":");

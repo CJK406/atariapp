@@ -5,6 +5,8 @@ export { default as ForgotPasswordScreen } from './ForgotPassword';
 export { default as TradeScreen } from './Trade';
 export { default as ProfileScreen } from './Profile';
 export { default as DashboardScreen } from './Dashboard';
+export { default as NftScreen } from './Nft';
+
 export { default as ExchangeScreen } from './Exchange';
 
 export { default as NotificationScreen } from './Notification';

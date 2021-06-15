@@ -1,12 +1,9 @@
 import { getAPI, postAPI, putAPI } from './base';
 
 export async function login(data){
-  console.log("bbbbbeeee");
   const response =  await postAPI('login', data);
-  console.log(response)
   if (response && response.token) {
       const {user,token,pricePerToken} = response;
-      console.log("aafefefe");
       if(pricePerToken.statusCode===429)
       {
         pricePerToken.atariPrice =0;

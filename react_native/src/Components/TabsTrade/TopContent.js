@@ -61,8 +61,13 @@ const TopContent = (props) => {
     },[])
 
     const showModalComponent = (mode) => {
+        if(currentTab===3 || currentTab===2 || currentTab===5){
+            setShowComingModal(true)
+        }
+        else{
             setModalMode(mode)
             setShowModal(true)
+        }
     }
     const ListsContent = [
         {
@@ -70,7 +75,7 @@ const TopContent = (props) => {
             params : {
                     address : props.get_address[curr_key],
                     darkmode: props.darkmode,
-                    icon : tabData.Image,
+                    icon : tabData.qr_image,
                     crypto_name:tabData.full_text,
                     color: tabData.color,
             }
@@ -79,7 +84,7 @@ const TopContent = (props) => {
             params : {
                 darkmode:props.darkmode,
                 tabData : tabData,
-                cryptoBalance: cryptoBalance,
+                cryptoBalance: balance[curr_key].toFixed(decimal),
                 usdBalance:usdBalance,
                 price:currPrice,
                 closeModal:() => {
@@ -125,11 +130,11 @@ const TopContent = (props) => {
 					isVisible={comingshowmodal}
 					>
 					<View style={{ backgroundColor:'white',borderRadius:10}}>
-						<Image source={Images.exchange_gif} style={{justifyContent:'center', width:'100%',height:200,marginTop:40}} />
-						<Text style={{fontSize:30, textAlign:'center',marginTop:40,marginBottom:20}}>Available Soon</Text>
-						<Text style={{textAlign:'center',padding:20,fontSize:20}}>This feature will be available soon.</Text>
+						<Image source={Images.Logo} style={{justifyContent:'center', width:100,height:30, alignItems:'center',alignSelf:'center',marginTop:24}} />
+						<Text style={{fontSize:20, textAlign:'center',marginTop:10,marginBottom:10}}>Comming Soon</Text>
+						{/* <Text style={{textAlign:'center',padding:20,fontSize:20}}>This feature will be available soon.</Text> */}
 						<TouchableOpacity onPress={() => {setShowComingModal(false)}} 
-							style={{backgroundColor:'rgb(227,30,45)', width:'60%',marginBottom:20,textAlign:'center',justifyContent:'center',marginLeft:'18%',padding:20,borderRadius:10,textAlign:'center',justifyContent:'center'}}
+							style={{backgroundColor:'rgb(227,30,45)', width:'60%',marginBottom:20,textAlign:'center',justifyContent:'center',marginLeft:'18%',padding:10,borderRadius:10,textAlign:'center',justifyContent:'center'}}
 						>
 							<Text style={{fontSize: 18,color:'white',textAlign:'center',justifyContent:'center',fontWeight:'bold'}}>OK</Text>
 						</TouchableOpacity>

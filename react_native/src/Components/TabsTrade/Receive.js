@@ -20,13 +20,13 @@ const Receive = (props) => {
                     <QRCode
                     value={address}
                     logo={icon}
-                    logoSize={40}
+                    logoSize={50}
                     size={170}
                     backgroundColor={"white"}
-                    quietZone={10}
-                    logoMargin={4}
+                    quietZone={1}
+                    logoMargin={2}
                     logoBackgroundColor={"white"}
-                    logoBorderRadius={3}
+                    logoBorderRadius={10}
                 />
                 )}
                 

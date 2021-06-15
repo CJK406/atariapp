@@ -50,12 +50,17 @@ class ExchangeScreen extends React.Component {
   
     buyInputChange = (e,exchage_from_data) => {
         const {drop1_key,drop2_key,price} = this.state;
-        e = e==="" ? "0" : e;
-        e = parseFloat(e.replace(/,/g,""));
-        let receiveInputValue1 = this.commafy(parseFloat((e*exchage_from_data[drop1_key]['price']/price.atri).toFixed(4)))
-        let usd_price = this.commafy(parseFloat((e*exchage_from_data[drop1_key]['price']).toFixed(2)));
+        // e = e==="" ? "0" : e;
+        // e = parseFloat(e.replace(/,/g,""));
+        // let receiveInputValue1 = this.commafy(parseFloat((e*exchage_from_data[drop1_key]['price']/price.atri).toFixed(4)))
+        // let usd_price = this.commafy(parseFloat((e*exchage_from_data[drop1_key]['price']).toFixed(2)));
+        let receiveInputValue1 = (e*exchage_from_data[drop1_key]['price']/price.atri).toFixed(0)
+        if(e*exchage_from_data[drop1_key]['price']/price.atri>0 && e*exchage_from_data[drop1_key]['price']/price.atri<1){
+            receiveInputValue1="1";
+        }
+        let usd_price = (e*exchage_from_data[drop1_key]['price']).toFixed(2)
         this.setState({
-            buyInputValue:this.commafy(e),
+            buyInputValue:e,
             receiveInputValue:receiveInputValue1,
             usdInputValue:usd_price,
         })
@@ -63,13 +68,15 @@ class ExchangeScreen extends React.Component {
 
     receiveInputChange = (e,exchage_from_data) => {
         const {drop1_key,price} = this.state;
-        e = e==="" ? "0" : e;
-        e = parseFloat(e.replace(/,/g,""));
-        let buyInputValue1 = this.commafy(parseFloat((e*price.atri/exchage_from_data[drop1_key]['price']).toFixed(exchage_from_data[drop1_key]['decimal'])))
-        let usd_price = this.commafy(parseFloat(e*price.atri).toFixed(2));
+        // e = e==="" ? "0" : e;
+        // e = parseFloat(e.replace(/,/g,""));
+        // let buyInputValue1 = this.commafy(parseFloat((e*price.atri/exchage_from_data[drop1_key]['price']).toFixed(exchage_from_data[drop1_key]['decimal'])))
+        // let usd_price = this.commafy(parseFloat(e*price.atri).toFixed(2));
+        let buyInputValue1 =(e*price.atri/exchage_from_data[drop1_key]['price']).toFixed(exchage_from_data[drop1_key]['decimal'])
+        let usd_price =(e*price.atri).toFixed(2)
         this.setState({
             buyInputValue:buyInputValue1,
-            receiveInputValue:this.commafy(e),
+            receiveInputValue:e,
             usdInputValue:usd_price,
 
         })
@@ -80,14 +87,19 @@ class ExchangeScreen extends React.Component {
  
     usdInputChange = (e,exchage_from_data) => {
         const {drop1_key,price} = this.state;
-        e = e==="" ? "0" : e;
-        e = parseFloat(e.replace(/,/g,""));
-        let buyInputValue1 = this.commafy(parseFloat((e/exchage_from_data[drop1_key]['price']).toFixed(exchage_from_data[drop1_key]['decimal'])))
-        let receiveInputValue1     = this.commafy(parseFloat((e/price.atri).toFixed(4)))
+        // e = e==="" ? "0" : e;
+        // e = parseFloat(e.replace(/,/g,""));
+        // let buyInputValue1 = this.commafy(parseFloat((e/exchage_from_data[drop1_key]['price']).toFixed(exchage_from_data[drop1_key]['decimal'])))
+        // let receiveInputValue1     = this.commafy(parseFloat((e/price.atri).toFixed(4)))
+        let buyInputValue1 = (e/exchage_from_data[drop1_key]['price']).toFixed(exchage_from_data[drop1_key]['decimal'])
+        let receiveInputValue1     = (e/price.atri).toFixed(0)
+        if(e/price.atri>0 && e/price.atri<1){
+            receiveInputValue1="1";
+        }
         this.setState({
             buyInputValue:buyInputValue1,
             receiveInputValue:receiveInputValue1,
-            usdInputValue:this.commafy(e)
+            usdInputValue:e
         })
     }
     
@@ -95,7 +107,7 @@ class ExchangeScreen extends React.Component {
         const {drop1_key,buyInputValue} = this.state;
         if(buyInputValue!=="" && buyInputValue!==0){
             this.setState({loading:true});
-            const token = ["btc","atari","ether","ltc","usdt","bnb"];
+            const token = ["ether","usdt","btc","bnb","ltc"];
             const data = await exchangeApi(token[drop1_key],buyInputValue);
             this.setState({loading:false});
             if(data.code===200){
@@ -103,35 +115,32 @@ class ExchangeScreen extends React.Component {
                 this.props.updateBallance();
             }
             else
-                this.awesomeAlert.showAlert('error', "Failed!", data.message);
+                this.awesomeAlert.showAlert('error', "Failed!", "Exchange failed.");
         }
         else
             this.awesomeAlert.showAlert('warning', "Amount is empty", "Please fill amount");
     }
     render() {
-
         const {drop1_key,drop2_key,darkmode,balance,price,buyInputValue,receiveInputValue,usdInputValue} = this.state;
         const exchage_from_data = [
             // {image:Images.Atri_icon,value:balance.atri.toFixed(4),u_v:(balance.atri_usd).toFixed(2),f_text:'ATRI', text:'Atari token',price:price.atri,decimal:4},
             {image:Images.Eth_icon,value:balance.eth.toFixed(8),u_v:(balance.eth_usd).toFixed(2), f_text:'ETH', text:'Ethereum',price:price.eth,decimal:8},
-            {image:Images.bch_icon,value:balance.usdt.toFixed(6),u_v:'0.00', f_text:'USDT', text:'USDT',price:price.usdt,decimal:8},
+            {image:Images.bch_icon,value:balance.usdt.toFixed(6),u_v:balance.usdt_usd.toFixed(2), f_text:'USDT', text:'USDT',price:price.usdt,decimal:8},
             {image:Images.btc_icon,value:balance.btc.toFixed(8),u_v:(balance.btc_usd).toFixed(2), f_text:'BTC', text:'Bitcoin',price:price.btc,decimal:8},
-            {image:Images.bnb_icon,value:'0.00000000',u_v:'0.00', f_text:'BNB', text:'BNB',price:price.bnb,decimal:8},
+            {image:Images.bnb_icon,value:balance.bnb.toFixed(8),u_v:balance.bnb_usd.toFixed(2), f_text:'BNB', text:'BNB',price:price.bnb,decimal:8},
             {image:Images.Ltc_icon,value:balance.ltc.toFixed(8),u_v:(balance.ltc_usd).toFixed(2), f_text:'LTC', text:'Litecoin',price:price.ltc,decimal:6},
         ]
         const exchage_from_data1 = [
-            {image:Images.Atri_icon,value:balance.atri.toFixed(4),u_v:(balance.atri_usd).toFixed(2),f_text:'ATRI', text:'Atari token',price:price.atri,decimal:4},
+            {image:Images.Atri_icon,value:balance.atri.toFixed(0),u_v:(balance.atri_usd).toFixed(2),f_text:'ATRI', text:'Atari token',price:price.atri,decimal:0},
         ]
-        
     const themeBg = darkmode?'rgb(33,33,33)':'white';
     const renderItem = ({ item }) => (
         <View style={[CustomStyles.container, styles.innerContainer]}>
             <Header darkmode={darkmode}/>
-            
             <View style={{padding:20}}>
                 <ExchangeDropdown items={exchage_from_data} darkmode={darkmode}
                     label={'From'}
-                    onSelect={index => this.setState({drop1_key:index})}
+                    onSelect={index => this.setState({drop1_key:index,buyInputValue:0, receiveInputValue:0, usdInputValue:0,})}
                     isOpen={this.state.drop1_open_flag}
                     drop_open={(e) => {this.drop1_open(e)}}
                 />
@@ -141,7 +150,6 @@ class ExchangeScreen extends React.Component {
                     onSelect={index => this.setState({drop2_key:index})}
                     isOpen={this.state.drop2_open_flag}
                     drop_open={(e) => {}}
-
                 />
                 
                 <ExchangeInput label={'Buy now'} 

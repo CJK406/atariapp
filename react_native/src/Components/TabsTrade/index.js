@@ -40,7 +40,6 @@ const TabsTrade = (props) => {
            
     },[props.trigger])
    
-    console.log("bbb",balance);
     return(
         <View>
             <TopContent darkmode={darkmode} currentTab={currentTab} balance={balance} chart_data={chart_data} tabData={props.tabData}/>

@@ -11,6 +11,7 @@ export async function get_History(currency){
     return await getAPI('transactions/'+currency);
   }
 export async function get_Graph(currency,period){
+  console.log('https://api.coingecko.com/api/v3/coins/'+currency+'/ohlc?vs_currency=usd&days='+period);
   return await getGraphAPI('https://api.coingecko.com/api/v3/coins/'+currency+'/ohlc?vs_currency=usd&days='+period);
 }
 

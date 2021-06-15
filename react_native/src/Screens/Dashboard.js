@@ -29,8 +29,12 @@ class DashboardScreen extends React.Component {
         return this.state.balance != nextState.balance 
                 || this.state.history != nextState.history
                 || this.state.darkmode != nextState.darkmode
+                || this.state.history_finish != nextState.history_finish
+
     }
 	componentDidMount() {
+        this.getHistory();
+
         InteractionManager.runAfterInteractions(() => {
             this.props.updateMenuStatus(true);
             if(this.props.pincode===null){
@@ -81,6 +85,26 @@ class DashboardScreen extends React.Component {
 
 	getHistory = async () => {
         const history = await get_allHistoryApi();
+        console.log("history.body",history.body)
+        // let history_array = [];
+        // history.body.ETH.forEach(element => {
+        //     history_array.push(element)
+        // });
+        // history.body.BTC.forEach(element => {
+        //     history_array.push(element)
+        // });
+        // history.body.LTC.forEach(element => {
+        //     history_array.push(element)
+        // });
+        // history.body.ATRI.forEach(element => {
+        //     history_array.push(element)
+        // });
+        // history.body.USDT.forEach(element => {
+        //     history_array.push(element)
+        // });
+        // history.body.BNB.forEach(element => {
+        //     history_array.push(element)
+        // });
          this.setState({
             history:history.body.arr,
             history_finish:true
@@ -103,7 +127,7 @@ class DashboardScreen extends React.Component {
     
   render() {
         const {balance,darkmode,history_finish,history} = this.state;
-
+        console.log("history_finish",history_finish)
         let data = [balance.atri_usd,balance.btc_usd,balance.eth_usd,balance.ltc_usd,balance.usdt_usd];
         if(balance.atri_usd===0 && balance.btc_usd===0 && balance.eth_usd===0 && balance.ltc_usd===0 && balance.usdt_usd===0)
             data = [1,0,0,0,0];
@@ -156,7 +180,7 @@ class DashboardScreen extends React.Component {
                         <View style={{flexDirection:'column', marginRight:16}}>
                             <BalanceList
                                 darkmode={darkmode}
-                                balance={this.state.balance.atri.toFixed(4)}
+                                balance={this.state.balance.atri.toFixed(0)}
                                 label={'ATRI'}
                                 icon={Images.Atri_icon}
                                 iconColor={color_data[0]}

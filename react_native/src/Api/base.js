@@ -2,9 +2,9 @@ import axios from 'axios';
 
 let store;
 
-const API_URL="https://atari-backend.herokuapp.com/api/users";
-// const API_URL="https://www.vub.gla.mybluehost.me/api/users";
-// const API_URL="http://10.0.2.2:4000";
+// const API_URL="https://atari-backend.herokuapp.com/api/users";
+const API_URL="https://www.vub.gla.mybluehost.me/api/users";
+// const API_URL="http://151.106.108.46/api/users";
 
 function getHeader() {
   let state = store.getState()
@@ -37,7 +37,9 @@ export async function getAPI(url) {
 }
 export async function getGraphAPI(url) {
   try {
-    let result = await axios.get(`${url}`, getHeader());
+    let result = await axios.get(`${url}`);
+    console.log("e1-------");
+
     result = result && result.data
     return result;
   } catch (error) {
@@ -51,7 +53,6 @@ export async function getGraphAPI(url) {
 
 export async function postAPI(url, data) {
   try {
-    console.log({url:`${API_URL}/${url}`, data, header:getHeader() })
     let result = await axios.post(`${API_URL}/${url}`, data, getHeader());
     result = result && result.data;
     return result;
