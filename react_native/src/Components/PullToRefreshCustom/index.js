@@ -19,13 +19,16 @@ export default class PTRView extends React.Component {
       refreshHeight:70,
       isRefreshing:false,
       spinValue:0,
-      shouldTriggerRefresh:false
+      shouldTriggerRefresh:false,
+      disabled:false,
+      ef:null
     }
 
     this.scrollRef = null
     this.scrollY = new Animated.Value(0);
     this.indicatorAnim = new Animated.Value(-50);
     this.spinAnim = new Animated.Value(0);
+    
   }
 
   setMinHeight(height){
@@ -52,20 +55,34 @@ export default class PTRView extends React.Component {
    // onScroll && onScroll(e);
     this.scrollY.setValue(minPullDistance - e.nativeEvent.contentOffset.y);
     const distance = this.scrollY;
-   // if(this.scrollY > 5){
-      
-      if ((minPullDistance - e.nativeEvent.contentOffset.y) >= 68) {
+    if(e.nativeEvent.contentOffset.y >= 70 && !this.state.ef){
+      this.setState({
+        ef:e.nativeEvent.contentOffset.y
+      })
+    }
+
+    if(e.nativeEvent.contentOffset.y === 70){
+      if(this.state.ef){
+        
+      }
+    }
+
+   if(e.nativeEvent.contentOffset.y < 70){
  
+      if ((minPullDistance - e.nativeEvent.contentOffset.y) >= 68) {
+        
         if (!shouldTriggerRefresh) {
           this.setState({
             shouldTriggerRefresh:true
           })
         }
       }
-    //}
-      if(!shouldTriggerRefresh){
+
+      if(!shouldTriggerRefresh ){
         this._indicatorShow(e.nativeEvent.contentOffset.y); 
       }
+    }
+      
     
   }
 
@@ -98,14 +115,16 @@ export default class PTRView extends React.Component {
   }
 
   _indicatorHide(){
-    this.setState({
-      isRefreshing:false
-    })
+    
     Animated.spring(this.indicatorAnim, {
       toValue:-50,
       friction: 10,
       useNativeDriver:false
-    }).start();
+    }).start(
+      this.setState({
+        isRefreshing:false
+      })
+    );
   }
 
   componentDidMount(){
@@ -139,25 +158,28 @@ export default class PTRView extends React.Component {
     })
   }
 
-  _onMomentumScrollEnd(){
+  _onMomentumScrollEnd(e){
     
-    //if (!this.state.isRefreshing && this.scrollY >= 0) {
-     
-      this.scrollRef.scrollTo({y: this.state.refreshHeight});
-      if(!this.state.shouldTriggerRefresh){
-        
-        this._indicatorHide();
-      }else{
-        if(!this.state.isRefreshing){
-          this.setState({
-            isRefreshing:true
-          })
-          this.startLoadingAnim();
-          this._handleOnRefresh(); 
+   
+    
+      if (e.nativeEvent.contentOffset.y < 70) {
+        this.scrollRef.scrollTo({y: this.state.refreshHeight});
+        if(!this.state.shouldTriggerRefresh){
+          
+          this._indicatorHide();
+        }else{
+          if(!this.state.isRefreshing){
+            this.setState({
+              isRefreshing:true
+            })
+            this.startLoadingAnim();
+            this._handleOnRefresh(); 
+          }
         }
       }
       
-    //}
+   
+    
   }
 
   _onScrollEndDrag(e){
@@ -165,16 +187,15 @@ export default class PTRView extends React.Component {
     
     if(shouldTriggerRefresh && !isRefreshing){
       const dstance = this.scrollY._value;
-      if(dstance >= 68){
+      
+      if(dstance >= 68 && !isRefreshing){ 
         this.setState({
           isRefreshing:true
         })
         this.startLoadingAnim();
         this._handleOnRefresh(); 
       }else{
-        this.setState({
-          shouldTriggerRefresh:false
-        })
+        
         this._indicatorHide();
       }
     }else{
@@ -243,7 +264,7 @@ export default class PTRView extends React.Component {
           onScroll={this._onScrollEvent.bind(this)} 
           onLayout={this._onLayout.bind(this)} 
           onMomentumScrollEnd={this._onMomentumScrollEnd.bind(this)} 
-      
+         
          onScrollEndDrag={this._onScrollEndDrag.bind(this)}
         >
           <View>
