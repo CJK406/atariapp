@@ -7,6 +7,10 @@ export const AUTH_SET_USER_INFO_SUCCESS				= 'AUTH_SET_USER_INFO_SUCCESS';
 
 export const AUTH_SET_TOKEN								= 'AUTH_SET_TOKEN';
 export const AUTH_SET_TOKEN_SUCCESS				= 'AUTH_SET_TOKEN_SUCCESS';
+export const AUTH_SET_PRICE				= 'AUTH_SET_PRICE';
+
+
+export const AUTO_UPDATE_VERIFY_TOKEN								= 'AUTO_UPDATE_VERIFY_TOKEN';
 
 
 
@@ -21,7 +25,9 @@ export const NOTIFICATIONFLAG                      = 'NOTIFICATIONFLAG';
 
 export const AUTH_SET_PINCODE              = 'AUTH_SET_PINCODE';
 export const AUTH_SET_PINCODE_SUCCESS              = 'AUTH_SET_PINCODE_SUCCESS';
+
 export const AUTH_SET_ALL_HISTORY              = 'AUTH_SET_ALL_HISTORY';
+export const AUTH_SET_ALL_HISTORY_SUCCESS             = 'AUTH_SET_ALL_HISTORY_SUCCESS';
 
 export const AUTH_GET_ALL_ADDRESS              = 'AUTH_GET_ALL_ADDRESS';
 export const AUTH_GET_ALL_ADDRESS_SUCCESS              = 'AUTH_GET_ALL_ADDRESS_SUCCESS';

@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { CustomStyles,Headers } from '../Constant';
 import { Header, TradeHeaderTab,   TabsTrade} from '../Components'
+import { updateBallance,setAllHistory,authSetToken} from '../Redux/Actions';
+
 // import PTRView from '../Components/PullToRefreshCustom';
 import PTRView from 'react-native-pull-to-refresh';
 
@@ -12,8 +14,8 @@ class TradeScreen extends React.Component {
 	state = {
 		currentTab: 0,
         tabData:Headers[0],
-		history:[],
-		history_finish:false,
+        history: {body:{ATARI:[],ETH:[],USDT:[],BTC:[],BNB:[],LTC:[]},arr:[]},
+		history_finish:true,
 		darkmode:true,
 		triggerRefresh : false,
 		balance:null
@@ -25,6 +27,8 @@ class TradeScreen extends React.Component {
 			darkmode:props.darkmode,
 			get_address:props.get_address,
 			price:props.price,
+			history:props.all_history,
+			notification_Flag:props.notification_Flag
 		};
 	}
 	shouldComponentUpdate(nextProps, nextState) {
@@ -38,19 +42,22 @@ class TradeScreen extends React.Component {
 	
 	refresh(){
 		this.setState({
-			triggerRefresh:true
+			triggerRefresh:true,
+			history_finish:false
 		},() => {
-			setTimeout(() => {
+			    this.props.authSetToken();
+				if(this.state.notification_Flag){
+					this.props.updateBallance();
+					this.props.setAllHistory();
+				}
 				this.setState({
 					triggerRefresh:false,
-					// currentTab:0,
-					// tabData:Headers[0]
+					history_finish:true
 				})
-			},1000)
 		})
 	}
   render() {
-		const { currentTab,balance,darkmode } = this.state;
+		const { currentTab,balance,darkmode,history,history_finish } = this.state;
 		const themeBG = darkmode?'rgb(33,33,33)':'white'
 		const txtColor = darkmode?'white':'black';
 		const renderItem = ({ item }) => (
@@ -59,8 +66,8 @@ class TradeScreen extends React.Component {
 				<TradeHeaderTab darkmode={darkmode} 
 					balance={balance} 
 					activeTab={currentTab}
-					onPressTab={(index, tab) => this.setState({currentTab:index,tabData:tab})}/>
-				<TabsTrade currentTab={currentTab} balance={balance} tabData={this.state.tabData} trigger={this.state.triggerRefresh}/>
+					onPressTab={(index, tab) => {this.setState({currentTab:index,tabData:tab}),this.props.authSetToken()}}/>
+				<TabsTrade currentTab={currentTab} history_finish={history_finish} history={history} balance={balance} tabData={this.state.tabData} trigger={this.state.triggerRefresh}/>
 				
 			</View>
 			);
@@ -86,7 +93,10 @@ function mapStateToProps(state) {
 		darkmode: state.Auth.darkmode,
 		get_address:state.Auth.get_address,
 		price:state.Auth.price,
+        all_history:state.Auth.all_history,
+		notification_Flag:state.Auth.notification_Flag,
+
   };
 }
 
-export default connect(mapStateToProps, {  })(withTheme(TradeScreen));
+export default connect(mapStateToProps, { updateBallance,setAllHistory,authSetToken })(withTheme(TradeScreen));

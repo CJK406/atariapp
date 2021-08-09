@@ -8,39 +8,47 @@ import Toast from 'react-native-simple-toast';
 import { forgetPassword  } from '../Api';
 import { update_verifyToken } from '../Redux/Actions';
 
-class ForgotPasswordScreen extends React.Component {
+class VerifyCodeScreen extends React.Component {
 	state = {
-		email: '',
+		insert_verify_code: '',
+		verify_code:'',
+		verify_token:'',
 		button_loading : false
 	}
 	shouldComponentUpdate(nextProps, nextState) {
-        return this.state.email != nextState.email || 
+        return this.state.insert_verify_code != nextState.insert_verify_code || 
 		this.state.button_loading != nextState.button_loading
     }
+	static getDerivedStateFromProps(props, state) {
+		return {
+			verify_code:props.verify_code,
+			verify_token:props.verify_token
+		};
+	  }
   render() {
 		const { thirdcolor} = this.props.theme.palette;
-		const { email } = this.state;
+		const { insert_verify_code, verify_code, button_loading} = this.state;
+
     return (
       <SafeAreaView style={{...CustomStyles.container, backgroundColor: 'rgb(33,33,33)' }}>
 		<View style={[CustomStyles.container, CustomStyles.innerContainer]}>
 
 			<Image source={Images.Forget_icon} style={{marginLeft:'35%'}} />
-			<Text style={{fontSize: 45, lineHeight: 55, textAlign:'center', fontWeight: 'bold', color: 'white', marginBottom: 35}}>Forget Password</Text>
-			<Text style={{...styles.customWriting}}>We just need your registered email to send you password reset instructions</Text>
+			<Text style={{fontSize: 45, lineHeight: 55, textAlign:'center', fontWeight: 'bold', color: 'white', marginBottom: 35}}>Verify Code</Text>
+			<Text style={{...styles.customWriting}}>Please enter the verification code sent to your email.</Text>
 			<View style={{justifyContent: 'center', alignItems: 'center'}}>
-				<TextInput value={email}
+				<TextInput value={insert_verify_code}
 					style={{...CustomStyles.textInput, marginBottom: 20,color:'white'}}
-					onChangeText={text => this.setState({email: text})}
-					autoCompleteType="email"
-					keyboardType="email-address"
-					placeholder="Email"
+					onChangeText={text => this.setState({insert_verify_code: text})}
+					placeholder="Verify Code"
 					placeholderTextColor="rgba(255,255,255,0.3)"
+
 					/>
 				<TouchableOpacity onPress={this.goNext} style={{backgroundColor:'rgb(227,30,45)',width:'100%', padding:20,borderRadius:10,textAlign:'center',justifyContent:'center',shadowColor: '#000',
 					shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.8, shadowRadius: 2}}>
 					{this.state.button_loading
                         ?<ActivityIndicator size="large" color="white" />
-                        :<Text style={{fontWeight: 'bold', fontSize: 18,color:"white",textAlign:'center'}}>SEND EMAIL</Text>}
+                        :<Text style={{fontWeight: 'bold', fontSize: 18,color:"white",textAlign:'center'}}>NEXT</Text>}
 
 					{/* <Text style={{fontSize: 18,color:'white',textAlign:'center',justifyContent:'center',fontWeight:'bold'}}>SEND EMAIL</Text> */}
 				</TouchableOpacity>
@@ -53,32 +61,17 @@ class ForgotPasswordScreen extends React.Component {
     );
   }
   goNext = async () => {
-	const { email } = this.state;
-	if (email.length === 0) {
-		Toast.show('Please fill in all fields.');
+	const { verify_code, insert_verify_code, verify_token } = this.state;
+	if (insert_verify_code.length === 0) {
+		Toast.show('Please fill in fields.');
 		return;
 	}
-	if (!email.toLowerCase().match(/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i)) {
-		Toast.show('Invalid Email Format');
+	if (verify_code!==insert_verify_code) {
+		Toast.show('The verify code is not correct. Please check again');
 		return;
 	}
 	try {
-		let data = {email:email};
-		this.setState({button_loading:true})
-		const response = await forgetPassword(data);
-		if (response.code===200) {
-			const verify_code = response.body.verify_code;
-			const verify_token = response.body.token;
-			const data = {verify_code:verify_code,verify_token:verify_token};
-			Toast.show("Email has been sent at "+email+", kindly follow the instruction ");
-
-			this.props.update_verifyToken(data);
-			this.props.navigation.navigate('VerifyCode');
-		} else {
-			Toast.show(response.message);
-		}
-		this.setState({button_loading:false})
-
+		this.props.navigation.navigate('ResetPassword');
 	} catch (err) {}
 	}
 	goBack = () => {
@@ -95,6 +88,9 @@ const styles = StyleSheet.create({
 });
 function mapStateToProps(state) {
 	return {
+        verify_code:state.Auth.verify_code,
+        verify_token:state.Auth.verify_token,
+		
 	};
   }
-export default connect(mapStateToProps, {update_verifyToken})(withTheme(ForgotPasswordScreen));
+export default connect(mapStateToProps, {update_verifyToken})(withTheme(VerifyCodeScreen));

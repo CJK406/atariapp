@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SafeAreaView, StyleSheet, Text,Image,TouchableOpacity, View, ActivityIndicator, BackHandler } from 'react-native';
+import { SafeAreaView, StyleSheet, Text,Image,TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-material-ui';
 import { CustomStyles,Headers } from '../Constant';
@@ -8,8 +8,8 @@ import { Images } from '../Assets';
 import Modal from 'react-native-modal';
 import RadioForm from 'react-native-simple-radio-button';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { sendEther,sendAttari,sendUsdt} from '../Api';
-import { updateBallance} from '../Redux/Actions';
+import { sendEther,sendAttari,sendUsdt,sendActionApi} from '../Api';
+import { updateBallance,setAllHistory} from '../Redux/Actions';
 import {InputPin,AwesomeAlert} from '../Components'
 let backPressed = 0;
 
@@ -43,22 +43,12 @@ class SendConfirmScreen extends React.Component {
             darkmode:props.darkmode,
             user_id:props.user_id,
             pincode:props.pincode,
+            id:props.id,
+            email:props.email,
+            name:props.name
         };
     }
-	componentDidMount() {
-        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton.bind(this));
-    }
-    componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton.bind(this));
-    }
-    handleBackButton = () => {
-        const {back_flag} = this.state;
-		if(!back_flag){
-			backPressed = 0;
-    		this.props.navigation.goBack();
-        }
-        return true;
-	}
+
 	goBack = () => {
         const {back_flag} = this.state;
 		if(!back_flag){
@@ -66,30 +56,24 @@ class SendConfirmScreen extends React.Component {
 
 		}
 	}
-    goDashboard = () => {
-        this.props.navigation.navigate('Dashboard1');
-    }
+   
     toggleModal = () => {
 		this.setState({
 			show_miner_fee_modal:!this.state.show_miner_fee_modal
 		})
     }
-	SendConfirm = async () => {
+	SendConfirm = () => {
         const {codePin, pincode,miner_fee, info,user_id} = this.state;
         if(codePin!==""){
-            this.setState({isLoading:true});
+            // this.setState({isLoading:true});
             
             let input_pincode = parseInt(codePin);
             let  user_pincode= parseInt(pincode);
             if(input_pincode !== user_pincode){
-                this.setState({isLoading:false});
                 this.awesomeAlert.showAlert('error', "Failed!","Pincode is not correct");
             }
             else{
-                this.setState({back_flag:true});
-                setTimeout(() => {
-                    this.setState({back_flag:false});
-                }, 30000);
+               
                 let currency = Headers[info.currentTab]['text'];
                 if(currency ==="ATRI")
                     currency="ATARI";
@@ -98,25 +82,12 @@ class SendConfirmScreen extends React.Component {
                             to:info.address,
                             code:input_pincode
                 }
-                let result = await sendAttari(data);
-                if(result.code===400){
-                    this.awesomeAlert.showAlert('error', "Failed!", "Your transaction was not successful");
-                    this.setState({back_flag:false});
-                }
-                else{
-                    this.awesomeAlert.showAlert('success', "Congratulations", "Transaction successfully sent");
-                    this.props.updateBallance();
-                    this.setState({back_flag:false});
-                    setTimeout(() => {
-                        this.goBack();
-                    }, 5000);
-                }
-                this.setState({isLoading:false});
+                let result = sendAttari(data);
+                this.goBack();
             }            
         }
         else{
             this.awesomeAlert.showAlert('error', "Failed!","Pincode is not correct");
-            this.setState({isLoading:false});
         }
     }
     elipsisText(value){
@@ -160,7 +131,7 @@ class SendConfirmScreen extends React.Component {
                     </View>
                 </View>
 
-                <View style={{flexDirection:'row',marginTop:20,borderBottomWidth:2,borderBottomColor:darkmode?'#333333':'gray',paddingBottom:20}}>
+                {/* <View style={{flexDirection:'row',marginTop:20,borderBottomWidth:2,borderBottomColor:darkmode?'#333333':'gray',paddingBottom:20}}>
                     <Text style={{width:'50%',fontSize:20,letterSpacing:1,color:darkmode?'white':'black'}}>Miner fee</Text>
                     <TouchableOpacity style={{textAlign:'right',alignItems:'flex-end',alignSelf:'flex-end',justifyContent:'flex-end', width:'50%'}} onPress={() => this.toggleModal(true)}>
                         <View style={{flexDirection:'row'}}>
@@ -168,7 +139,7 @@ class SendConfirmScreen extends React.Component {
                             <Ionicons name="chevron-down-outline" size={20} style={{marginLeft:20}} color={darkmode?"white":'black'} />
                         </View>
                     </TouchableOpacity>
-                </View>
+                </View> */}
 
                 <View style={{marginTop:20,borderBottomWidth:2,borderBottomColor:darkmode?'#333333':'gray',paddingBottom:20}}>
                     <Text style={{marginBottom:20,fontSize:20,letterSpacing:1,color:darkmode?'white':'black'}}>Enter your pincode*</Text>
@@ -204,7 +175,7 @@ class SendConfirmScreen extends React.Component {
                 }
                 </TouchableOpacity>
             </View>
-            <Modal isVisible={this.state.show_miner_fee_modal}
+            {/* <Modal isVisible={this.state.show_miner_fee_modal}
                 onBackdropPress={() => this.toggleModal(false)}
                 style={{margin:0}}
             >
@@ -223,7 +194,7 @@ class SendConfirmScreen extends React.Component {
                         />
                     </View>
                 </View>
-            </Modal>
+            </Modal> */}
         </View>
       </SafeAreaView>
         </KeyboardAwareScrollView>
@@ -249,8 +220,11 @@ function mapStateToProps(state) {
 		darkmode: state.Auth.darkmode,
         user_id:state.Auth.user_id,
         pincode:state.Auth.pincode,
+        name:state.Auth.user_name,
+        email:state.Auth.email,
+        id:state.Auth.user_id
 
   };
 }
 
-export default connect(mapStateToProps, { updateBallance })(withTheme(SendConfirmScreen));
+export default connect(mapStateToProps, { updateBallance,setAllHistory })(withTheme(SendConfirmScreen));

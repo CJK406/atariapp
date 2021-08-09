@@ -9,7 +9,8 @@ import {
   AUTH_GET_ALL_ADDRESS,
   AUTH_UPDATE_BALLANCE,
   AUTH_UPDATE_STARTSCREEN,
-  AUTH_UPDATE_MENUSTATUS
+  AUTH_UPDATE_MENUSTATUS,
+  AUTO_UPDATE_VERIFY_TOKEN
 } from '../type';
 
 export const authSetUserInfo = (data) => {
@@ -46,10 +47,12 @@ export const updateMenuStatus = (data) => {
   }
 }
 
-
-
-
-
+export const update_verifyToken = (data) => {
+  return {
+    type:AUTO_UPDATE_VERIFY_TOKEN,
+    data:data
+  }
+}
 
 export const authLogout = () => {
   return {
@@ -71,10 +74,10 @@ export const settingNotification = (data) => {
   }
 }
 
-export const setAllHistory = (data) => {
+export const setAllHistory = () => {
   return {
     type: AUTH_SET_ALL_HISTORY,
-    data:data
+    data:{}
   }
 }
 

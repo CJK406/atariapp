@@ -5,42 +5,54 @@ import { withTheme } from 'react-native-material-ui';
 import { Images } from '../Assets';
 import { CustomStyles } from '../Constant';
 import Toast from 'react-native-simple-toast';
-import { forgetPassword  } from '../Api';
+import { resetPassword  } from '../Api';
 import { update_verifyToken } from '../Redux/Actions';
 
-class ForgotPasswordScreen extends React.Component {
+class ResetPasswordScreen extends React.Component {
 	state = {
-		email: '',
-		button_loading : false
+		password: '',
+		c_password : '',
+        button_loading:false,
+        verify_token:''
 	}
-	shouldComponentUpdate(nextProps, nextState) {
-        return this.state.email != nextState.email || 
-		this.state.button_loading != nextState.button_loading
-    }
+
+    static getDerivedStateFromProps(props, state) {
+		return {
+			verify_token:props.verify_token
+		};
+	  }
   render() {
 		const { thirdcolor} = this.props.theme.palette;
-		const { email } = this.state;
+		const { password,c_password,button_loading} = this.state;
     return (
       <SafeAreaView style={{...CustomStyles.container, backgroundColor: 'rgb(33,33,33)' }}>
 		<View style={[CustomStyles.container, CustomStyles.innerContainer]}>
 
 			<Image source={Images.Forget_icon} style={{marginLeft:'35%'}} />
-			<Text style={{fontSize: 45, lineHeight: 55, textAlign:'center', fontWeight: 'bold', color: 'white', marginBottom: 35}}>Forget Password</Text>
-			<Text style={{...styles.customWriting}}>We just need your registered email to send you password reset instructions</Text>
+			<Text style={{fontSize: 45, lineHeight: 55, textAlign:'center', fontWeight: 'bold', color: 'white', marginBottom: 35}}>Reset Password</Text>
+			<Text style={{...styles.customWriting}}>Please Input Password</Text>
 			<View style={{justifyContent: 'center', alignItems: 'center'}}>
-				<TextInput value={email}
+				<TextInput value={password}
 					style={{...CustomStyles.textInput, marginBottom: 20,color:'white'}}
-					onChangeText={text => this.setState({email: text})}
-					autoCompleteType="email"
-					keyboardType="email-address"
-					placeholder="Email"
+					onChangeText={text => this.setState({password: text})}
+                    secureTextEntry={true}
+					placeholder="Type your password"
+					placeholderTextColor="rgba(255,255,255,0.3)"
+					/>
+
+                <TextInput value={c_password}
+					style={{...CustomStyles.textInput, marginBottom: 20,color:'white'}}
+					onChangeText={text => this.setState({c_password: text})}
+                    secureTextEntry={true}
+					placeholder="Retype your password"
+
 					placeholderTextColor="rgba(255,255,255,0.3)"
 					/>
 				<TouchableOpacity onPress={this.goNext} style={{backgroundColor:'rgb(227,30,45)',width:'100%', padding:20,borderRadius:10,textAlign:'center',justifyContent:'center',shadowColor: '#000',
 					shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.8, shadowRadius: 2}}>
 					{this.state.button_loading
                         ?<ActivityIndicator size="large" color="white" />
-                        :<Text style={{fontWeight: 'bold', fontSize: 18,color:"white",textAlign:'center'}}>SEND EMAIL</Text>}
+                        :<Text style={{fontWeight: 'bold', fontSize: 18,color:"white",textAlign:'center'}}>Change Password</Text>}
 
 					{/* <Text style={{fontSize: 18,color:'white',textAlign:'center',justifyContent:'center',fontWeight:'bold'}}>SEND EMAIL</Text> */}
 				</TouchableOpacity>
@@ -53,27 +65,19 @@ class ForgotPasswordScreen extends React.Component {
     );
   }
   goNext = async () => {
-	const { email } = this.state;
-	if (email.length === 0) {
-		Toast.show('Please fill in all fields.');
+	const { c_password, password, verify_token } = this.state;
+	if (c_password.length === 0 || password.length===0 || c_password!==password) {
+		Toast.show('Confirm password is not match. Please check again');
 		return;
 	}
-	if (!email.toLowerCase().match(/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i)) {
-		Toast.show('Invalid Email Format');
-		return;
-	}
+	
 	try {
-		let data = {email:email};
+		let data = {newPass:password,token:verify_token};
 		this.setState({button_loading:true})
-		const response = await forgetPassword(data);
-		if (response.code===200) {
-			const verify_code = response.body.verify_code;
-			const verify_token = response.body.token;
-			const data = {verify_code:verify_code,verify_token:verify_token};
-			Toast.show("Email has been sent at "+email+", kindly follow the instruction ");
-
-			this.props.update_verifyToken(data);
-			this.props.navigation.navigate('VerifyCode');
+		const response = await resetPassword(data);
+        if (response.code===200) {
+			Toast.show("Your password has been changed.");
+		    this.props.navigation.navigate('Login');
 		} else {
 			Toast.show(response.message);
 		}
@@ -95,6 +99,8 @@ const styles = StyleSheet.create({
 });
 function mapStateToProps(state) {
 	return {
+        verify_token:state.Auth.verify_token,
+
 	};
   }
-export default connect(mapStateToProps, {update_verifyToken})(withTheme(ForgotPasswordScreen));
+export default connect(mapStateToProps, {update_verifyToken})(withTheme(ResetPasswordScreen));

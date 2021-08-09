@@ -7,20 +7,19 @@ import { CustomStyles } from '../Constant';
 import {  Header, BalanceList, History } from '../Components';
 import { Images } from '../Assets';
 import { PieChart } from 'react-native-svg-charts';
-import {get_allHistory as get_allHistoryApi,login as loginApi} from '../Api';
-import { setAllHistory ,getAllAddress,updateBallance,updateStartScreenState,updateMenuStatus} from '../Redux/Actions';
-// import PTRView from 'react-native-pull-to-refresh';
-import PTRView from '../Components/PullToRefreshCustom';
+import { setAllHistory ,getAllAddress,updateBallance,updateStartScreenState,updateMenuStatus,authSetToken} from '../Redux/Actions';
+import PTRView from 'react-native-pull-to-refresh';
+// import PTRView from '../Components/PullToRefreshCustom';
 import Toast from 'react-native-simple-toast';
 const {  height } = Dimensions.get("window");
 let backPressed = 0;
 class DashboardScreen extends React.Component {
     state = {
         balance:null,
-        history_finish:false,
+        history_finish:true,
         darkmode:true,
         pincode:null,
-        history:[],
+        history: {body:{ATARI:[],ETH:[],USDT:[],BTC:[],BNB:[],LTC:[]},arr:[]},
         get_address:{atri:"",btc:"",eth:"",ltc:"",bch:"",flag:false},
         interval:null,
 	}
@@ -34,7 +33,6 @@ class DashboardScreen extends React.Component {
     }
 	componentDidMount() {
         this.getHistory();
-
         InteractionManager.runAfterInteractions(() => {
             this.props.updateMenuStatus(true);
             if(this.props.pincode===null){
@@ -42,6 +40,7 @@ class DashboardScreen extends React.Component {
             }
             else{
 	        	this.props.updateStartScreenState(false);
+                this.props.authSetToken();
                 this.get_address();  
                 if(this.props.all_history===undefined || this.props.all_history.length==0)
                     this.getHistory();
@@ -76,6 +75,7 @@ class DashboardScreen extends React.Component {
         pincode:props.pincode,
         history:props.all_history,
         get_address:props.get_address,
+        notification_Flag:props.notification_Flag
     };
   }
 	
@@ -84,50 +84,29 @@ class DashboardScreen extends React.Component {
     }
 
 	getHistory = async () => {
-        const history = await get_allHistoryApi();
-        console.log("history.body",history.body)
-        // let history_array = [];
-        // history.body.ETH.forEach(element => {
-        //     history_array.push(element)
-        // });
-        // history.body.BTC.forEach(element => {
-        //     history_array.push(element)
-        // });
-        // history.body.LTC.forEach(element => {
-        //     history_array.push(element)
-        // });
-        // history.body.ATRI.forEach(element => {
-        //     history_array.push(element)
-        // });
-        // history.body.USDT.forEach(element => {
-        //     history_array.push(element)
-        // });
-        // history.body.BNB.forEach(element => {
-        //     history_array.push(element)
-        // });
-         this.setState({
-            history:history.body.arr,
-            history_finish:true
-         });
-        this.props.setAllHistory(history.body.arr);
+        this.props.setAllHistory();
     }
     refresh(){
         this.setState({
-            history:[],
+            history:{},
             history_finish:false,
 		}, () => {
-            this.getHistory();
-			this.props.updateBallance();
+            this.props.authSetToken();
+            if(this.state.notification_Flag){
+                this.getHistory();
+                this.props.updateBallance();
+            }
+             this.setState({
+                history_finish:true,
+            });
 		});
        
     }
     commafy( num ) {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
      }
-    
   render() {
         const {balance,darkmode,history_finish,history} = this.state;
-        console.log("history_finish",history_finish)
         let data = [balance.atri_usd,balance.btc_usd,balance.eth_usd,balance.ltc_usd,balance.usdt_usd];
         if(balance.atri_usd===0 && balance.btc_usd===0 && balance.eth_usd===0 && balance.ltc_usd===0 && balance.usdt_usd===0)
             data = [1,0,0,0,0];
@@ -230,7 +209,7 @@ class DashboardScreen extends React.Component {
                     </View>
                 </View>
             </View>
-            <History label={'History'} data={history} darkmode={darkmode}
+            <History label={'History'} data={history.body.arr} darkmode={darkmode}
                 isLoad={!history_finish}/>
         </View>
     
@@ -284,8 +263,8 @@ function mapStateToProps(state) {
         pincode:state.Auth.pincode,
         all_history:state.Auth.all_history,
         get_address:state.Auth.get_address,
-        
+		notification_Flag:state.Auth.notification_Flag,
   };
 }
 
-export default connect(mapStateToProps, {setAllHistory,getAllAddress,updateBallance,updateStartScreenState,updateMenuStatus})(withTheme(DashboardScreen));
+export default connect(mapStateToProps, {setAllHistory,getAllAddress,updateBallance,authSetToken,updateStartScreenState,updateMenuStatus})(withTheme(DashboardScreen));

@@ -8,10 +8,11 @@ import Modal from 'react-native-modal'
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
 import { useNavigation } from '@react-navigation/native';
+import {AwesomeAlert} from '../../Components'
 
 const Send = (props) => {
     const navigation = useNavigation();
-    const [amount,setAmount] = useState("0.00")
+    const [amount,setAmount] = useState("0")
     const [amountUsd, setAmountUsd] = useState('0.00')
     const [destination, setDestination] = useState('')
     const [showQR, setShowQR] = useState(false)
@@ -21,10 +22,14 @@ const Send = (props) => {
     const themeBG = darkmode?'rgb(33,33,33)':'white'
     const txtColor = darkmode?'white':'black'
 
+  
     const onChangeValue = (e) => {
-        const usd = e!=="" ?  (parseFloat(e)*parseFloat(price)) : 0;
-        setAmount(e)
-        setAmountUsd(usd.toFixed(2))
+        if (currency!=="ATRI" || e[e.length-1]!=="." && e[e.length-1]!==","){
+            const usd = e!=="" ?  (parseFloat(e)*parseFloat(price)) : 0;
+            setAmount(e)
+            setAmountUsd(usd.toFixed(2))
+        }
+        
     }
     const onChangeUsdValue = (e) => {
 		const coin = e!=="" ?  (parseFloat(e)/parseFloat(price)).toFixed(CryptoStyle[curr_key]['decimal']) : 0;
@@ -33,7 +38,7 @@ const Send = (props) => {
     }
     const setFullBalance = () => {
         const {decimal} = CryptoStyle[curr_key]
-        setAmount(parseFloat(cryptoBalance).toFixed(decimal))
+        setAmount((parseFloat(cryptoBalance)*0.95).toFixed(decimal))
         setAmountUsd(parseFloat(usdBalance).toFixed(2))
     }
     const focusSendInput = async() => {
@@ -41,13 +46,33 @@ const Send = (props) => {
 		setDestination(text)
 	};
     const sendConfirm = () => {
-        console.log(parseFloat(amount),parseFloat(cryptoBalance))
-		if(destination!=="" && amount!=="0.00" && parseFloat(amount)<parseFloat(cryptoBalance)){
+		let status=true;
+        let message = "";
+        if(destination==="")
+        {
+            message="The address is empty. Please check again";
+            status=false;
+        }
+        if(amount==="0" || amount===""){
+            status=false;
+            message="The amount could not zero";
+        }
+        if(parseFloat(amount)>parseFloat(cryptoBalance))
+        {
+            message="The send amount should be less than balance";
+            status=false;
+        }
+
+        if(status){
             props.closeModal();
             const currTab = Headers.findIndex((item) => item.text === currency)
 			let info= {send_usd_amount:amountUsd,send_amount:amount, address:destination, currentTab:currTab}
 			navigation.navigate('SendConfirm',{ info: info });
 		}
+        else if(!status){
+			this.awesomeAlert.showAlert('error', "Failed!", message);
+        }
+
         
     }
     onScanned = async e => {
@@ -69,6 +94,7 @@ const Send = (props) => {
       }, []);
     return(
         <View style={{...styles.modalContainer,backgroundColor:themeBG}}>
+       		<AwesomeAlert ref={(ref) => this.awesomeAlert = ref }/> 
             <Image source={tabData.Image} style={styles.icSend}></Image>
             <Text style={{ color:txtColor, ...styles.modalTitle}}>Send amount</Text>
             <View style={{flexDirection:'row',textAlign:'center',alignSelf:'center',alignItems:'center'}}>
@@ -76,7 +102,7 @@ const Send = (props) => {
                     <TextInput 
                         onChangeText={(key) => onChangeValue(key)}
                         value={amount.toString()}
-                        placeholder="0.00"  
+                        placeholder="0"  
                         placeholderTextColor="white" 
                         keyboardType={'numeric'} 
                         style={{color:txtColor,backgroundColor:'transparent',fontSize:24}}></TextInput>
@@ -99,7 +125,7 @@ const Send = (props) => {
             <View style={{flexDirection:'row',textAlign:'center',alignItems:'center',alignSelf:'center'}}>
                 <Text style={{color:darkmode?'white':'black',fontSize:20,marginTop:20}}>*Available: {cryptoBalance} {currency}</Text>
                 <TouchableOpacity 
-                    style={{marginTop:25,borderWidth:1,borderColor:'white',justifyContent:'center',alignItems:'center',alignSelf:'center',marginLeft:20,padding:5,borderRadius:10,backgroundColor:'rgb(227,30,45)',width:50,height:25,textAlign:'right'}} 
+                    style={{marginTop:15,borderWidth:1,borderColor:'white',justifyContent:'center',alignItems:'center',alignSelf:'center',marginLeft:20,padding:5,paddingTop:0,borderRadius:10,backgroundColor:'rgb(227,30,45)',width:50,height:25,textAlign:'right'}} 
                     onPress={setFullBalance} >
                     <Text style={{color:'white'}}>Full</Text>	
                 </TouchableOpacity>

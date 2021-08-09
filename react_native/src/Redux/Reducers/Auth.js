@@ -14,7 +14,10 @@ import {
     AUTH_UPDATE_BALLANCE,
     AUTH_UPDATE_BALLANCE_SUCCESS,
     AUTH_UPDATE_STARTSCREEN,
-    AUTH_UPDATE_MENUSTATUS
+    AUTH_UPDATE_MENUSTATUS,
+    AUTO_UPDATE_VERIFY_TOKEN,
+    AUTH_SET_ALL_HISTORY_SUCCESS,
+    AUTH_SET_PRICE
 } from '../type';
 
 const INITIAL = {
@@ -32,12 +35,14 @@ const INITIAL = {
     notification_Flag: true,
     pincode: null,
     user_id: "",
-
-    all_history: [],
+    user_name:'',
+    all_history: {body:{ATARI:[],ETH:[],USDT:[],BTC:[],BNB:[],LTC:[]},arr:[]},
     get_address: {atri: "", btc: "", eth: "", ltc: "", bch: "",ftm:"",bnb:"", flag: false},
     price: null,
     start_screen_flag: false,
-    menustatus: false
+    menustatus: false,
+    verify_token:'',
+    verify_code:''
 }
 
 export default (state = INITIAL, action) => {
@@ -46,7 +51,7 @@ export default (state = INITIAL, action) => {
             if (!action.payload) return state;
 
             const {Auth} = action.payload;
-            let {loggedin, token, balance, darkmode, pincode, notification_Flag, all_history, get_address, price} = Auth;
+            let {loggedin, email,token, balance, darkmode, pincode, notification_Flag, all_history,user_name, get_address, price,verify_token,verify_code} = Auth;
             return {
                 ...Auth,
                 loggedin,
@@ -58,6 +63,10 @@ export default (state = INITIAL, action) => {
                 all_history,
                 get_address,
                 price,
+                verify_token,
+                verify_code,
+                user_name,
+                email
             };
         }
 
@@ -65,15 +74,22 @@ export default (state = INITIAL, action) => {
         case AUTH_SET_TOKEN:
         case AUTH_SET_PINCODE:
         case AUTH_GET_ALL_ADDRESS:
+        case AUTH_SET_ALL_HISTORY:
         case AUTH_UPDATE_BALLANCE: {
             return {...state, loading: true, messages: null}
         }
 
         case AUTH_SET_TOKEN_SUCCESS: {
-            const token = action.data;
-
-            return {...state, token};
+            const {notification_Flag} = action.data;
+            return {...state,notification_Flag:notification_Flag};
         }
+        case AUTO_UPDATE_VERIFY_TOKEN: {
+        
+            const {verify_token,verify_code} = action.data;
+            return {...state,verify_token,verify_code };
+        }
+
+        
         case AUTH_UPDATE_MENUSTATUS: {
             const data = action.data;
 
@@ -91,6 +107,14 @@ export default (state = INITIAL, action) => {
             return {...state, start_screen_flag: data};
         }
 
+        case AUTH_SET_PRICE:{
+            const price = action.data;
+            console.log("price-=-=-===---==-=-=-=-",price)
+            return {
+                ...state,
+                price: price,
+            };
+        }
 
         case AUTH_SET_USER_INFO_SUCCESS: {
             const {user, token, price, balance} = action.data.data;
@@ -98,14 +122,17 @@ export default (state = INITIAL, action) => {
                 ...state,
                 loading: false,
                 loggedin: true,
-                all_history: [],
+                all_history: {body:{ATARI:[],ETH:[],USDT:[],BTC:[],BNB:[],LTC:[]},arr:[]},
+
                 price: price,
                 pincode: user.pinCode,
                 user_id: user._id,
                 balance: balance,
                 messages: null,
                 token:token,
-
+                email:user.email,
+                password:user.password,
+                user_name:user.name
             };
         }
 
@@ -158,7 +185,7 @@ export default (state = INITIAL, action) => {
         case NOTIFICATIONFLAG: {
             return {...state, notification_Flag: action.data};
         }
-        case AUTH_SET_ALL_HISTORY: {
+        case AUTH_SET_ALL_HISTORY_SUCCESS: {
             return {...state, all_history: action.data}
         }
         case AUTH_GET_ALL_ADDRESS_SUCCESS: {

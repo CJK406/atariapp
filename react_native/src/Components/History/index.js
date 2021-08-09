@@ -4,7 +4,6 @@ import styles from './style'
 import HistoryItem from './Item'
 
 const History = (props) => {
-
     const color = props.darkmode ? 'white':'black'
     return (
         <View style={{...styles.container}}>
@@ -16,7 +15,7 @@ const History = (props) => {
                 data={props.data}
                 keyExtractor={(item, index) => index }
                 renderItem={({ item }) => <HistoryItem darkmode={props.darkmode} item={item}/>}
-                ListFooterComponent={() => (
+                ListHeaderComponent={() => (
                     <View>
                         {props.isLoad && 
                         <ActivityIndicator size="large" color={color} />}

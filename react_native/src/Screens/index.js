@@ -1,6 +1,10 @@
 export { default as StartScreen } from './Start';
 export { default as LoginScreen } from './Login';
 export { default as ForgotPasswordScreen } from './ForgotPassword';
+export { default as VerifyCodeScreen } from './VerifyCode';
+export { default as ResetPasswordScreen } from './ResetPassword';
+
+
 
 export { default as TradeScreen } from './Trade';
 export { default as ProfileScreen } from './Profile';

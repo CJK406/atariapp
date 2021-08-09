@@ -34,9 +34,9 @@ class NftScreen extends React.Component {
                 <Header darkmode={darkmode}/>
                 <View style={{textAlign:'center'}}>
                     <Text style={{color:'red', fontSize:13,textAlign:'center',marginTop:100}}>WELCOME TO THE</Text>
-                    <Text style={{color:'white', fontSize:35,textAlign:'center', marginTop:10}}>Atari NFT Universe</Text>
+                    <Text style={{color:darkmode?'white' :'black', fontSize:35,textAlign:'center', marginTop:10}}>Atari NFT Universe</Text>
                     <Text style={{color:'gray',fontSize:15, textAlign:'center', marginTop:10}}>Buy, store and sell your NFTs</Text>
-                    <Text style={{color:'white',fontSize:17, textAlign:'center', marginTop:10}}>( Comming Soon )</Text>
+                    <Text style={{color:darkmode?'white' :'black',fontSize:17, textAlign:'center', marginTop:10}}>( Coming Soon )</Text>
 
                 </View>
            </View>

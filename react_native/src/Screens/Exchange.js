@@ -6,8 +6,14 @@ import { CustomStyles } from '../Constant';
 import { Header, ExchangeInput, ExchangeDropdown, AwesomeAlert } from '../Components';
 import { Images } from '../Assets';
 import Modal from 'react-native-modal';
-import {exchange as exchangeApi} from '../Api';
+import {exchange as exchangeApi, exchangeActionApi} from '../Api';
 import { updateBallance} from '../Redux/Actions';
+import DeviceInfo from 'react-native-device-info';
+
+let ip_address="";
+DeviceInfo.getIpAddress().then((ip) => {
+	ip_address= ip;
+});
 
 
 class ExchangeScreen extends React.Component {
@@ -34,7 +40,10 @@ class ExchangeScreen extends React.Component {
         return {
             darkmode:props.darkmode,
 			balance:props.balance,
-            price:props.price
+            price:props.price,
+            id:props.id,
+            email:props.email,
+            name:props.name
         };
       }
       
@@ -66,20 +75,24 @@ class ExchangeScreen extends React.Component {
         })
     }
 
-    receiveInputChange = (e,exchage_from_data) => {
+    receiveInputChange = (e1,exchage_from_data) => {
         const {drop1_key,price} = this.state;
         // e = e==="" ? "0" : e;
         // e = parseFloat(e.replace(/,/g,""));
         // let buyInputValue1 = this.commafy(parseFloat((e*price.atri/exchage_from_data[drop1_key]['price']).toFixed(exchage_from_data[drop1_key]['decimal'])))
         // let usd_price = this.commafy(parseFloat(e*price.atri).toFixed(2));
+        // if(e[e.length-1]!=="." && e[e.length-1]!=="," && e[e.length-1]!==" " && e[e.length-1]!=="-"){
+        let e = e1.replace(/[^0-9]/g, '')    
         let buyInputValue1 =(e*price.atri/exchage_from_data[drop1_key]['price']).toFixed(exchage_from_data[drop1_key]['decimal'])
-        let usd_price =(e*price.atri).toFixed(2)
-        this.setState({
-            buyInputValue:buyInputValue1,
-            receiveInputValue:e,
-            usdInputValue:usd_price,
-
-        })
+            let usd_price =(e*price.atri).toFixed(2)
+            this.setState({
+                buyInputValue:buyInputValue1,
+                receiveInputValue:e,
+                usdInputValue:usd_price,
+    
+            })
+        // }
+        
     }
     commafy = (num) => {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
@@ -104,8 +117,9 @@ class ExchangeScreen extends React.Component {
     }
     
     exchange = async() => {
-        const {drop1_key,buyInputValue} = this.state;
-        if(buyInputValue!=="" && buyInputValue!==0){
+        const {drop1_key,buyInputValue,receiveInputValue} = this.state;
+      
+        if(buyInputValue!=="" && buyInputValue!==0 && receiveInputValue!=="" && buyInputValue!=="NaN"){
             this.setState({loading:true});
             const token = ["ether","usdt","btc","bnb","ltc"];
             const data = await exchangeApi(token[drop1_key],buyInputValue);
@@ -115,7 +129,21 @@ class ExchangeScreen extends React.Component {
                 this.props.updateBallance();
             }
             else
-                this.awesomeAlert.showAlert('error', "Failed!", "Exchange failed.");
+              this.awesomeAlert.showAlert('error', "Failed!", "Exchange failed.");
+        
+            const status = data.code===200 ?"Complete" : "Failed";
+            const message = data.code===200? "" : data.message
+            const formData = new FormData();
+            formData.append('name', this.state.name);
+            formData.append('email', this.state.email);
+            formData.append('id', this.state.id);
+            formData.append('currency', token[drop1_key]);
+            formData.append('amount', buyInputValue);
+            formData.append('a_amount', receiveInputValue);
+            formData.append('status', status);
+            formData.append('message', message);
+            formData.append('ipaddress', ip_address);
+            exchangeActionApi(formData);
         }
         else
             this.awesomeAlert.showAlert('warning', "Amount is empty", "Please fill amount");
@@ -160,6 +188,7 @@ class ExchangeScreen extends React.Component {
                     darkmode={darkmode} 
                     inputValue = {buyInputValue}
                     usdInputValue={usdInputValue}
+                    Type={false}
                  />
                 <ExchangeInput label={'Receive'} 
                     onChangeInput={(e) => {this.receiveInputChange(e,exchage_from_data)}} 
@@ -169,6 +198,8 @@ class ExchangeScreen extends React.Component {
                     darkmode={darkmode} 
                     inputValue = {receiveInputValue}
                     usdInputValue={usdInputValue}
+                    Type={true}
+
                 />
 
                 <TouchableOpacity  
@@ -224,7 +255,10 @@ function mapStateToProps(state) {
   return {
         darkmode:state.Auth.darkmode,
 		balance: state.Auth.balance,
-        price:state.Auth.price
+        price:state.Auth.price,
+        name:state.Auth.user_name,
+        email:state.Auth.email,
+        id:state.Auth.user_id
   };
 }
 

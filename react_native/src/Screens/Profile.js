@@ -14,6 +14,7 @@ const Menus = [
 	{ name: 'Support', page: '', icon: 'help-buoy-outline',description:'' },
 	{ name: 'Reset Pincode', page: 'ResetPin', icon: 'refresh-outline',description:'' },
 	{ name: 'Logout', page: '', icon: 'log-out-outline',description:'' },
+	{ name: 'Version 2.1', page: '', icon: 'information-circle-outline',description:'' }
 ];
 class ProfileScreen extends React.Component {
 	constructor(props) {
@@ -70,7 +71,11 @@ class ProfileScreen extends React.Component {
 							themeToggle={this.state.themeToggle}
 						/> */}
 						
-						<Text style={{fontSize:15,marginBottom:14,color:txtColor}}>Advanced</Text>
+						{/* <Text style={{fontSize:15,marginBottom:14,color:txtColor}}>Advanced</Text> */}
+						<SettingMenu icon={Menus[7].icon} title={Menus[7].name}
+							themeToggle={this.state.themeToggle}
+
+						/>
 						<SettingMenu icon={Menus[3].icon} title={Menus[3].name}
 							subTitle={Menus[3].description}
 							withAction
@@ -84,11 +89,11 @@ class ProfileScreen extends React.Component {
 							themeToggle={this.state.themeToggle}
 
 						/>
-						{/* <SettingMenu icon={Menus[5].icon} title={Menus[5].name}
+						<SettingMenu icon={Menus[5].icon} title={Menus[5].name}
 							onPress={() => this.goToDetail('ResetPin')}
 							themeToggle={this.state.themeToggle}
 
-						/> */}
+						/>
 						<SettingMenu icon={Menus[6].icon} title={Menus[6].name}
 							onPress={this.logout}
 							themeToggle={this.state.themeToggle}

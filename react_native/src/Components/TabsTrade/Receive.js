@@ -4,6 +4,7 @@ import Clipboard from '@react-native-community/clipboard';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import QRCode from 'react-native-qrcode-svg'
 
+// import { QRCode } from 'react-native-custom-qr-codes';
 const Receive = (props) => {
     const {darkmode, address, icon, crypto_name, color} = props
 
@@ -20,7 +21,7 @@ const Receive = (props) => {
                     <QRCode
                     value={address}
                     logo={icon}
-                    logoSize={50}
+                    logoSize={40}
                     size={170}
                     backgroundColor={"white"}
                     quietZone={1}
@@ -28,6 +29,12 @@ const Receive = (props) => {
                     logoBackgroundColor={"white"}
                     logoBorderRadius={10}
                 />
+                // <QRCode content={address}
+                // size={170}
+                // logo={icon}
+                // logoSize={50}
+                // logoBackgroundColor='transparent'
+                // />
                 )}
                 
             </View>

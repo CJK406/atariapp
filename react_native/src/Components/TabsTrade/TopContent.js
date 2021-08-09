@@ -13,15 +13,17 @@ import Send from './Send'
 const TopContent = (props) => {
     const [cryptoBalance, setCryptoBalance] = useState(0)
     const [usdBalance, setUsdBalance] = useState(0)
-    const [currPrice, setCurrPrice] = useState(0)
+    // const [currPrice, setCurrPrice] = useState(0)
     const [changes, setChanges] = useState('0.00')
     const [comingshowmodal, setShowComingModal] = useState(false)
     const [showModal, setShowModal] = useState(false)
     const [modalMode, setModalMode] = useState(0)
     const { tabData } = props 
     const txtColor  = props.darkmode ? 'white':'black'
+    
     const currency = tabData.text
     const curr_key = currency.toLowerCase()
+    const currPrice = props.price[curr_key];
     const cryptoColor = CryptoStyle[curr_key]['color']
     const {chart_data,balance, price,currentTab} = props
     const {decimal} = CryptoStyle[curr_key]
@@ -34,7 +36,7 @@ const TopContent = (props) => {
         setCryptoBalance(balance[curr_key].toFixed(decimal))
         const usdkey = curr_key+"_usd"
         setUsdBalance(balance[usdkey].toFixed(2))
-        setCurrPrice(parseFloat(price[curr_key]).toFixed(2)) 
+        // setCurrPrice(parseFloat(price[curr_key])) 
     }
     const calculateChanges = () => {
         let changes = '0.00'
@@ -61,7 +63,7 @@ const TopContent = (props) => {
     },[])
 
     const showModalComponent = (mode) => {
-        if(currentTab===3 || currentTab===2 || currentTab===5){
+        if(currentTab===3 || currentTab===4 || currentTab===5){
             setShowComingModal(true)
         }
         else{
@@ -110,14 +112,16 @@ const TopContent = (props) => {
                 />}
                 <View style={{flex:1}}>
                     <Text style={{color:txtColor,...styles.coinBalance}}>{ balance[curr_key].toFixed(decimal) } {currency}</Text>
-                    <Text style={{color:txtColor,...styles.usdBalance}}>${ commafy(balance[curr_key+"_usd"].toFixed(2)) }</Text>
+                    <Text style={{color:txtColor,...styles.usdBalance}}>${ commafy((balance[curr_key]*chart_data.y[chart_data.y.length-1]).toFixed(2)) }</Text>
                 </View>
                 {currency !== 'BCH' &&
                 <SideTrade label={'Send'} icon={'trending-up-outline'} position={'right'}
                     onPress={() => showModalComponent(1)}/>}
             </View>
             <View style={styles.cryptoPriceContainer}>
-                <Text style={{color:cryptoColor,fontSize:19}}>{currency} ${chart_data.y[chart_data.y.length-1]}</Text>
+                {/* <Text style={{color:cryptoColor,fontSize:19}}>{currency} ${chart_data.y[chart_data.y.length-1]}</Text> */}
+                <Text style={{color:cryptoColor,fontSize:19}}>{currency} ${parseFloat(currPrice).toFixed(4)}</Text>
+                
                 <View style={{backgroundColor:cryptoColor,...styles.badgeRadius}}>
                     <Text style={{fontWeight:'700'}}>{chart_data.percent.toFixed(2)}%</Text>
                 </View>

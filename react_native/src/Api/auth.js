@@ -65,6 +65,11 @@ export async function setPincode(data){
 }
 
 
-export async function requestResetPassword(data){
-  return await putAPI('forgot-password',data);
+
+export async function forgetPassword(data){
+  return await postAPI('forgot-password',data);
+}
+
+export async function resetPassword(data){
+  return await postAPI('reset-password',data);
 }

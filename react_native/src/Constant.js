@@ -80,6 +80,10 @@ export const CryptoStyle = {
 		color:'#c42626',
 		decimal:0
 	},
+	atari : {
+		color:'#c42626',
+		decimal:0
+	},
 	eth : {
 		color:'aqua',
 		decimal:8
